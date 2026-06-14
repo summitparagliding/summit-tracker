@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Visionneuse PDF</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#16161d;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#e2e8f0}
+/* toolbar — two rows on mobile */
+#tb{position:fixed;inset:0 0 auto 0;z-index:100;background:#0d0d1a;border-bottom:1px solid rgba(255,255,255,.1);display:flex;flex-wrap:wrap;align-items:center;gap:4px;padding:6px 8px;min-height:48px}
+#tb-row2{width:100%;display:flex;align-items:center;gap:4px;padding-top:2px}
+.btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:6px;color:#cbd5e1;cursor:pointer;padding:6px 10px;font-size:13px;line-height:1;white-space:nowrap;flex-shrink:0;transition:background .12s}
+.btn:hover{background:rgba(255,255,255,.14)}
+.btn.on{background:rgba(0,232,198,.2);border-color:rgba(0,232,198,.5);color:#00e8c6}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.sep{width:1px;height:22px;background:rgba(255,255,255,.1);flex-shrink:0}
+.spacer{flex:1}
+#pg{color:#64748b;font-size:12px;font-family:monospace;white-space:nowrap}
+#ji{width:46px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:5px;color:#e2e8f0;font-size:12px;padding:5px 4px;text-align:center;font-family:monospace}
+#ji::-webkit-inner-spin-button{display:none}
+/* sidebar */
+#sb{position:fixed;top:88px;left:0;bottom:0;z-index:50;width:108px;background:#0a0a16;border-right:1px solid rgba(255,255,255,.07);overflow-y:auto;padding:8px 5px;flex-direction:column;gap:6px;display:none}
+#sb.open{display:flex}
+.ti{cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;border:2px solid transparent;border-radius:4px;padding:2px;transition:border-color .12s}
+.ti:hover{border-color:rgba(0,232,198,.35)}
+.ti.cur{border-color:#00e8c6}
+.tc{display:block;width:96px;background:#ddd;border-radius:2px;box-shadow:0 1px 4px rgba(0,0,0,.5)}
+.tl{font-size:9px;color:#475569;font-family:monospace}
+/* viewer */
+#vw{position:fixed;top:88px;left:0;right:0;bottom:0;overflow-y:scroll;overflow-x:auto;background:#1e1e2c;padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px;transition:left .18s}
+#vw.sb{left:108px}
+/* pages */
+.pw{flex-shrink:0;position:relative;box-shadow:0 4px 20px rgba(0,0,0,.6);background:#fff}
+.pw canvas{display:block}
+.ph{position:absolute;inset:0;background:#f0f0f0;display:flex;align-items:center;justify-content:center}
+.sp{width:22px;height:22px;border:2.5px solid rgba(0,0,0,.1);border-top-color:#00e8c6;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pair{display:flex;gap:6px;flex-shrink:0;align-items:flex-start}
+/* loading */
+#ld{position:fixed;inset:0;z-index:200;background:#16161d;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#64748b;font-size:13px}
+.lsp{width:32px;height:32px;border:3px solid rgba(255,255,255,.08);border-top-color:#00e8c6;border-radius:50%;animation:spin .7s linear infinite}
+#er{position:fixed;inset:0;z-index:200;background:#16161d;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:2rem;text-align:center;display:none}
+#er p{color:#f87171;font-size:13px;max-width:300px;line-height:1.6}
+</style>
+</head>
+<body>
+
+<div id="ld"><div class="lsp"></div><span id="lm">Chargement…</span></div>
+<div id="er">
+  <p id="em"></p>
+  <button class="btn" onclick="history.back()">← Retour</button>
+</div>
+
+<div id="tb">
+  <!-- Row 1: navigation + zoom + thumbnails -->
+  <button class="btn" id="bk">← Retour</button>
+  <div class="sep"></div>
+  <button class="btn" id="bth" title="Miniatures">⊞</button>
+  <div class="sep"></div>
+  <button class="btn" id="bzm">−</button>
+  <span id="zl" style="font-size:12px;color:#94a3b8;font-family:monospace;flex-shrink:0;min-width:38px;text-align:center">80%</span>
+  <button class="btn" id="bzp">+</button>
+  <div class="sep"></div>
+  <button class="btn" id="b2p">2p</button>
+  <button class="btn" id="bhd" title="Qualité HD (consomme plus de mémoire)">HD</button>
+  <button class="btn" id="bfs" title="Plein écran">⛶</button>
+  <!-- Row 2: page indicator + jump-to-page -->
+  <div id="tb-row2">
+    <span id="pg" style="font-size:12px;color:#64748b;font-family:monospace;white-space:nowrap;flex-shrink:0">— / —</span>
+    <div class="sep"></div>
+    <span style="font-size:11px;color:#64748b;white-space:nowrap">Aller à la page :</span>
+    <input id="ji" type="number" min="1" placeholder="n°" style="width:56px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:5px;color:#e2e8f0;font-size:13px;padding:5px 6px;text-align:center;font-family:monospace">
+    <button class="btn" id="bgo">→ Aller</button>
+  </div>
+</div>
+
+<div id="sb"></div>
+<div id="vw"></div>
+
+<script type="module">
+import * as pdfjs from '/pdfjs/pdf.min.mjs';
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdfjs/pdf.worker.min.mjs';
+
+const P      = new URLSearchParams(location.search);
+const pdfUrl = P.get('url');
+const docId  = P.get('id') || 'x';
+const S      = k => localStorage.getItem('spv_' + docId + '_' + k);
+const Ws     = (k, v) => localStorage.setItem('spv_' + docId + '_' + k, v);
+
+const vw = document.getElementById('vw');
+const sb = document.getElementById('sb');
+const ld = document.getElementById('ld');
+const er = document.getElementById('er');
+const pg = document.getElementById('pg');
+const zl = document.getElementById('zl');
+const ji = document.getElementById('ji');
+
+// ── State ──────────────────────────────────────────────────
+let doc, n, cur, sc, tu, sth, hd;
+let rendered = new Set(), thDone = new Set();
+let heights  = [];         // 1-indexed CSS px heights
+let obs, tobs;
+let rq = Promise.resolve();
+
+// ── Boot ───────────────────────────────────────────────────
+function err(msg) {
+  ld.style.display = 'none';
+  er.style.display = 'flex';
+  document.getElementById('em').textContent = msg;
+}
+
+async function boot() {
+  if (!pdfUrl) return err('Aucun document spécifié.');
+  cur = Math.max(1, parseInt(S('p') || 1));
+  sc  = Math.max(0.5, Math.min(4, parseFloat(S('s') || '0.8')));
+  tu  = S('2') === '1';
+  hd  = S('hd') === '1';   // HD = use full devicePixelRatio (sharper, more memory)
+  sth = false;
+
+  try {
+    document.getElementById('lm').textContent = 'Ouverture du document…';
+    // Fully fetch the PDF upfront — no streaming.
+    // Streaming + mobile = half-loaded images. The whole manual is ~7 MB; fine to download.
+    //
+    // Asset URLs are CRITICAL for image-heavy old PDFs (this Manuel-FFVL.pdf is from
+    // 2010 QuarkXPress + Distiller 8 — uses JPEG2000, ICC profiles, custom CMaps).
+    // Without these, PDF.js silently skips images it can't decode → blank illustrations.
+    doc = await pdfjs.getDocument({
+      url: pdfUrl,
+      disableStream: true,
+      disableAutoFetch: true,
+      disableFontFace: false,
+      cMapUrl:             '/pdfjs/cmaps/',
+      cMapPacked:          true,
+      standardFontDataUrl: '/pdfjs/standard_fonts/',
+      iccUrl:              '/pdfjs/iccs/',
+      wasmUrl:             '/pdfjs/wasm/',
+    }).promise;
+    n   = doc.numPages;
+    ji.max = n;
+
+    document.getElementById('lm').textContent = 'Calcul des pages…';
+    await calcHeights();
+    build();
+    setupObs();
+    updateUI();
+    ld.style.display = 'none';
+
+    const t = Math.min(cur, n);
+    if (t > 1) { await sleep(80); await jump(t); }
+  } catch(e) {
+    err('Impossible de charger le document.\n' + e.message);
+  }
+}
+
+// ── Pre-compute all page heights ───────────────────────────
+async function calcHeights() {
+  const dpr = hd ? (window.devicePixelRatio || 1) : Math.min(window.devicePixelRatio || 1, 1.5);
+  heights = [0];
+  for (let i = 1; i <= n; i++) {
+    const p = await doc.getPage(i);
+    const v = p.getViewport({ scale: sc * dpr });
+    heights.push(Math.round(v.height / dpr));
+  }
+}
+
+// ── Build DOM ──────────────────────────────────────────────
+function build() {
+  vw.innerHTML = sb.innerHTML = '';
+  rendered.clear(); thDone.clear();
+  tu ? buildTwo() : buildOne();
+  buildThumbs();
+}
+
+function buildOne() {
+  for (let i = 1; i <= n; i++) vw.appendChild(mkWrap(i));
+}
+
+function buildTwo() {
+  // cover alone
+  const c = document.createElement('div');
+  c.className = 'pair';
+  c.appendChild(mkWrap(1));
+  vw.appendChild(c);
+  // pairs
+  for (let i = 2; i <= n; i += 2) {
+    const r = document.createElement('div');
+    r.className = 'pair';
+    r.appendChild(mkWrap(i));
+    if (i + 1 <= n) r.appendChild(mkWrap(i + 1));
+    vw.appendChild(r);
+  }
+}
+
+function mkWrap(i) {
+  const w = document.createElement('div');
+  w.className = 'pw'; w.dataset.p = i;
+  w.style.height = heights[i] + 'px';
+  const ph = document.createElement('div');
+  ph.className = 'ph';
+  ph.innerHTML = '<div class="sp"></div>';
+  const cv = document.createElement('canvas');
+  cv.id = 'cv' + i; cv.style.display = 'none';
+  w.appendChild(ph); w.appendChild(cv);
+  return w;
+}
+
+function buildThumbs() {
+  for (let i = 1; i <= n; i++) {
+    const d = document.createElement('div');
+    d.className = 'ti' + (i === cur ? ' cur' : '');
+    d.dataset.t = i;
+    d.onclick = () => jump(i);
+    const cv = document.createElement('canvas');
+    cv.className = 'tc'; cv.id = 'tc' + i;
+    const lb = document.createElement('div');
+    lb.className = 'tl'; lb.textContent = i;
+    d.appendChild(cv); d.appendChild(lb);
+    sb.appendChild(d);
+  }
+}
+
+// ── Observers ──────────────────────────────────────────────
+function setupObs() {
+  if (obs) obs.disconnect();
+  obs = new IntersectionObserver(es => {
+    es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const i = +e.target.dataset.p;
+      if (!i || rendered.has(i)) return;
+      rq = rq.then(() => renderPg(i));
+      trackCur(i);
+    });
+  }, { root: vw, threshold: 0.05 });
+  document.querySelectorAll('.pw').forEach(el => obs.observe(el));
+
+  if (tobs) tobs.disconnect();
+  tobs = new IntersectionObserver(es => {
+    es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const i = +e.target.dataset.t;
+      if (!i || thDone.has(i)) return;
+      thDone.add(i); renderTh(i);
+    });
+  }, { root: sb, threshold: 0.1 });
+  document.querySelectorAll('.ti').forEach(el => tobs.observe(el));
+}
+
+// ── Render ─────────────────────────────────────────────────
+async function renderPg(i) {
+  if (rendered.has(i)) return;
+  rendered.add(i);
+  const cv = document.getElementById('cv' + i);
+  if (!cv) return;
+  try {
+    const dpr = hd ? (window.devicePixelRatio || 1) : Math.min(window.devicePixelRatio || 1, 1.5);
+    const p   = await doc.getPage(i);
+    const vp  = p.getViewport({ scale: sc * dpr });
+    cv.width  = vp.width; cv.height = vp.height;
+    cv.style.width  = Math.round(vp.width  / dpr) + 'px';
+    cv.style.height = Math.round(vp.height / dpr) + 'px';
+    await p.render({ canvasContext: cv.getContext('2d'), viewport: vp }).promise;
+    cv.style.display = 'block';
+    const ph = cv.parentNode?.querySelector('.ph');
+    if (ph) ph.remove();
+    cv.parentNode.style.height = 'auto';
+  } catch(e) { rendered.delete(i); }
+}
+
+async function renderTh(i) {
+  const cv = document.getElementById('tc' + i);
+  if (!cv) return;
+  try {
+    const p  = await doc.getPage(i);
+    const vp = p.getViewport({ scale: 0.17 });
+    cv.width = vp.width; cv.height = vp.height;
+    cv.style.width  = vp.width  + 'px';
+    cv.style.height = vp.height + 'px';
+    await p.render({ canvasContext: cv.getContext('2d'), viewport: vp }).promise;
+  } catch(e) {}
+}
+
+// ── Jump ───────────────────────────────────────────────────
+async function jump(i) {
+  i = Math.max(1, Math.min(n, i));
+  ji.value = '';
+
+  // Pre-render target and neighbours
+  const pre = [i, i-1, i+1].filter(x => x >= 1 && x <= n && !rendered.has(x));
+  await Promise.all(pre.map(renderPg));
+
+  // Scroll
+  const el = document.querySelector(`.pw[data-p="${i}"]`);
+  if (el) {
+    vw.scrollTo({ top: el.offsetTop - 12, behavior: 'instant' });
+  } else {
+    let sum = 0;
+    for (let j = 1; j < i; j++) sum += (heights[j] || 0) + 8;
+    vw.scrollTo({ top: sum, behavior: 'instant' });
+  }
+  trackCur(i);
+}
+
+function trackCur(i) {
+  if (!i || i === cur) return;
+  cur = i; Ws('p', i);
+  pg.textContent = i + ' / ' + n;
+  document.querySelectorAll('.ti').forEach(el =>
+    el.classList.toggle('cur', +el.dataset.t === i));
+  if (sth) {
+    document.querySelector(`.ti[data-t="${i}"]`)?.scrollIntoView({ block: 'nearest' });
+  }
+}
+
+vw.addEventListener('scroll', () => {
+  const mid = vw.getBoundingClientRect().top + vw.clientHeight * 0.38;
+  let best, bd = Infinity;
+  document.querySelectorAll('.pw').forEach(el => {
+    const r = el.getBoundingClientRect();
+    const d = Math.abs(r.top + r.height / 2 - mid);
+    if (d < bd) { bd = d; best = el; }
+  });
+  if (best) trackCur(+best.dataset.p);
+  recycleFar();   // free memory by clearing distant canvases
+}, { passive: true });
+
+// Off-screen canvas recycling: pages more than KEEP_RADIUS away are cleared
+// (their canvas dimensions zeroed, freeing GPU/system memory). They'll re-render
+// when scrolled back into view via the IntersectionObserver.
+const KEEP_RADIUS = 6;
+let recycleTimer;
+function recycleFar() {
+  clearTimeout(recycleTimer);
+  recycleTimer = setTimeout(() => {
+    for (const i of Array.from(rendered)) {
+      if (Math.abs(i - cur) > KEEP_RADIUS) {
+        const cv = document.getElementById('cv' + i);
+        if (cv) {
+          cv.width = 0; cv.height = 0; cv.style.display = 'none';
+          const w = cv.parentNode;
+          if (w) {
+            w.style.height = (heights[i] || 800) + 'px';
+            if (!w.querySelector('.ph')) {
+              const ph = document.createElement('div');
+              ph.className = 'ph';
+              ph.innerHTML = '<div class="sp"></div>';
+              w.appendChild(ph);
+            }
+          }
+          rendered.delete(i);
+        }
+      }
+    }
+  }, 250);
+}
+
+// ── Zoom ───────────────────────────────────────────────────
+async function zoom(s) {
+  sc = Math.max(0.5, Math.min(4, s));
+  Ws('s', sc);
+  const was = cur;
+  await calcHeights();
+  build(); setupObs(); updateUI();
+  await sleep(50); jump(was);
+}
+
+// ── 2-up ───────────────────────────────────────────────────
+async function toggle2p() {
+  tu = !tu; Ws('2', tu ? '1' : '0');
+  if (tu) await fitTwoUpWidth();   // auto-shrink so both pages fit
+  const was = cur;
+  await calcHeights();
+  build(); setupObs(); updateUI();
+  await sleep(50); jump(was);
+}
+
+// Calculate a scale that makes two pages fit side-by-side in current viewport width
+async function fitTwoUpWidth() {
+  try {
+    const p  = await doc.getPage(1);
+    const vp = p.getViewport({ scale: 1 });
+    const pageWidthPt = vp.width;  // PDF points at scale 1
+    // Available width per page in CSS pixels: (viewport - padding - gap) / 2
+    const sbOffset = sth ? 108 : 0;
+    const avail = (window.innerWidth - sbOffset - 24 /*padding*/ - 6 /*gap*/) / 2;
+    sc = Math.max(0.3, Math.min(4, avail / pageWidthPt));
+    Ws('s', sc);
+  } catch(e) {}
+}
+
+// ── Thumbs sidebar ─────────────────────────────────────────
+function toggleSb() {
+  sth = !sth;
+  sb.classList.toggle('open', sth);
+  vw.classList.toggle('sb', sth);
+  document.getElementById('bth').classList.toggle('on', sth);
+}
+
+function updateUI() {
+  pg.textContent = cur + ' / ' + (n || '—');
+  zl.textContent = Math.round(sc * 100) + '%';
+  document.getElementById('b2p').classList.toggle('on', tu);
+}
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+// ── Buttons ────────────────────────────────────────────────
+function saveState() {
+  Ws('p', cur);
+  Ws('s', sc);
+  Ws('2', tu ? '1' : '0');
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden) saveState(); });
+window.addEventListener('pagehide', saveState);
+window.addEventListener('beforeunload', saveState);
+
+document.getElementById('bk').onclick  = () => {
+  saveState();
+  window.parent ? window.parent.postMessage({ type: 'pdf-close' }, '*') : history.back();
+};
+document.getElementById('bth').onclick = toggleSb;
+document.getElementById('bzm').onclick = () => zoom(sc - 0.25);
+document.getElementById('bzp').onclick = () => zoom(sc + 0.25);
+document.getElementById('b2p').onclick = toggle2p;
+document.getElementById('bgo').onclick = () => {
+  const v = parseInt(ji.value, 10);
+  if (v >= 1 && v <= n) jump(v);
+};
+ji.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const v = parseInt(ji.value, 10);
+    if (v >= 1 && v <= n) jump(v);
+  }
+});
+
+// Re-fit 2p mode on rotation / window resize
+let resizeT;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeT);
+  resizeT = setTimeout(async () => {
+    if (tu && doc) {
+      await fitTwoUpWidth();
+      await calcHeights();
+      build(); setupObs(); updateUI();
+      jump(cur);
+    }
+  }, 250);
+});
+
+// Fullscreen handler
+async function toggleFullscreen() {
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    } else {
+      await document.documentElement.requestFullscreen();
+    }
+  } catch(e) { console.warn('[fullscreen]', e.message); }
+}
+document.getElementById('bfs').onclick = toggleFullscreen;
+
+// HD mode handler
+async function toggleHD() {
+  hd = !hd; Ws('hd', hd ? '1' : '0');
+  document.getElementById('bhd').classList.toggle('on', hd);
+  const was = cur;
+  // Re-render existing canvases at new resolution
+  rendered.clear();
+  await calcHeights();
+  build(); setupObs(); updateUI();
+  await sleep(50); jump(was);
+}
+document.getElementById('bhd').onclick = toggleHD;
+
+// Mark HD button as active if HD is on from localStorage
+document.addEventListener('DOMContentLoaded', () => {
+  if (hd) document.getElementById('bhd')?.classList.add('on');
+});
+
+boot();
+</script>
+</body>
+</html>

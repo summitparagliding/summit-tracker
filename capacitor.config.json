@@ -1,0 +1,26 @@
+{
+  "appId": "com.summitparagliding.app",
+  "appName": "Summit Paragliding",
+  "webDir": "build",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "BackgroundGeolocation": {
+      "backgroundMessage": "Vol en cours — Summit Paragliding suit votre position GPS.",
+      "backgroundTitle": "Summit — GPS actif",
+      "requestPermissions": true,
+      "stale": false,
+      "distanceFilter": 10
+    }
+  },
+  "android": {
+    "buildOptions": {
+      "keystorePath": null,
+      "releaseType": "APK"
+    }
+  },
+  "ios": {
+    "scheme": "Summit Paragliding"
+  }
+}
