@@ -551,12 +551,12 @@
     {#each libraryItems as item}
     <div class="card lib-doc-card">
       <div style="display:flex;align-items:flex-start;gap:.625rem">
-        <div style="flex:1">
+        <div style="flex:1;min-width:0">
           <div class="xs" style="font-weight:700;color:var(--txt)">{item.title}</div>
           {#if item.description}<div class="xs muted">{item.description}</div>{/if}
-          <div class="xs muted" style="margin-top:.2rem;font-family:monospace;font-size:.7rem">{item.file_url}</div>
+          <div class="xs muted" style="margin-top:.2rem;font-family:monospace;font-size:.7rem;overflow-wrap:anywhere">{item.file_url}</div>
         </div>
-        <form method="POST" action="?/deleteLibraryItem" use:enhance>
+        <form method="POST" action="?/deleteLibraryItem" use:enhance style="flex-shrink:0">
           <input type="hidden" name="id" value={item.id} />
           <button class="btn btn-danger btn-xs"
             on:click|preventDefault={e=>{if(confirm('Supprimer ce document?'))e.target.form.submit();}}>

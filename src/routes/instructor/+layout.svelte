@@ -88,7 +88,7 @@
           <button class="lang-btn" class:active={$lang==='en'} on:click={() => lang.set('en')}>EN</button>
           <button class="lang-btn" class:active={$lang==='fr'} on:click={() => lang.set('fr')}>FR</button>
         </div>
-        <div class="inst-version">Summit v121</div>
+        <div class="inst-version">Summit v122</div>
         <!-- Theme slider — same dark→light control as student side -->
         <div class="inst-theme-row">
           <span style="font-size:.85rem;opacity:.6">🌙</span>
@@ -174,7 +174,11 @@
     .sidebar{width:100%;height:auto;position:relative;flex-direction:column}
     .sb-nav{flex-direction:row;flex-wrap:wrap;padding:.5rem}
     .nav-item{font-size:.72rem;padding:.4rem .625rem}
-    .sb-foot{flex-direction:row;padding:.5rem .75rem;border-top:none;border-left:1px solid var(--border)}
+    .sb-foot{flex-direction:row;flex-wrap:wrap;align-items:center;gap:.4rem .75rem;padding:.5rem .75rem;border-top:none;border-left:1px solid var(--border)}
+    .inst-lang-row{padding:0;flex:0 0 auto}
+    .inst-version{padding:0;flex:0 0 auto;text-align:left}
+    .inst-theme-row{padding:0;margin:0;border-bottom:none;flex:1 1 100%;min-width:180px}
+    .sb-user{flex:0 0 auto}
     .inst-main{padding:1.25rem}
   }
 </style>

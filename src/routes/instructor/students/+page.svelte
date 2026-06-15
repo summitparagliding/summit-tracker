@@ -159,4 +159,11 @@
   .actions{display:flex;gap:.3rem;align-items:center;justify-content:flex-end}
   .empty-state{padding:2rem 1rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.75rem}
   .name-link{display:flex;align-items:center;gap:.4rem;text-decoration:none;color:var(--txt)}
+  @media(max-width:768px){
+    table{table-layout:auto}
+    /* hide Contact + Inscrit columns so Name + Actions fit on a phone */
+    th:nth-child(2),td:nth-child(2),th:nth-child(3),td:nth-child(3){display:none}
+    th,td{white-space:normal}
+    .actions{flex-wrap:wrap;justify-content:flex-start;gap:.25rem}
+  }
 </style>
