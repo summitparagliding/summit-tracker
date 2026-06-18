@@ -79,7 +79,7 @@
       {L ? 'Démarrer un quiz' : 'Start a quiz'}
     </div>
     <div class="xs muted">
-      {L ? '174 questions FFVL — 7 catégories' : '174 FFVL questions — 7 categories'}
+      {data.quizCount || 233} {L ? 'questions — 7 catégories' : 'questions — 7 categories'}
     </div>
   </div>
   <span style="color:var(--teal);font-size:1.2rem;flex-shrink:0">→</span>

@@ -221,18 +221,18 @@
 
   // ── Debrief ────────────────────────────────────────────────────
   const PHASES = [
-    {key:'wing_up',   fr:"Mise en l'air",   en:'Bringing up wing',  group:'launch'},
-    {key:'wing_ctrl', fr:'Contrôle aile',    en:'Wing control',       group:'launch'},
-    {key:'run',       fr:'Course décollage', en:'Launch run',         group:'launch'},
+    {key:'wing_up',   fr:'Gonflage',         en:'Inflation',          group:'launch'},
+    {key:'wing_ctrl', fr:'Contrôle',         en:'Control',            group:'launch'},
+    {key:'run',       fr:'Course',           en:'Run',                group:'launch'},
     {key:'exercises', fr:'Exercices en vol', en:'In-flight exercises',group:'flight'},
     {key:'approach',  fr:'Approche',         en:'Approach',           group:'landing'},
-    {key:'final',     fr:'Approche finale',  en:'Final approach',     group:'landing'},
-    {key:'flare',     fr:'Freinage',         en:'Flare',              group:'landing'},
-    {key:'landing',   fr:'Atterrissage',     en:'Landing',            group:'landing'},
+    {key:'final',     fr:'Finale',           en:'Final',              group:'landing'},
+    {key:'flare',     fr:'Arrondi',          en:'Flare',              group:'landing'},
   ];
   let debriefFlight  = null;
   let lightboxUrl    = null;  // fullscreen image viewer
   let selectedPhases = new Set();
+  let debriefNote    = '';
   let debriefsByFlight = {};
   let debriefLoading   = null;
   let debriefSent      = null;
@@ -290,17 +290,19 @@
   }
 
   async function sendDebrief(flightId) {
-    if (!selectedPhases.size) return;
+    if (!selectedPhases.size && !debriefNote.trim()) return;
     debriefErr = '';
     try {
       const res  = await fetch('/api/debrief', {
         method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ action:'request', flight_id:flightId, phases:[...selectedPhases] }),
+        body: JSON.stringify({ action:'request', flight_id:flightId, phases:[...selectedPhases], note:debriefNote.trim() }),
       });
       const json = await res.json();
       if (json.ok) {
         debriefSent  = flightId;
         debriefFlight = null;
+        selectedPhases = new Set();
+        debriefNote = '';
         await fetchDebriefs(flightId);
         setTimeout(() => debriefSent=null, 3000);
       } else {
@@ -565,13 +567,20 @@
             </div>
           </div>
           {/each}
+          <div class="debrief-note">
+            <div class="xs" style="color:var(--txt-3);font-weight:700;margin-bottom:.2rem">
+              {L?'Ce que tu veux débriéfer / ce que tu as ressenti':'What you want to debrief / how it felt'}
+            </div>
+            <textarea class="debrief-note-ta" rows="3" bind:value={debriefNote}
+              placeholder={L?'Décris ce qui s\'est passé, ce qui t\'a surpris, ce sur quoi tu veux des conseils…':'Describe what happened, what surprised you, what you want advice on…'}></textarea>
+          </div>
           {#if debriefErr}<div class="xs" style="color:var(--red);margin-top:.35rem">{debriefErr}</div>{/if}
           <div style="display:flex;gap:.5rem;margin-top:.5rem">
-            <button class="btn btn-primary btn-sm" disabled={!selectedPhases.size}
+            <button class="btn btn-primary btn-sm" disabled={!selectedPhases.size && !debriefNote.trim()}
               on:click={() => sendDebrief(f.id)}>
               {L?'Envoyer':'Send'}
             </button>
-            <button class="btn btn-ghost btn-sm" on:click={() => {debriefFlight=null; debriefErr='';}}>
+            <button class="btn btn-ghost btn-sm" on:click={() => {debriefFlight=null; debriefErr=''; debriefNote='';}}>
               {L?'Annuler':'Cancel'}
             </button>
           </div>
@@ -786,6 +795,7 @@
   .debrief-hdr{display:flex;align-items:center;justify-content:space-between}
   .debrief-form{background:var(--bg-2);border-radius:8px;padding:.5rem .625rem;display:flex;flex-direction:column;gap:.35rem}
   .phase-group{display:flex;flex-direction:column;gap:.2rem}
+  .debrief-note-ta{width:100%;background:var(--bg-raised);border:1px solid var(--border);border-radius:8px;padding:.5rem;color:var(--txt);font-size:.82rem;font-family:inherit;resize:vertical}
   .phase-chips{display:flex;flex-wrap:wrap;gap:.25rem}
   .phase-chip{font-size:.75rem;padding:.2rem .5rem;border-radius:var(--r-full);border:1px solid var(--border);background:var(--bg-raised);color:var(--txt-2);cursor:pointer}
   .phase-chip.selected{background:rgba(0,184,122,.15);border-color:var(--teal);color:var(--teal);font-weight:700}

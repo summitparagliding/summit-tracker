@@ -50,6 +50,7 @@ export async function POST({ request, cookies }) {
         flight_id,
         student_id:       student.student_id,
         phases_requested: body.phases || [],
+        student_note:     body.note || null,
       });
       return json({ ok: true, id });
     } catch(e) {

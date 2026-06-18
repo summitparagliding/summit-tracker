@@ -37,7 +37,10 @@
   let flightType = '', launchType = '', landingSite = '';
   let confRating = 3;
   let wentWell = '', toImprove = '', personalNotes = '', nextGoals = '';
-  const confLabels = { fr: ["Très incertain","Incertain","Neutre","Confiant","Très confiant"], en: ["Very uncertain","Uncertain","Neutral","Confident","Very confident"] };
+  const confOptions = {
+    fr: [{v:1,l:"Très incertain"},{v:2,l:"Incertain"},{v:4,l:"Confiant"},{v:5,l:"Très confiant"}],
+    en: [{v:1,l:"Very uncertain"},{v:2,l:"Uncertain"},{v:4,l:"Confident"},{v:5,l:"Very confident"}]
+  };
   // selectedExIds: Set of exercise IDs the student checked
   let selectedExIds = new Set();
   let submitting = false;
@@ -113,6 +116,16 @@
     (subcat(e) === 'if' || subcat(e) === 'lnd') &&
     e.status !== 'passed' && e.status !== 'pending'
   );
+
+  // Next objectives — upcoming exercises in curriculum (chronological) order
+  $: upcomingObjectives = exercises.filter(e =>
+    (subcat(e) === 'if' || subcat(e) === 'lnd') && e.status !== 'passed'
+  ).slice(0, 4);
+  function addObjective(e) {
+    if (readonly) return;
+    const t = ($lang==='fr' && e.title_fr) ? e.title_fr : e.title;
+    nextGoals = nextGoals ? (nextGoals.replace(/\s*$/,'') + '\n• ' + t) : ('• ' + t);
+  }
 
   // Validation
   function validate() {
@@ -411,17 +424,16 @@
     
     <div class="form-group conf-group">
       <label style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap">
-        {$lang==='fr'?'Confiance en soi aujourd\'hui':'Self-confidence today'} (1–5)
+        {$lang==='fr'?'Confiance en soi aujourd\'hui':'Self-confidence today'}
         {#if !confRating && !readonly}<span style="color:var(--red);font-size:.68rem;font-weight:700">{$lang==='fr'?'— requis':'— required'}</span>{/if}
       </label>
-      <div class="conf-stars" style={!confRating && !readonly ? 'outline:1.5px solid var(--red);outline-offset:4px;border-radius:6px;' : ''}>
-        {#each [1,2,3,4,5] as n}
-          <label class="conf-star">
-            <input type="radio" name="confidence_rating" value={n} bind:group={confRating} />
-            <span class="star-ico" class:lit={n <= confRating}></span>
+      <div class="conf-scale" style={!confRating && !readonly ? 'outline:1.5px solid var(--red);outline-offset:4px;border-radius:8px;' : ''}>
+        {#each confOptions[$lang||'fr'] as o}
+          <label class="conf-opt" class:sel={confRating===o.v}>
+            <input type="radio" name="confidence_rating" value={o.v} bind:group={confRating} disabled={readonly} />
+            <span>{o.l}</span>
           </label>
         {/each}
-        <span class="conf-label">{confRating ? confLabels[$lang||'fr'][confRating-1] : ''}</span>
       </div>
     </div>
   </div>
@@ -433,6 +445,18 @@
         {$lang==='fr'?'Objectifs prochain vol':'Goals for Next Flight'}
       </div>
       <p class="xs" style="color:var(--teal);margin-bottom:.5rem">Vol #{flightNum}</p>
+      {#if upcomingObjectives.length && !readonly}
+        <p class="xs" style="color:var(--txt-3);margin-bottom:.35rem">
+          {$lang==='fr'?'Suggestions selon ta progression (touche pour ajouter) :':'Suggested from your progression (tap to add):'}
+        </p>
+        <div class="obj-chips">
+          {#each upcomingObjectives as e, i}
+            <button type="button" class="obj-chip" on:click={()=>addObjective(e)}>
+              <span class="obj-num">{i+1}</span>{($lang==='fr'&&e.title_fr)?e.title_fr:e.title}
+            </button>
+          {/each}
+        </div>
+      {/if}
       <textarea name="next_goals" rows="3" bind:value={nextGoals} disabled={readonly}
         placeholder="{$lang==='fr'?'Travailler sur les 360°…':'Work on 360° turns…'}"></textarea>
     </div>
@@ -528,11 +552,15 @@
 
   .submit-area{display:flex;gap:.75rem;margin-top:1.25rem;padding-bottom:1.5rem}
   .conf-group{margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border)}
-  .conf-stars{display:flex;align-items:center;gap:.2rem;margin-top:.3rem;flex-wrap:wrap}
-  .conf-star input{display:none}
-  .star-ico{font-size:1.6rem;cursor:pointer;color:var(--border);transition:color .1s}
-  .star-ico.lit{color:var(--amber)}
-  .conf-label{font-size:.8rem;color:var(--txt-3);margin-left:.5rem;font-style:italic}
+  .conf-scale{display:flex;gap:.4rem;margin-top:.4rem;flex-wrap:wrap}
+  .conf-opt{flex:1 1 calc(50% - .4rem);min-width:120px}
+  .conf-opt input{display:none}
+  .conf-opt span{display:block;text-align:center;padding:.55rem .5rem;border:1px solid var(--border);border-radius:8px;background:var(--bg-raised);color:var(--txt-2);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .12s}
+  .conf-opt.sel span{background:var(--teal);color:var(--txt-inv);border-color:var(--teal)}
+  .obj-chips{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.5rem}
+  .obj-chip{display:flex;align-items:center;gap:.5rem;text-align:left;background:var(--bg-raised);border:1px solid var(--border);border-radius:8px;padding:.45rem .6rem;color:var(--txt);font-size:.82rem;cursor:pointer;font-family:inherit}
+  .obj-chip:hover{border-color:var(--teal)}
+  .obj-num{flex-shrink:0;width:18px;height:18px;border-radius:50%;background:var(--teal);color:var(--txt-inv);font-size:.68rem;font-weight:800;display:grid;place-items:center}
   .ex-item-wrap{display:flex;flex-direction:column;gap:.2rem}
   .ex-item:disabled{cursor:not-allowed;opacity:.75}
 </style>

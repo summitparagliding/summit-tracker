@@ -214,6 +214,29 @@
   $: pct        = weightedProgress;
   $: currentIdx = steps.findIndex(s => !s.done);
 
+  const clamp = v => Math.min(1, Math.max(0, v || 0));
+  $: stepFrac = {
+    p1_theory: clamp(p1TheoryDone / Math.max(p1TheoryTotal, 1)),
+    ground:    clamp(groundDone   / Math.max(groundTotal, 1)),
+    p1_prac:   clamp(p1PracDone   / Math.max(p1PracTotal, 1)),
+    p1_exam:   p1ExamOk ? 1 : p1ExamWrit ? 0.5 : 0,
+    flights:   clamp(flightCount  / Math.max(FLIGHT_TOTAL, 1)),
+    inflight:  clamp(inFlightDone / Math.max(inFlightTotal, 1)),
+    p2ex:      clamp(p2ExDone     / Math.max(p2ExTotal, 1)),
+    p2_theory: clamp(p2TheoryDone / Math.max(p2TheoryTotal, 1)),
+    p2_exam:   p2ExamOk ? 1 : p2ExamWrit ? 0.5 : 0,
+  };
+  function phaseName(p) {
+    if (p === 'P1') return L ? 'Brevet initial — Novice' : 'Initial — Novice';
+    if (p === 'P2') return L ? 'Brevet — Récréatif' : 'Recreational';
+    return '';
+  }
+  $: phasePct = (ph) => {
+    const ids = steps.filter(s => s.phase === ph).map(s => s.id);
+    if (!ids.length) return 0;
+    return Math.round(ids.reduce((a, id) => a + (stepFrac[id] || 0), 0) / ids.length * 100);
+  };
+
   // ── Interaction ───────────────────────────────────────────────────────────
   let expanded = false;
   let openId   = null;
@@ -264,80 +287,79 @@
 </script>
 
 <div class="rm">
-  <!-- ── Collapsed summary ─────────────────────────────────────────────────── -->
+  <!-- ── Header ─────────────────────────────────────────────── -->
   <button class="rm-hdr" on:click={toggleExpand}>
     <div class="rm-left">
-      <span class="xs" style="font-weight:700;color:var(--txt-2)">{L ? 'Parcours de formation' : 'Training path'}</span>
-      <span class="xs muted">
-        {doneCount}/{steps.length} {L ? 'étapes' : 'steps'} ·
+      <span class="rm-title">{L ? 'Parcours de formation' : 'Training path'}</span>
+      <span class="rm-sub">
         {#if doneCount === steps.length}
-          <span style="color:var(--teal);font-weight:700">{L ? 'Certifié P2 ✓' : 'P2 Certified ✓'}</span>
+          <span class="rm-cert">★ {L ? 'Certifié P2' : 'P2 Certified'}</span>
         {:else if currentIdx >= 0}
-          {steps[currentIdx][L?'fr':'en']}
+          {doneCount}/{steps.length} · {L ? 'à suivre' : 'next'}: {steps[currentIdx][L?'fr':'en']}
         {/if}
       </span>
     </div>
     <div class="rm-right">
-      <span class="xs mono" style="color:var(--teal);font-weight:700">{pct}%</span>
-      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"
-        style="color:var(--txt-3);transition:transform .2s;transform:rotate({expanded?180:0}deg)">
-        <polyline points="6 9 12 15 18 9"/>
-      </svg>
+      <span class="rm-pct">{pct}<span class="rm-pct-s">%</span></span>
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"
+        class="rm-chev" style="transform:rotate({expanded?180:0}deg)"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
   </button>
   <div class="rm-bar-bg"><div class="rm-bar" style="width:{pct}%"></div></div>
 
-  <!-- ── Expanded ──────────────────────────────────────────────────────────── -->
+  <!-- ── Timeline ───────────────────────────────────────────── -->
   {#if expanded}
-  <div class="rm-steps">
+  <div class="rm-tl">
     {#each steps as step, i}
     {#if i === 0 || steps[i-1].phase !== step.phase}
-    <div class="rm-phase-lbl xs">{step.phase}</div>
-    {/if}
-
-    <button class="rm-row" on:click={() => clickStep(step)}>
-      <div class="rm-bullet" style="color:{bulletColor(step)};border-color:{bulletBorder(step)};background:{bulletBg(step)}">
-        {#if step.done}
-        <svg viewBox="0 0 12 12" width="9" height="9" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="2 6 5 9 10 3"/></svg>
-        {:else if step.partial}◐
-        {:else}<span style="font-size:.6rem;font-weight:800">{i+1}</span>
-        {/if}
-      </div>
-      <div class="rm-lbl">
-        <span class="xs" style="font-weight:{(!step.done&&currentIdx===i)||step.done?700:500};color:{step.done?'var(--txt)':currentIdx===i?'var(--txt)':'var(--txt-3)'}">{L ? step.fr : step.en}</span>
-        <span class="xs" style="color:{bulletColor(step)}">{L ? step.fr_prog : step.en_prog}</span>
-      </div>
-      <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"
-        style="flex-shrink:0;color:var(--txt-3);transition:transform .2s;transform:rotate({openId===step.id?180:0}deg)">
-        <polyline points="6 9 12 15 18 9"/>
-      </svg>
-    </button>
-
-    {#if openId === step.id}
-    <div class="rm-detail">
-      <p class="xs" style="color:var(--txt-2);line-height:1.65;margin-bottom:.4rem">{L ? step.fr_what : step.en_what}</p>
-      {#if !step.done && (L ? step.fr_next : step.en_next)}
-      <div class="rm-next xs">
-        <svg viewBox="0 0 14 14" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="7" r="5"/><line x1="7" y1="4.5" x2="7" y2="7.5"/><circle cx="7" cy="9.5" r=".35" fill="currentColor"/></svg>
-        {L ? step.fr_next : step.en_next}
-      </div>
-      {:else if step.done}
-      <div class="xs" style="color:var(--teal);font-weight:700">✓ {L ? 'Étape complétée' : 'Step completed'}</div>
-      {/if}
-      {#if !step.done}
-      {@const nextStep = nextIncompleteAfter(step)}
-      {#if nextStep}
-      <button class="rm-next-btn xs" on:click|stopPropagation={() => jumpToNext(step)}>
-        <span class="rm-next-lbl">{L ? 'Étape suivante' : 'Next step'}:</span>
-        <span class="rm-next-name">{L ? nextStep.fr : nextStep.en}</span>
-        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5">
-          <polyline points="9 6 15 12 9 18"/>
-        </svg>
-      </button>
-      {/if}
-      {/if}
+    <div class="rm-phase">
+      <span class="rm-phase-badge">{step.phase}</span>
+      <span class="rm-phase-name">{phaseName(step.phase)}</span>
+      <span class="rm-phase-pct">{phasePct(step.phase)}%</span>
     </div>
     {/if}
+
+    <div class="rm-item" class:is-current={currentIdx===i} class:is-open={openId===step.id}>
+      <div class="rm-rail" class:rail-done={step.done} class:rail-last={i===steps.length-1}></div>
+      <button class="rm-dot" data-state={step.done?'done':step.partial?'partial':'todo'} on:click={() => clickStep(step)}>
+        {#if step.done}
+          <svg viewBox="0 0 12 12" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="2 6 5 9 10 3"/></svg>
+        {:else}{i+1}{/if}
+      </button>
+      <button class="rm-body" on:click={() => clickStep(step)}>
+        <div class="rm-line1">
+          <span class="rm-name" data-state={step.done?'done':currentIdx===i?'current':'todo'}>{L ? step.fr : step.en}</span>
+          <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"
+            class="rm-chev" style="transform:rotate({openId===step.id?180:0}deg);flex-shrink:0;opacity:.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="rm-mini"><div class="rm-mini-fill" data-state={step.done?'done':step.partial?'partial':'todo'} style="width:{(stepFrac[step.id]||0)*100}%"></div></div>
+        <span class="rm-prog" data-state={step.done?'done':step.partial?'partial':'todo'}>{L ? step.fr_prog : step.en_prog}</span>
+      </button>
+
+      {#if openId === step.id}
+      <div class="rm-detail">
+        <p class="rm-what">{L ? step.fr_what : step.en_what}</p>
+        {#if !step.done && (L ? step.fr_next : step.en_next)}
+        <div class="rm-next">
+          <svg viewBox="0 0 14 14" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="7" r="5.5"/><line x1="7" y1="4" x2="7" y2="7.5"/><circle cx="7" cy="10" r=".4" fill="currentColor"/></svg>
+          <span>{L ? step.fr_next : step.en_next}</span>
+        </div>
+        {:else if step.done}
+        <div class="rm-doneline">✓ {L ? 'Étape complétée' : 'Step completed'}</div>
+        {/if}
+        {#if !step.done}
+        {@const nextStep = nextIncompleteAfter(step)}
+        {#if nextStep}
+        <button class="rm-next-btn" on:click|stopPropagation={() => jumpToNext(step)}>
+          <span class="rm-next-lbl">{L ? 'Étape suivante' : 'Next step'}</span>
+          <span class="rm-next-name">{L ? nextStep.fr : nextStep.en}</span>
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 6 15 12 9 18"/></svg>
+        </button>
+        {/if}
+        {/if}
+      </div>
+      {/if}
+    </div>
     {/each}
   </div>
   {/if}
@@ -345,24 +367,53 @@
 
 <style>
   .rm{padding:.1rem 0}
-  .rm-hdr{width:100%;display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:none;border:none;cursor:pointer;padding:.3rem 0;text-align:left}
-  .rm-left{display:flex;flex-direction:column;gap:.08rem}
-  .rm-right{display:flex;align-items:center;gap:.35rem;flex-shrink:0}
-  .rm-bar-bg{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:.4rem}
-  .rm-bar{height:100%;background:var(--teal);border-radius:2px;transition:width .4s}
-  .rm-steps{display:flex;flex-direction:column}
-  .rm-phase-lbl{font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--txt-3);padding:.5rem 0 .1rem;border-top:1px solid var(--border);margin-top:.2rem}
-  .rm-phase-lbl:first-child{border-top:none;padding-top:.2rem;margin-top:0}
-  .rm-row{width:100%;display:flex;align-items:center;gap:.5rem;padding:.4rem 0;background:none;border:none;border-bottom:1px solid var(--border);cursor:pointer;text-align:left}
-  .rm-row:last-child{border-bottom:none}
-  .rm-bullet{width:22px;height:22px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;font-size:.9rem}
-  .rm-lbl{flex:1;min-width:0;display:flex;flex-direction:column;gap:.05rem}
-  .rm-detail{padding:.25rem .25rem .55rem 2.35rem}
-  .rm-next{display:flex;align-items:flex-start;gap:.35rem;color:#f59e0b;background:rgba(245,158,11,.07);border-radius:6px;padding:.3rem .45rem;line-height:1.5}
-  .xs{font-size:.75rem} .muted{color:var(--txt-3)} .mono{font-family:var(--ff-mono,monospace)}
-  .rm-next-btn{display:flex;align-items:center;gap:.4rem;width:100%;margin-top:.4rem;padding:.4rem .5rem;background:rgba(0,232,198,.08);border:1px solid rgba(0,232,198,.25);border-radius:6px;color:var(--teal);cursor:pointer;text-align:left;transition:background .12s}
-  .rm-next-btn:hover{background:rgba(0,232,198,.14)}
-  .rm-next-btn svg{margin-left:auto;flex-shrink:0;color:var(--teal)}
-  .rm-next-lbl{font-weight:700;flex-shrink:0}
+  .rm-hdr{width:100%;display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:none;border:none;cursor:pointer;padding:.15rem 0 .5rem;text-align:left}
+  .rm-left{display:flex;flex-direction:column;gap:.12rem;min-width:0}
+  .rm-title{font-family:var(--ff-head,inherit);font-weight:800;font-size:.92rem;color:var(--txt);letter-spacing:.01em}
+  .rm-sub{font-size:.74rem;color:var(--txt-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rm-cert{color:var(--teal);font-weight:800}
+  .rm-right{display:flex;align-items:center;gap:.45rem;flex-shrink:0}
+  .rm-pct{font-family:var(--ff-head,inherit);font-weight:800;font-size:1.35rem;color:var(--teal);line-height:1}
+  .rm-pct-s{font-size:.8rem;opacity:.7;margin-left:1px}
+  .rm-chev{color:var(--txt-3);transition:transform .2s}
+  .rm-bar-bg{height:6px;background:var(--border);border-radius:99px;overflow:hidden}
+  .rm-bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-hi,#00e890));border-radius:99px;transition:width .5s var(--ease,ease)}
+
+  .rm-tl{margin-top:.9rem;display:flex;flex-direction:column}
+  .rm-phase{display:flex;align-items:center;gap:.5rem;margin:.7rem 0 .5rem;padding-top:.55rem;border-top:1px solid var(--border)}
+  .rm-phase:first-child{border-top:none;padding-top:0;margin-top:0}
+  .rm-phase-badge{font-family:var(--ff-head,inherit);font-weight:800;font-size:.66rem;letter-spacing:.05em;color:var(--teal);background:var(--teal-lo,rgba(0,184,122,.12));border:1px solid var(--teal-border,rgba(0,184,122,.25));border-radius:5px;padding:.12rem .4rem}
+  .rm-phase-name{font-size:.74rem;font-weight:700;color:var(--txt-2);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rm-phase-pct{font-family:var(--ff-mono,monospace);font-size:.72rem;font-weight:700;color:var(--txt-3)}
+
+  .rm-item{position:relative;padding-left:2.1rem;padding-bottom:.2rem}
+  .rm-rail{position:absolute;left:.68rem;top:1.4rem;bottom:-.2rem;width:2px;background:var(--border)}
+  .rm-rail.rail-done{background:var(--teal)}
+  .rm-rail.rail-last{display:none}
+  .rm-dot{position:absolute;left:0;top:.35rem;width:1.45rem;height:1.45rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--ff-head,inherit);font-size:.7rem;font-weight:800;cursor:pointer;border:2px solid var(--border);background:var(--bg-card);color:var(--txt-3);z-index:1;transition:all .2s}
+  .rm-dot[data-state="done"]{background:var(--teal);border-color:var(--teal);color:var(--txt-inv,#04130d)}
+  .rm-dot[data-state="partial"]{border-color:#f59e0b;color:#f59e0b}
+  .rm-body{width:100%;display:flex;flex-direction:column;gap:.28rem;background:none;border:none;cursor:pointer;text-align:left;padding:.45rem 0}
+  .rm-line1{display:flex;align-items:center;gap:.4rem}
+  .rm-name{font-size:.84rem;font-weight:600;color:var(--txt-3);flex:1;min-width:0}
+  .rm-name[data-state="done"]{color:var(--txt);font-weight:700}
+  .rm-name[data-state="current"]{color:var(--txt);font-weight:800}
+  .rm-mini{height:4px;background:var(--border);border-radius:99px;overflow:hidden}
+  .rm-mini-fill{height:100%;border-radius:99px;background:var(--txt-3);transition:width .5s var(--ease,ease)}
+  .rm-mini-fill[data-state="done"]{background:var(--teal)}
+  .rm-mini-fill[data-state="partial"]{background:#f59e0b}
+  .rm-prog{font-size:.7rem;color:var(--txt-3)}
+  .rm-prog[data-state="done"]{color:var(--teal);font-weight:600}
+  .rm-prog[data-state="partial"]{color:#f59e0b}
+
+  .rm-detail{padding:.1rem 0 .65rem}
+  .rm-what{font-size:.76rem;color:var(--txt-2);line-height:1.65;margin-bottom:.45rem}
+  .rm-next{display:flex;align-items:flex-start;gap:.4rem;font-size:.74rem;color:#f59e0b;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:7px;padding:.4rem .5rem;line-height:1.5}
+  .rm-next svg{flex-shrink:0;margin-top:1px}
+  .rm-doneline{font-size:.74rem;color:var(--teal);font-weight:700}
+  .rm-next-btn{display:flex;align-items:center;gap:.45rem;width:100%;margin-top:.45rem;padding:.45rem .55rem;background:var(--teal-lo,rgba(0,184,122,.08));border:1px solid var(--teal-border,rgba(0,184,122,.25));border-radius:7px;color:var(--teal);cursor:pointer;text-align:left;font-size:.74rem;transition:background .12s}
+  .rm-next-btn:hover{background:var(--teal-lo,rgba(0,184,122,.16))}
+  .rm-next-lbl{font-weight:800;flex-shrink:0}
   .rm-next-name{font-weight:500;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
+  .rm-next-btn svg{margin-left:auto;flex-shrink:0}
 </style>

@@ -1707,6 +1707,10 @@ export function getQuizQuestions(category=null, phase=null, limit=20) {
 export function getQuizCategories() {
   return getDb().prepare('SELECT DISTINCT category, phase FROM quiz_questions ORDER BY phase, category').all();
 }
+export function getQuizCount() {
+  try { return getDb().prepare('SELECT COUNT(*) n FROM quiz_questions').get().n; }
+  catch(e) { return 0; }
+}
 export function quizQuestionCount() {
   return getDb().prepare('SELECT COUNT(*) as n FROM quiz_questions').get()?.n || 0;
 }
@@ -2302,6 +2306,8 @@ export function runDebriefingMigration(db) {
       uploaded_at     DATETIME DEFAULT CURRENT_TIMESTAMP
     );
   `);
+  // Add student_note column if upgrading an existing DB
+  try { db.exec(`ALTER TABLE flight_debriefings ADD COLUMN student_note TEXT`); } catch(e) {}
 }
 export function getPendingDebriefs() {
   return getDb().prepare(`
@@ -2329,10 +2335,10 @@ export function getDebriefingsForFlight(flightId) {
     media: db.prepare('SELECT * FROM debriefing_media WHERE debriefing_id=? ORDER BY uploaded_at ASC').all(d.id)
   }));
 }
-export function createDebriefingRequest({ flight_id, student_id, phases_requested }) {
+export function createDebriefingRequest({ flight_id, student_id, phases_requested, student_note }) {
   return getDb().prepare(
-    'INSERT INTO flight_debriefings (flight_id, student_id, phases_requested) VALUES (?,?,?)'
-  ).run(flight_id, student_id, JSON.stringify(phases_requested)).lastInsertRowid;
+    'INSERT INTO flight_debriefings (flight_id, student_id, phases_requested, student_note) VALUES (?,?,?,?)'
+  ).run(flight_id, student_id, JSON.stringify(phases_requested), student_note || null).lastInsertRowid;
 }
 export function updateDebriefing({ id, instructor_id, content, status }) {
   getDb().prepare(

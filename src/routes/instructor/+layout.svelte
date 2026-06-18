@@ -8,34 +8,11 @@
   export let data;
 
   // ── Theme slider — continuous 0 (dark) → 1 (light), shared with student side ──
+  import { applyThemeMix, initThemeMix } from '$lib/theme.js';
   let themeMix  = 0;
   let themeOpen = false;
-  const DARK = {bg:[6,13,22],bgCard:[11,22,32],bgRaised:[15,28,44],bgInput:[15,30,46],border:[22,34,51],borderHi:[30,51,72],txt:[238,244,255],txt2:[143,179,204],txt3:[77,122,150],txtInv:[8,15,24]};
-  const LIGHT= {bg:[240,244,248],bgCard:[255,255,255],bgRaised:[232,237,243],bgInput:[255,255,255],border:[200,212,224],borderHi:[168,189,208],txt:[15,25,35],txt2:[55,74,92],txt3:[107,141,168],txtInv:[255,255,255]};
-  function lerpC(dk,lt,t){return `rgb(${Math.round(dk[0]+(lt[0]-dk[0])*t)},${Math.round(dk[1]+(lt[1]-dk[1])*t)},${Math.round(dk[2]+(lt[2]-dk[2])*t)})`}
-  function applyMix(t) {
-    const r = document.documentElement;
-    r.style.setProperty('--bg',lerpC(DARK.bg,LIGHT.bg,t));
-    r.style.setProperty('--bg-card',lerpC(DARK.bgCard,LIGHT.bgCard,t));
-    r.style.setProperty('--bg-raised',lerpC(DARK.bgRaised,LIGHT.bgRaised,t));
-    r.style.setProperty('--bg-input',lerpC(DARK.bgInput,LIGHT.bgInput,t));
-    r.style.setProperty('--bg-2',lerpC(DARK.bgRaised,LIGHT.bgRaised,t));
-    r.style.setProperty('--border',lerpC(DARK.border,LIGHT.border,t));
-    r.style.setProperty('--border-hi',lerpC(DARK.borderHi,LIGHT.borderHi,t));
-    r.style.setProperty('--txt',lerpC(DARK.txt,LIGHT.txt,t));
-    r.style.setProperty('--txt-2',lerpC(DARK.txt2,LIGHT.txt2,t));
-    r.style.setProperty('--txt-3',lerpC(DARK.txt3,LIGHT.txt3,t));
-    r.style.setProperty('--txt-inv',lerpC(DARK.txtInv,LIGHT.txtInv,t));
-    r.style.setProperty('--bg-overlay',`rgba(${Math.round(DARK.bg[0]+(LIGHT.bg[0]-DARK.bg[0])*t)},${Math.round(DARK.bg[1]+(LIGHT.bg[1]-DARK.bg[1])*t)},${Math.round(DARK.bg[2]+(LIGHT.bg[2]-DARK.bg[2])*t)},0.92)`);
-    r.setAttribute('data-theme', t > 0.55 ? 'light' : 'dark');
-    localStorage.setItem('summit-theme-mix', String(t));
-    themeMix = t;
-  }
-  onMount(() => {
-    const saved = parseFloat(localStorage.getItem('summit-theme-mix') ?? '0');
-    themeMix = isNaN(saved) ? 0 : saved;
-    applyMix(themeMix);
-  });
+  function applyMix(t) { applyThemeMix(t); themeMix = t; }
+  onMount(() => { themeMix = initThemeMix(); });
 
   const nav = [
     { href:'/instructor',              label:'Dashboard',    ico:'dashboard'   },
@@ -88,7 +65,7 @@
           <button class="lang-btn" class:active={$lang==='en'} on:click={() => lang.set('en')}>EN</button>
           <button class="lang-btn" class:active={$lang==='fr'} on:click={() => lang.set('fr')}>FR</button>
         </div>
-        <div class="inst-version">Summit v122</div>
+        <div class="inst-version">Summit v123</div>
         <!-- Theme slider — same dark→light control as student side -->
         <div class="inst-theme-row">
           <span style="font-size:.85rem;opacity:.6">🌙</span>

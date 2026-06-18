@@ -154,6 +154,11 @@
     {#if parsePhases(d.phases_requested).length}
       <div class="xs muted" style="margin:.25rem 0">Phases: {parsePhases(d.phases_requested).join(', ')}</div>
     {/if}
+    {#if d.student_note}
+      <div class="xs" style="margin:.25rem 0;padding:.4rem .55rem;background:var(--bg-2);border-left:3px solid var(--teal);border-radius:6px;color:var(--txt-2);white-space:pre-wrap">
+        <strong style="color:var(--teal)">Note de l'étudiant :</strong> {d.student_note}
+      </div>
+    {/if}
     <form method="POST" action="?/respondDebrief" use:enhance class="debrief-resp-form">
       <input type="hidden" name="debrief_id" value={d.id} />
       <textarea name="content" rows="3" placeholder="Votre débriefing pour cet étudiant…" class="debrief-textarea" required></textarea>

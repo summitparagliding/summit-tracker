@@ -344,8 +344,8 @@
       lines.push({ type:'header', text: L ? 'Precipitation' : 'Precipitation' });
       if (maxPrecip >= 70) {
         lines.push({ type:'warn', text: L
-          ? `Precipitation forte prevue (${maxPrecip}%). Le vol est pratiquement impossible par temps de pluie : visibilite reduite, voile alourdi, risque de panne moteur sur les rares moteurs embarques. Annuler ou reporter la session.`
-          : `Heavy precipitation likely (${maxPrecip}%). Flying in rain is nearly impossible: reduced visibility, wet glider, risk of dangerous conditions. Cancel or postpone the session.`
+          ? `Précipitations fortes prévues (${maxPrecip}%). Le vol est pratiquement impossible sous la pluie : visibilité réduite, voile alourdie, aire de décollage glissante et vitesse de décrochage plus élevée en vol. Annuler ou reporter la session.`
+          : `Heavy precipitation likely (${maxPrecip}%). Flying in rain is nearly impossible: reduced visibility, a waterlogged heavier wing, a slippery launch area, and a higher stall speed in the air. Cancel or postpone the session.`
         });
       } else if (maxPrecip >= 40) {
         lines.push({ type:'warn', text: L

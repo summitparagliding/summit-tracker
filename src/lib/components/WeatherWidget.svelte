@@ -257,6 +257,10 @@
             <span>{hh.gust}</span>
           </div>
           <div class="xs" style="color:var(--teal)">{hh.dir}</div>
+          <div class="xs h-precip" style="color:{(hh.precip||0)>=40?'#3b9eff':'var(--txt-3)'};font-weight:{(hh.precip||0)>=40?'700':'400'}">
+            <svg viewBox="0 0 12 16" width="9" height="11" style="vertical-align:-1px"><path d="M6 1 C6 1 1.5 6.5 1.5 10 a4.5 4.5 0 0 0 9 0 C10.5 6.5 6 1 6 1 z" fill="currentColor"/></svg>
+            {hh.precip||0}%
+          </div>
         </div>
       {/each}
     </div>
