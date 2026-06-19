@@ -5,6 +5,7 @@ import { getPendingRegistrations,
   getPendingDebriefs, signOffExercise, signOffExam, signOffAllForStudent, getDb,
   getNewOrdersForInstructor, markOrdersSeenByInstructor, getAllPendingPayments, approvePayment, rejectPayment,
   getPendingFlightRemovals, approveFlightRemoval, denyFlightRemoval,
+  getOrdersAwaitingReply, getUnseenStudentBills, markBillsSeenByInstructor,
 } from '$lib/server/db.js';
 
 export function load({ cookies }) {
@@ -74,8 +75,15 @@ export function load({ cookies }) {
   try { pendingPayments = getAllPendingPayments() || []; } catch(e) {}
   let flightRemovals = [];
   try { flightRemovals = getPendingFlightRemovals() || []; } catch(e) {}
+  let orderReplies = [];
+  try { orderReplies = getOrdersAwaitingReply() || []; } catch(e) {}
+  let uploadedBills = [];
+  try {
+    uploadedBills = getUnseenStudentBills() || [];
+    if (uploadedBills.length) markBillsSeenByInstructor(uploadedBills.map(b => b.id));
+  } catch(e) {}
   return {
-    registrations: getPendingRegistrations(), dash, today, allProgress, messages, orders, allOrders, pendingDebriefs, acknowledgedDebriefs, newOrders, pendingPayments, flightRemovals };
+    registrations: getPendingRegistrations(), dash, today, allProgress, messages, orders, allOrders, pendingDebriefs, acknowledgedDebriefs, newOrders, pendingPayments, flightRemovals, orderReplies, uploadedBills };
 }
 
 export const actions = {

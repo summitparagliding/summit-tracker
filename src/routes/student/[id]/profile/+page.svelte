@@ -1,6 +1,7 @@
 <script>
   import { enhance } from '$app/forms';
   import ConfidenceTrend from '$lib/components/ConfidenceTrend.svelte';
+  import ConfidenceChart from '$lib/components/ConfidenceChart.svelte';
  import Icon from '$lib/components/Icon.svelte';
  import { lang } from '$lib/stores/lang.js';
  import ProgressMap from '$lib/components/ProgressMap.svelte';
@@ -8,8 +9,9 @@
  import { invalidateAll } from '$app/navigation';
  export let data;
   export let form;
- $: ({ student, dash, equipment, progressMap, bills, confidenceTrend } = data);
+ $: ({ student, dash, equipment, progressMap, bills, confidenceTrend, confidenceCompare } = data);
   $: ct = confidenceTrend || { trend:'neutral', baseline:null, recent:null, last:null, data:[] };
+  $: cc = confidenceCompare || { data:[], avgPre:null, avgPost:null, delta:null };
   $: avatarUrl = student?.profile_picture_url || avatarOverride || null;
   let avatarOverride = null;
   let uploading = false;
@@ -277,16 +279,14 @@
  {/each}
 </div>
 
-<!-- ── Confidence Trend ─────────────────────────────────── -->
-{#if ct.data?.length}
-<div class="conf-trend-card">
+<!-- ── Confidence: before vs after flights ───────────────── -->
+<div class="card conf-trend-card">
   <div class="ct-hdr">
-    <span class="xs" style="font-weight:700;color:var(--txt-2)">{$lang==='fr'?'Évolution de la confiance':'Confidence trend'}</span>
-    <span class="xs muted">{ct.data.length} vol{ct.data.length>1?'s':''}</span>
+    <span class="xs" style="font-weight:700;color:var(--txt-2)">{$lang==='fr'?'Confiance — avant et après vol':'Confidence — before & after flights'}</span>
+    {#if cc.data?.length}<span class="xs muted">{cc.data.length} vol{cc.data.length>1?'s':''}</span>{/if}
   </div>
-  <ConfidenceTrend data={ct.data} trend={ct.trend} baseline={ct.baseline} recent={ct.recent} last={ct.last} />
+  <ConfidenceChart compare={cc} lang={$lang} />
 </div>
-{/if}
 
 <!-- ── Progress Map ───────────────────────────────────────── -->
 <div class="card pmap-card">
@@ -715,10 +715,8 @@
  .dl-row{display:flex;gap:.625rem;margin-bottom:1rem;flex-wrap:wrap}
  .dl-strip{display:flex;gap:.625rem;margin-bottom:1.25rem;flex-wrap:wrap}
  .dl-btn{flex:1;justify-content:center;min-width:140px;display:flex;align-items:center;gap:.45rem;font-size:.82rem}
-  .conf-trend-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:10px;padding:.625rem .875rem;margin-top:.5rem}
-  .ct-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem}
-  .conf-trend-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:10px;padding:.625rem .875rem;margin-top:.5rem}
-  .ct-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem}
+  .conf-trend-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:10px;padding:.75rem .875rem;margin:.5rem 0 .875rem;position:relative}
+  .ct-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
   .prof-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.5rem}
   .fg{display:flex;flex-direction:column;gap:.2rem}
   .fg-lbl{font-size:.68rem;font-weight:600;color:var(--txt-3);text-transform:uppercase;letter-spacing:.04em}

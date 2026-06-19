@@ -240,6 +240,13 @@
       <div class="wg-lbl xs muted">Dir.</div>
       {#each wxData.hourScores as h}<div class="wg-val xs">{dirLabel(h.dir)}</div>{/each}
 
+      <div class="wg-lbl xs muted" style="color:#3b9eff">{L ? 'Précip.' : 'Precip.'}</div>
+      {#each wxData.hourScores as h}
+        <div class="wg-val xs mono" style="color:{(h.precip??0)>=40?'#3b9eff':(h.precip??0)>=20?'#7fb3d5':'var(--txt-3)'};font-weight:{(h.precip??0)>=40?'700':'400'}">
+          {h.precip != null ? h.precip+'%' : '—'}
+        </div>
+      {/each}
+
       {#each YAMASKA_LAUNCHES as lch}
       <div class="wg-lbl xs" style="color:{lch.color};font-weight:700">{lch.key}</div>
       {#each wxData.hourScores as h}

@@ -237,6 +237,21 @@
     return Math.round(ids.reduce((a, id) => a + (stepFrac[id] || 0), 0) / ids.length * 100);
   };
 
+  // ── Individual items per step (extreme detail) ────────────────────────────
+  const exState = e => e.status === 'passed' ? 'done' : e.status === 'pending' ? 'partial' : 'todo';
+  const thState = t => t.completed ? 'done' : 'todo';
+  const pxState = e => (e.passed === 1 && e.signed_off_at) ? 'done' : e.passed === 1 ? 'partial' : 'todo';
+  const thTitle = t => t.title || t.block_title || t.name || t.label || (L ? 'Bloc théorique' : 'Theory block');
+  $: stepItems = {
+    p1_theory: p1Theory.map(t => ({ title: thTitle(t), state: thState(t) })),
+    ground:    exercises.filter(e => e.category === 'ground_handling').map(e => ({ title: e.exercise_title, state: exState(e) })),
+    p1_prac:   exams.filter(e => (e.phase==='p1'||e.phase==='P1') && e.type==='practical').map(e => ({ title: e.title || (L?'Évaluation pratique':'Practical evaluation'), state: pxState(e) })),
+    inflight:  inFlightExs.map(e => ({ title: e.exercise_title, state: exState(e) })),
+    p2ex:      p2Exs.map(e => ({ title: (e.exercise_title||'').replace('P2 — ','').replace('P2 - ',''), state: exState(e) })),
+    p2_theory: p2Theory.map(t => ({ title: thTitle(t), state: thState(t) })),
+  };
+  const stateColor = s => s === 'done' ? 'var(--teal)' : s === 'partial' ? '#f59e0b' : 'var(--txt-3)';
+
   // ── Interaction ───────────────────────────────────────────────────────────
   let expanded = false;
   let openId   = null;
@@ -339,6 +354,22 @@
       {#if openId === step.id}
       <div class="rm-detail">
         <p class="rm-what">{L ? step.fr_what : step.en_what}</p>
+
+        {#if stepItems[step.id]?.length}
+        <div class="rm-items">
+          {#each stepItems[step.id] as it}
+          <div class="rm-it">
+            <span class="rm-it-dot" data-state={it.state}>
+              {#if it.state==='done'}<svg viewBox="0 0 12 12" width="8" height="8" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="2 6 5 9 10 3"/></svg>
+              {:else if it.state==='partial'}<span class="rm-it-half"></span>{/if}
+            </span>
+            <span class="rm-it-title" style="color:{it.state==='todo'?'var(--txt-3)':'var(--txt-2)'}">{it.title}</span>
+            {#if it.state==='partial'}<span class="rm-it-tag" style="color:#f59e0b">{L?'en attente':'pending'}</span>{/if}
+          </div>
+          {/each}
+        </div>
+        {/if}
+
         {#if !step.done && (L ? step.fr_next : step.en_next)}
         <div class="rm-next">
           <svg viewBox="0 0 14 14" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="7" r="5.5"/><line x1="7" y1="4" x2="7" y2="7.5"/><circle cx="7" cy="10" r=".4" fill="currentColor"/></svg>
@@ -416,4 +447,13 @@
   .rm-next-lbl{font-weight:800;flex-shrink:0}
   .rm-next-name{font-weight:500;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
   .rm-next-btn svg{margin-left:auto;flex-shrink:0}
+
+  .rm-items{display:flex;flex-direction:column;gap:.1rem;margin:.1rem 0 .5rem;padding:.5rem .6rem;background:var(--bg-card);border:1px solid var(--border);border-radius:8px}
+  .rm-it{display:flex;align-items:center;gap:.5rem;padding:.22rem 0}
+  .rm-it-dot{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--txt-inv,#04130d)}
+  .rm-it-dot[data-state="done"]{background:var(--teal);border-color:var(--teal)}
+  .rm-it-dot[data-state="partial"]{border-color:#f59e0b}
+  .rm-it-half{width:7px;height:7px;border-radius:50%;background:#f59e0b}
+  .rm-it-title{font-size:.74rem;line-height:1.35;flex:1;min-width:0}
+  .rm-it-tag{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;flex-shrink:0}
 </style>

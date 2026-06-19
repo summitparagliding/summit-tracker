@@ -1,4 +1,4 @@
-import { saveStudentColours, getConfidenceTrend,
+import { saveStudentColours, getConfidenceTrend, getConfidenceComparison,
   getStudentDashboard, getStudentEquipment, getStudentProgressMap, getBillsForStudent,
   updateStudentContact, getStudentSession, saveStudentEquipment } from '$lib/server/db.js';
 
@@ -60,5 +60,6 @@ export function load({ params }) {
     progressMap: getStudentProgressMap(id),
     bills:       getBillsForStudent(id),
     confidenceTrend,
+    confidenceCompare: (() => { try { return getConfidenceComparison(id); } catch(e) { return {data:[],avgPre:null,avgPost:null,delta:null}; } })(),
   };
 }

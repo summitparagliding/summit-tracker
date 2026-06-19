@@ -64,7 +64,7 @@ label{display:block;font-size:.72rem;font-weight:600;color:var(--txt-2);letter-s
 .btn-block{width:100%}
 
 /* Cards */
-.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.5rem;box-shadow:var(--shadow-md)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.5rem;box-shadow:var(--shadow-md);position:relative;isolation:isolate}
 .card-sm{padding:1rem;border-radius:var(--r-md)}
 .card-xs{padding:.75rem;border-radius:var(--r-sm)}
 .card-teal{border-color:var(--teal-border);background:linear-gradient(135deg,var(--bg-card) 0%,rgba(0,201,180,.04) 100%)}

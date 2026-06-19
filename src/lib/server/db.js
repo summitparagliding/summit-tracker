@@ -692,6 +692,33 @@ export function getUnviewedDebriefings(studentId) {
 }
 
 // ─── CONFIDENCE TREND ─────────────────────────────────────────────────────────
+export function getConfidenceComparison(studentId) {
+  // Per-flight pre-flight feeling (mental_condition) vs post-flight confidence
+  // (confidence_rating), so the student can see whether flights build or shake
+  // their confidence. Both on a 1–5 scale.
+  try {
+    const rows = getDb().prepare(
+      `SELECT date,
+              mental_condition  AS pre,
+              confidence_rating AS post
+       FROM flights
+       WHERE student_id=? AND status='complete'
+         AND (mental_condition IS NOT NULL OR confidence_rating IS NOT NULL)
+       ORDER BY date ASC`
+    ).all(studentId);
+    if (!rows.length) return { data: [], avgPre: null, avgPost: null, delta: null };
+    const pres  = rows.filter(r => r.pre  != null).map(r => r.pre);
+    const posts = rows.filter(r => r.post != null).map(r => r.post);
+    const avg = a => a.length ? +(a.reduce((s,v)=>s+v,0)/a.length).toFixed(1) : null;
+    const avgPre = avg(pres), avgPost = avg(posts);
+    const delta = (avgPre != null && avgPost != null) ? +(avgPost - avgPre).toFixed(1) : null;
+    return { data: rows, avgPre, avgPost, delta };
+  } catch (e) {
+    console.error('[getConfidenceComparison]', e.message);
+    return { data: [], avgPre: null, avgPost: null, delta: null };
+  }
+}
+
 export function getConfidenceTrend(studentId) {
   // Uses mental_condition (1-5 "how are you feeling") from preflight form.
   // Falls back to confidence_rating (post-flight self-assessment) if no mental data.
@@ -1991,6 +2018,7 @@ export function runV47Migrations(db) {
       uploaded_by     INTEGER REFERENCES instructors(id),
       uploader_type   TEXT DEFAULT 'instructor',
       notes           TEXT,
+      seen_by_instructor INTEGER DEFAULT 0,
       uploaded_at     DATETIME DEFAULT CURRENT_TIMESTAMP
     );
     CREATE TABLE IF NOT EXISTS payment_proofs (
@@ -2203,6 +2231,37 @@ export function createBill({ student_id, title, filename, url, r2_key, uploaded_
 export function deleteBill(id) {
   getDb().prepare('DELETE FROM student_bills WHERE id=?').run(id);
 }
+export function getOrdersAwaitingReply() {
+  // Orders (not closed) whose most recent message is from the student — the
+  // student replied and it's the instructor's turn. Self-clearing once the
+  // instructor replies or confirms.
+  try {
+    return getDb().prepare(`
+      SELECT o.id, o.student_id, o.description, o.status, s.name AS student_name,
+        (SELECT body FROM order_messages m WHERE m.order_id=o.id ORDER BY m.id DESC LIMIT 1) AS last_msg
+      FROM student_orders o
+      JOIN students s ON s.id = o.student_id
+      WHERE o.status NOT IN ('confirmed','completed','cancelled')
+        AND (SELECT sender_type FROM order_messages m WHERE m.order_id=o.id ORDER BY m.id DESC LIMIT 1) = 'student'
+      ORDER BY o.id DESC
+    `).all();
+  } catch (e) { console.error('[getOrdersAwaitingReply]', e.message); return []; }
+}
+export function getUnseenStudentBills() {
+  try {
+    return getDb().prepare(`
+      SELECT b.id, b.student_id, b.title, b.uploaded_at, s.name AS student_name
+      FROM student_bills b JOIN students s ON s.id = b.student_id
+      WHERE b.uploader_type='student' AND COALESCE(b.seen_by_instructor,0)=0
+      ORDER BY b.id DESC
+    `).all();
+  } catch (e) { console.error('[getUnseenStudentBills]', e.message); return []; }
+}
+export function markBillsSeenByInstructor(ids) {
+  if (!ids?.length) return;
+  const stmt = getDb().prepare('UPDATE student_bills SET seen_by_instructor=1 WHERE id=?');
+  for (const id of ids) stmt.run(id);
+}
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PAYMENT PROOFS
@@ -2308,6 +2367,7 @@ export function runDebriefingMigration(db) {
   `);
   // Add student_note column if upgrading an existing DB
   try { db.exec(`ALTER TABLE flight_debriefings ADD COLUMN student_note TEXT`); } catch(e) {}
+  try { db.exec(`ALTER TABLE student_bills ADD COLUMN seen_by_instructor INTEGER DEFAULT 0`); } catch(e) {}
 }
 export function getPendingDebriefs() {
   return getDb().prepare(`

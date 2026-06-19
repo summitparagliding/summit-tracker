@@ -4,7 +4,7 @@
   import { lang } from '$lib/stores/lang.js';
   $: L = $lang === 'fr';
   export let data, form;
-  $: ({ dash, today, allProgress, messages, orders, allOrders, pendingDebriefs, acknowledgedDebriefs, newOrders, pendingPayments, flightRemovals } = data);
+  $: ({ dash, today, allProgress, messages, orders, allOrders, pendingDebriefs, acknowledgedDebriefs, newOrders, pendingPayments, flightRemovals, orderReplies, uploadedBills } = data);
 
   let newMsgTitle = '', newMsgBody = '';
   let showMsgForm = false;
@@ -315,12 +315,12 @@
 </div>
 
 <!-- ── ACTIVITY & ALERTS (always at top) ────────────────── -->
-{#if (pendingDebriefs?.length || newOrders?.length || pendingPayments?.length || data.registrations?.length || acknowledgedDebriefs?.length || flightRemovals?.length)}
+{#if (pendingDebriefs?.length || newOrders?.length || orderReplies?.length || pendingPayments?.length || uploadedBills?.length || data.registrations?.length || acknowledgedDebriefs?.length || flightRemovals?.length)}
 <div class="card activity-card" style="margin-bottom:1rem">
   <div class="activity-hdr">
     <span class="act-title">{$lang==='fr' ? 'Activité & actions requises' : 'Activity & required actions'}</span>
-    {#if (pendingDebriefs?.length||0)+(newOrders?.length||0)+(pendingPayments?.length||0)+(data.registrations?.length||0)+(acknowledgedDebriefs?.length||0)+(flightRemovals?.length||0) > 0}
-    <span class="act-badge">{(pendingDebriefs?.length||0)+(newOrders?.length||0)+(pendingPayments?.length||0)+(data.registrations?.length||0)+(acknowledgedDebriefs?.length||0)+(flightRemovals?.length||0)}</span>
+    {#if (pendingDebriefs?.length||0)+(newOrders?.length||0)+(orderReplies?.length||0)+(pendingPayments?.length||0)+(uploadedBills?.length||0)+(data.registrations?.length||0)+(acknowledgedDebriefs?.length||0)+(flightRemovals?.length||0) > 0}
+    <span class="act-badge">{(pendingDebriefs?.length||0)+(newOrders?.length||0)+(orderReplies?.length||0)+(pendingPayments?.length||0)+(uploadedBills?.length||0)+(data.registrations?.length||0)+(acknowledgedDebriefs?.length||0)+(flightRemovals?.length||0)}</span>
     {/if}
   </div>
   <div class="act-list">
@@ -341,11 +341,23 @@
       <span class="xs act-name">{o.student_name}</span></div>
       <span class="act-btn xs">{$lang==='fr'?'Voir':'View'}</span></a>
     {/each}
+    {#each (orderReplies || []) as o}
+    <a href="/instructor/students/{o.student_id}?tab=orders" class="act-item act-item-link"><div class="act-dot" style="background:#06b6d4"></div>
+      <div class="act-body"><span class="xs act-label">{$lang==='fr'?'Réponse à une commande':'Order reply'}</span>
+      <span class="xs act-name">{o.student_name}{o.last_msg ? ' · '+o.last_msg.slice(0,40) : ''}</span></div>
+      <span class="act-btn xs">{$lang==='fr'?'Répondre':'Reply'}</span></a>
+    {/each}
     {#each (pendingPayments || []) as p}
     <a href="/instructor/students/{p.student_id}?tab=payments" class="act-item act-item-link"><div class="act-dot" style="background:#22c55e"></div>
       <div class="act-body"><span class="xs act-label">{$lang==='fr'?'Paiement à confirmer':'Payment to confirm'}</span>
       <span class="xs act-name">{p.student_name} · {(p.amount||0).toFixed(2)} $</span></div>
       <span class="act-btn xs">{$lang==='fr'?'Confirmer':'Confirm'}</span></a>
+    {/each}
+    {#each (uploadedBills || []) as b}
+    <a href="/instructor/students/{b.student_id}?tab=payments" class="act-item act-item-link"><div class="act-dot" style="background:#10b981"></div>
+      <div class="act-body"><span class="xs act-label">{$lang==='fr'?'Facture téléversée':'Bill uploaded'}</span>
+      <span class="xs act-name">{b.student_name}{b.title ? ' · '+b.title : ''}</span></div>
+      <span class="act-btn xs">{$lang==='fr'?'Voir':'View'}</span></a>
     {/each}
     {#each (data.registrations || []).slice(0,3) as r}
     <div class="act-item"><div class="act-dot" style="background:#f97316"></div>
