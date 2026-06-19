@@ -93,6 +93,7 @@
           maxlength="6"
           required
         />
+        <p class="pin-hint">{L ? 'Première connexion ? Votre code PIN est les 4 derniers chiffres de votre numéro de téléphone.' : 'First time? Your PIN is the last 4 digits of your phone number.'}</p>
       </div>
 
       <button type="submit" class="btn-submit">
@@ -124,6 +125,7 @@
   .field input{width:100%;padding:.65rem .875rem;box-sizing:border-box;background:var(--bg-2, #0f1e2e);border:1.5px solid var(--border);border-radius:8px;color:var(--txt);font-size:.95rem;font-family:inherit;outline:none;transition:border-color .15s}
   .field input[type="password"]{font-size:1.2rem;letter-spacing:.2em;text-align:center}
   .field input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,232,198,.1)}
+  .pin-hint{margin:.45rem 0 0;font-size:.72rem;line-height:1.45;color:var(--txt-3);text-align:center}
   .ac-wrap{position:relative}
   .ac-list{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg-card,#0b1620);border:1.5px solid rgba(0,232,198,.25);border-radius:9px;list-style:none;margin:0;padding:.3rem;z-index:200;box-shadow:0 8px 24px rgba(0,0,0,.3);max-height:220px;overflow-y:auto}
   .ac-list li{padding:.55rem .75rem;border-radius:6px;cursor:pointer;font-size:.9rem;color:var(--txt)}

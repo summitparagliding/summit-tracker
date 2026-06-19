@@ -38,8 +38,8 @@
   let confRating = 3;
   let wentWell = '', toImprove = '', personalNotes = '', nextGoals = '';
   const confOptions = {
-    fr: [{v:1,l:"Très incertain"},{v:2,l:"Incertain"},{v:4,l:"Confiant"},{v:5,l:"Très confiant"}],
-    en: [{v:1,l:"Very uncertain"},{v:2,l:"Uncertain"},{v:4,l:"Confident"},{v:5,l:"Very confident"}]
+    fr: [{v:1,l:"Très incertain"},{v:2,l:"Incertain"},{v:3,l:"Neutre"},{v:4,l:"Confiant"},{v:5,l:"Très confiant"}],
+    en: [{v:1,l:"Very uncertain"},{v:2,l:"Uncertain"},{v:3,l:"Neutral"},{v:4,l:"Confident"},{v:5,l:"Very confident"}]
   };
   // selectedExIds: Set of exercise IDs the student checked
   let selectedExIds = new Set();
@@ -424,7 +424,7 @@
     
     <div class="form-group conf-group">
       <label style="display:flex;align-items:center;gap:.4rem;flex-wrap:wrap">
-        {$lang==='fr'?'Confiance en soi aujourd\'hui':'Self-confidence today'}
+        {$lang==='fr'?'Comment te sens-tu après le vol ?':'How do you feel after the flight?'}
         {#if !confRating && !readonly}<span style="color:var(--red);font-size:.68rem;font-weight:700">{$lang==='fr'?'— requis':'— required'}</span>{/if}
       </label>
       <div class="conf-scale" style={!confRating && !readonly ? 'outline:1.5px solid var(--red);outline-offset:4px;border-radius:8px;' : ''}>

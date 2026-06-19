@@ -92,15 +92,51 @@
   ];
 
   const progressionSteps = [
-    { phase:'P1', step:1, fr:'Théorie P1',            en:'P1 Theory',           desc_fr:'Blocs théoriques obligatoires. Aérodynamique, météo de base, réglementation, procédures de sécurité. Complétés dans l\'application avant les exercices sol.', desc_en:'Mandatory theory blocks. Aerodynamics, basic weather, regulations, safety procedures. Completed in the app before ground exercises.' },
-    { phase:'P1', step:2, fr:'Exercices sol P1',       en:'P1 Ground Exercises', desc_fr:'Gonflage dos voile (forward), face voile (croisé/reverse), zigzag, contrôle de l\'aile au sol. Maîtrise complète avant le premier vol.', desc_en:'Forward and reverse inflations, zigzag, canopy control on the ground. Full mastery required before first flight.' },
-    { phase:'P1', step:3, fr:'Examens pratiques P1',   en:'P1 Practical Exams',  desc_fr:'10 décollages forward + 10 décollages reverse consécutifs et contrôlés. Évalué par l\'instructeur. Résultats enregistrés dans l\'application.', desc_en:'10 consecutive forward + 10 reverse launches, controlled. Assessed by instructor. Results logged in the app.' },
-    { phase:'P1', step:4, fr:'Examen théorique P1',    en:'P1 Theory Exam',      desc_fr:'Examen écrit en présence de l\'instructeur. Score enregistré dans l\'application.', desc_en:'Written exam in instructor\'s presence. Score recorded in the app.' },
-    { phase:'P1', step:5, fr:'Premiers vols P1',       en:'First P1 Flights',    desc_fr:'Premier vol depuis le grand décollage après validation complète des étapes 1–4. Moment marquant du parcours.', desc_en:'First flight from the main launch after full validation of steps 1–4. A milestone moment.' },
-    { phase:'P2', step:6, fr:'Théorie P2',             en:'P2 Theory',           desc_fr:'Météo avancée, aérologie, thermique, gestion des urgences, vol de campagne. Maîtrise des phénomènes atmosphériques.', desc_en:'Advanced weather, aerology, thermals, emergency management, cross-country flying.' },
-    { phase:'P2', step:7, fr:'Exercices sol P2',       en:'P2 Ground Exercises', desc_fr:'Cobra, nose-down, gonflages dans des conditions variées, techniques avancées.', desc_en:'Cobra, nose-down, inflations in varied conditions, advanced techniques.' },
-    { phase:'P2', step:8, fr:'Vols P2',                en:'P2 Flights',          desc_fr:'Vols avec techniques avancées, thermiques, navigation. Renforcement de l\'autonomie progressive.', desc_en:'Flights with advanced techniques, thermals, navigation. Building progressive autonomy.' },
-    { phase:'P2', step:9, fr:'Certification P2',       en:'P2 Certification',    desc_fr:'Examen théorique P2 et validation finale instructeur. Certification HPAC/ACVL complète.', desc_en:'P2 theory exam and final instructor validation. Full HPAC/ACVL certification.' },
+    { phase:'P1', step:1, fr:'Théorie P1', en:'P1 Theory',
+      desc_fr:'Blocs théoriques obligatoires, complétés dans l\'onglet Étude avant les exercices au sol.',
+      desc_en:'Mandatory theory blocks, completed in the Study tab before ground exercises.',
+      pts_fr:['Aérodynamique de base','Météorologie','Réglementation ACVL / Transport Canada','Procédures de sécurité','Lecture du Manuel FFVL'],
+      pts_en:['Basic aerodynamics','Meteorology','ACVL / Transport Canada regulations','Safety procedures','Read the FFVL Manual'] },
+    { phase:'P1', step:2, fr:'Exercices au sol P1', en:'P1 Ground Handling',
+      desc_fr:'Maîtrise complète du gonflage et du contrôle de l\'aile au sol avant le premier vol.',
+      desc_en:'Full mastery of inflation and canopy control on the ground before the first flight.',
+      pts_fr:['Gonflage dos voile (forward)','Gonflage face voile (reverse)','Zigzag','Temporisation et contrôle','Course au décollage'],
+      pts_en:['Forward inflation','Reverse inflation','Zigzag','Damping and control','Launch run'] },
+    { phase:'P1', step:3, fr:'Examens pratiques P1', en:'P1 Practical Exams',
+      desc_fr:'Évalué par l\'instructeur, résultats enregistrés dans l\'application.',
+      desc_en:'Assessed by the instructor, results logged in the app.',
+      pts_fr:['10 décollages forward consécutifs','10 décollages reverse consécutifs','Tous contrôlés et réussis'],
+      pts_en:['10 consecutive forward launches','10 consecutive reverse launches','All controlled and passed'] },
+    { phase:'P1', step:4, fr:'Examen théorique P1', en:'P1 Theory Exam',
+      desc_fr:'Examen écrit en présence de l\'instructeur.',
+      desc_en:'Written exam in the instructor\'s presence.',
+      pts_fr:['Minimum 75 %','Score enregistré dans l\'application'],
+      pts_en:['Minimum 75%','Score recorded in the app'] },
+    { phase:'P1', step:5, fr:'Premiers vols P1', en:'First P1 Flights',
+      desc_fr:'Premier vol depuis le grand décollage après validation des étapes 1 à 4. Un moment marquant.',
+      desc_en:'First flight from the main launch after validating steps 1-4. A milestone moment.',
+      pts_fr:['Décollage contrôlé','Approche et plan de vol','Atterrissage debout'],
+      pts_en:['Controlled launch','Approach and flight plan','Stand-up landing'] },
+    { phase:'P2', step:6, fr:'Théorie P2', en:'P2 Theory',
+      desc_fr:'Approfondissement des phénomènes atmosphériques et de la gestion du vol.',
+      desc_en:'Deeper study of atmospheric phenomena and flight management.',
+      pts_fr:['Météo avancée et aérologie','Thermique','Gestion des urgences','Vol de campagne'],
+      pts_en:['Advanced weather and aerology','Thermals','Emergency management','Cross-country flying'] },
+    { phase:'P2', step:7, fr:'Exercices au sol P2', en:'P2 Ground Handling',
+      desc_fr:'Techniques avancées de gonflage dans des conditions variées.',
+      desc_en:'Advanced inflation techniques in varied conditions.',
+      pts_fr:['Cobra','Nose-down','Gonflages en conditions variées'],
+      pts_en:['Cobra','Nose-down','Inflations in varied conditions'] },
+    { phase:'P2', step:8, fr:'Vols P2', en:'P2 Flights',
+      desc_fr:'Vols avec techniques avancées et renforcement progressif de l\'autonomie.',
+      desc_en:'Flights with advanced techniques and progressive autonomy building.',
+      pts_fr:['Thermiques','Navigation','Autonomie progressive'],
+      pts_en:['Thermals','Navigation','Progressive autonomy'] },
+    { phase:'P2', step:9, fr:'Licence P2 — Récréatif', en:'P2 Licence — Recreational',
+      desc_fr:'Examen théorique P2 et validation finale de l\'instructeur. La licence HPAC P2, avec assurance responsabilité de 10 M$, permet le vol autonome partout dans le monde — sauf aux États-Unis.',
+      desc_en:'P2 theory exam and final instructor validation. The HPAC P2 licence, with 10M liability insurance, allows autonomous flying worldwide — except in the United States.',
+      pts_fr:['Examen P2 — minimum 75 %','Validation instructeur complète','Licence HPAC + assurance 10 M$','Vol autonome mondial (sauf É.-U.)'],
+      pts_en:['P2 exam — minimum 75%','Full instructor validation','HPAC licence + 10M insurance','Worldwide autonomous flight (except USA)'] },
   ];
 
   function toggle(key) { open = { ...open, [key]: !open[key] }; }
@@ -261,15 +297,28 @@
     <div class="coll-body">
       <div class="timeline">
         {#each progressionSteps as s, i}
-          {@const isP2   = s.phase==='P2'}
-          {@const isLast = i===progressionSteps.length-1}
+          {@const isP2    = s.phase==='P2'}
+          {@const isLast  = i===progressionSteps.length-1}
+          {@const newPhase= i===0 || progressionSteps[i-1].phase!==s.phase}
+          {#if newPhase}
+          <div class="tl-phase-head" class:p2={isP2}>
+            <span class="tl-phase-badge" class:p2={isP2}>{s.phase}</span>
+            <span class="tl-phase-title">{isP2 ? (L?'Phase 2 — Récréatif':'Phase 2 — Recreational') : (L?'Phase 1 — Brevet initial':'Phase 1 — Initial')}</span>
+          </div>
+          {/if}
           <div class="tl-step">
             {#if !isLast}<div class="tl-line" class:p2-line={isP2}></div>{/if}
             <div class="tl-node" class:p2-node={isP2}><span class="tl-num">{s.step}</span></div>
             <div class="tl-content" class:p2-content={isP2}>
-              <div class="tl-phase-tag" class:p2-tag={isP2}>{s.phase}</div>
               <div class="tl-label">{L ? s.fr : s.en}</div>
               <div class="tl-desc xs">{L ? s.desc_fr : s.desc_en}</div>
+              {#if (L ? s.pts_fr : s.pts_en)?.length}
+              <ul class="tl-pts">
+                {#each (L ? s.pts_fr : s.pts_en) as p}
+                <li class:p2={isP2}>{p}</li>
+                {/each}
+              </ul>
+              {/if}
             </div>
           </div>
         {/each}
@@ -397,18 +446,25 @@
 
   /* Timeline */
   .timeline{display:flex;flex-direction:column;position:relative;padding-left:2.5rem}
+  .tl-phase-head{display:flex;align-items:center;gap:.5rem;margin:.25rem 0 .85rem;margin-left:-2.5rem}
+  .tl-phase-head:not(:first-child){margin-top:.75rem;padding-top:.85rem;border-top:1px solid var(--border)}
+  .tl-phase-badge{font-family:var(--ff-head,inherit);font-weight:800;font-size:.7rem;letter-spacing:.05em;color:#04130d;background:var(--teal);border-radius:6px;padding:.18rem .5rem}
+  .tl-phase-badge.p2{background:var(--aqua,#38bdf8);color:#04101a}
+  .tl-phase-title{font-size:.82rem;font-weight:700;color:var(--txt)}
   .tl-step{position:relative;padding-bottom:1.25rem;display:flex;flex-direction:column}
-  .tl-line{position:absolute;left:-.95rem;top:1.4rem;bottom:0;width:2px;background:var(--teal);opacity:.3}
-  .p2-line{background:var(--aqua)}
-  .tl-node{position:absolute;left:-1.55rem;top:.1rem;width:1.2rem;height:1.2rem;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;z-index:1}
-  .p2-node{background:var(--aqua)}
-  .tl-num{font-size:.65rem;font-weight:800;color:#fff;line-height:1}
-  .tl-content{background:var(--bg-2);border-radius:9px;padding:.625rem .75rem;border-left:3px solid var(--teal)}
-  .p2-content{border-left-color:var(--aqua)}
-  .tl-phase-tag{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal);margin-bottom:.15rem}
-  .p2-tag{color:var(--aqua)}
-  .tl-label{font-weight:700;font-size:.88rem;color:var(--txt);margin-bottom:.2rem}
-  .tl-desc{color:var(--txt-2);line-height:1.5}
+  .tl-line{position:absolute;left:-.95rem;top:1.6rem;bottom:-.2rem;width:2px;background:linear-gradient(var(--teal),var(--teal));opacity:.35}
+  .p2-line{background:var(--aqua,#38bdf8)}
+  .tl-node{position:absolute;left:-1.6rem;top:.35rem;width:1.35rem;height:1.35rem;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;z-index:1;box-shadow:0 0 0 4px var(--bg-card,var(--bg))}
+  .p2-node{background:var(--aqua,#38bdf8)}
+  .tl-num{font-size:.7rem;font-weight:800;color:#04130d;line-height:1}
+  .tl-content{background:var(--bg-card,var(--bg-2));border:1px solid var(--border);border-radius:10px;padding:.7rem .85rem;border-left:3px solid var(--teal)}
+  .p2-content{border-left-color:var(--aqua,#38bdf8)}
+  .tl-label{font-weight:700;font-size:.92rem;color:var(--txt);margin-bottom:.25rem}
+  .tl-desc{color:var(--txt-2);line-height:1.55;margin-bottom:.4rem}
+  .tl-pts{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.22rem}
+  .tl-pts li{position:relative;padding-left:1rem;font-size:.74rem;color:var(--txt-2);line-height:1.4}
+  .tl-pts li::before{content:'';position:absolute;left:.1rem;top:.5rem;width:5px;height:5px;border-radius:50%;background:var(--teal)}
+  .tl-pts li.p2::before{background:var(--aqua,#38bdf8)}
 
   /* Emergency */
   .em-grid{display:flex;flex-direction:column;gap:.5rem}

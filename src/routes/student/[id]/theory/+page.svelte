@@ -218,7 +218,7 @@
 
 <style>
  .th-map{margin-bottom:1rem}
- .thm-row{display:flex;align-items:center;gap:.625rem;margin-bottom:.5rem}
+ .thm-row{display:flex;align-items:center;gap:.5rem;min-height:1.4rem;margin-bottom:.35rem}
  .thm-row:last-child{margin-bottom:0}
  /* Quiz */
  .quiz-wrap{padding:.25rem 0;max-width:600px}
@@ -247,14 +247,14 @@
  .quiz-explain{border-radius:8px;padding:.625rem .75rem;background:rgba(0,184,122,.06);border:1px solid rgba(0,184,122,.2);font-size:.83rem;color:var(--txt-2);line-height:1.5}
  .quiz-explain.correct-bg{background:rgba(22,163,74,.08);border-color:rgba(22,163,74,.25)}
  .quiz-next{align-self:flex-end}
- .thm-label{width:52px;flex-shrink:0;font-family:var(--ff-head);font-size:.68rem;font-weight:700;color:var(--txt-2);white-space:nowrap}
+ .thm-label{width:72px;flex-shrink:0;text-align:right;font-size:.68rem;font-weight:600;color:var(--txt-3);white-space:nowrap}
  .thm-dots{display:flex;flex-wrap:wrap;gap:3px;flex:1}
- .thm-dot{width:16px;height:16px;border-radius:4px;background:rgba(150,200,230,0.22);border:1px solid rgba(150,200,230,0.18);transition:background .2s;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative}
- .thm-dot.done{background:var(--teal);border-color:var(--teal)}
+ .thm-dot{width:14px;height:14px;border-radius:50%;background:var(--bg-2);border:1.5px solid var(--border);transition:background .2s;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative}
+ .thm-dot.done{background:var(--green);border-color:var(--green)}
  .thm-dot.exam-dot{border-radius:50%}
  .thm-dot.pend{background:var(--amber);border-color:var(--amber)}
- .thm-num{font-family:var(--ff-mono);font-size:7px;color:rgba(180,220,255,0.65);font-weight:700;line-height:1;pointer-events:none}
- .thm-stat{flex-shrink:0;color:var(--txt-3);min-width:28px;text-align:right}
+ .thm-num{font-size:.5rem;color:var(--txt-3);font-weight:700;line-height:1;pointer-events:none}
+ .thm-stat{flex-shrink:0;color:var(--txt-3);min-width:36px;text-align:right;font-size:.68rem}
  .phase-label { font-family:var(--ff-head);font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin:1.25rem 0 .5rem }
  .theory-card { margin-bottom:.5rem;padding:.875rem 1rem;transition:border-color .15s }
  .theory-card.done { border-color:rgba(34,197,94,.2) }

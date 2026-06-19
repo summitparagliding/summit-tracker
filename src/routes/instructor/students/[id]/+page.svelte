@@ -99,7 +99,7 @@
     <span class="xs" style="font-weight:700;color:var(--txt-2)">Confiance — Confidence trend</span>
     <span class="xs muted">{ct.data.length} vol{ct.data.length>1?'s':''}</span>
   </div>
-  <ConfidenceTrend data={ct.data} trend={ct.trend} baseline={ct.baseline} recent={ct.recent} last={ct.last} />
+  <ConfidenceTrend data={ct.data} trend={ct.trend} baseline={ct.baseline} recent={ct.recent} last={ct.last} lang={$lang} />
 </div>
 {/if}
  <div class="two-col">

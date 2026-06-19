@@ -171,8 +171,8 @@
     {
       id:'p2_exam', phase:'P2',
       fr:'Examen P2 — Certification', en:'P2 Exam — Certification',
-      fr_what:`Examen théorique P2 ACVL/HPAC : minimum 75%. Validation finale par l'instructeur de tous les exercices en vol et des compétences P2. La certification P2 (Récréatif) permet le vol autonome sur sites approuvés au Canada.`,
-      en_what:`ACVL/HPAC P2 theory exam: minimum 75%. Final instructor validation of all in-flight exercises and P2 skills. P2 (Recreational) certification allows autonomous flying at approved Canadian sites.`,
+      fr_what:`Examen théorique P2 ACVL/HPAC : minimum 75%. Validation finale par l'instructeur de tous les exercices en vol et des compétences P2. La licence P2 (Récréatif) HPAC, avec assurance responsabilité de 10 M$, permet le vol autonome partout dans le monde — sauf aux États-Unis.`,
+      en_what:`ACVL/HPAC P2 theory exam: minimum 75%. Final instructor validation of all in-flight exercises and P2 skills. The HPAC P2 (Recreational) licence, with 10M liability insurance, allows autonomous flying worldwide — except in the United States.`,
       done:    p2ExamOk,
       partial: p2ExamWrit && !p2ExamOk,
       fr_prog: p2ExamOk ? 'Certifié P2 ✓' : p2ExamWrit ? 'Réussi — en attente signature' : 'Non complété',

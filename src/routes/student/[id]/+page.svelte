@@ -639,7 +639,7 @@
  <div class="gauge-meta">
  <div class="gauge-meta-left">
  <span class="xs dimmed">{$lang==='fr'?'Charge à plat':'Flat loading'}</span>
- <span class="gauge-ideal xs">idéal 3.4–3.9 kg/m²</span>
+ <span class="gauge-ideal xs">{$lang==='fr'?'idéal':'ideal'} 3.4–3.9 kg/m²</span>
  </div>
  <span class="mono gauge-num" style="color:{loadColor(wlFlat)}">{wlFlat.toFixed(2)} kg/m²</span>
  </div>
@@ -696,7 +696,7 @@
  </button>
  </div>
 {:else}
- <div class="card">
+ <div class="card" style="margin-bottom:.875rem">
  {#if equipSaved}<div class="alert alert-ok"><Icon name="check" size={14} />{$lang==='fr'?'Sauvegardé':'Saved'}</div>{/if}
  <form method="POST" action="?/saveEquipment" use:enhance
  on:submit={() => { equipSaved = true; showEquipForm = false; }}>
@@ -1481,7 +1481,7 @@
  .range-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:4px;height:14px;border-radius:2px;z-index:2}
  .range-min{background:var(--green)}
  .range-max{background:var(--red)}
- .equip-display { display:flex; flex-direction:column; gap:.75rem; }
+ .equip-display { display:flex; flex-direction:column; gap:.75rem; margin-bottom:.875rem; }
  .eq-items { display:flex; flex-direction:column; gap:.5rem; }
  .eq-item { display:flex; align-items:center; gap:.75rem; padding:.5rem 0; border-bottom:1px solid var(--border); }
  .eq-item:last-child { border-bottom:none; }

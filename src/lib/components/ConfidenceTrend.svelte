@@ -5,6 +5,8 @@
   export let recent = null;
   export let last = null;
   export let compact = false; // compact mode for instructor list
+  export let lang = 'fr';
+  $: L = lang === 'fr';
 
   $: hasData = data.length > 0;
   $: sparkPoints = buildSparkline(data);
@@ -44,18 +46,18 @@
   <div class="ct-stats">
     {#if baseline !== null}
     <div class="ct-stat">
-      <span class="ct-label">Base</span>
+      <span class="ct-label">{L?'Base':'Base'}</span>
       <span class="ct-val">{baseline}</span>
     </div>
     {/if}
     {#if recent !== null && recent !== baseline}
     <div class="ct-stat">
-      <span class="ct-label">Récent</span>
+      <span class="ct-label">{L?'Récent':'Recent'}</span>
       <span class="ct-val" style="color:{trendColor}">{recent}</span>
     </div>
     {/if}
     <div class="ct-stat">
-      <span class="ct-label">Dernier</span>
+      <span class="ct-label">{L?'Dernier':'Last'}</span>
       <span class="ct-val" style="color:{trendColor}; font-weight:700">{last}/5</span>
     </div>
     <div class="ct-trend" style="color:{trendColor}">{trendIcon}</div>

@@ -85,12 +85,12 @@
       ...h,
       scores: YAMASKA_LAUNCHES.map(l => ({
         key: l.key, color: l.color,
-        pct: launchScore(h.spd, h.dir, h.gust, l),
+        pct: launchScore(h.spd, h.dir, h.gust, l, h.precip ?? 0),
       })),
     }));
 
     const blocks  = timeBriefing(hours, lang);
-    const bestPct = bestLaunchScore(avgSpd, domDir, peakGust || null);
+    const bestPct = bestLaunchScore(avgSpd, domDir, peakGust || null, maxPrecip);
     const bestLch = bestLaunch(avgSpd, domDir, peakGust || null);
 
     return { avgSpd, peakGust, domDir, maxPrecip, bestPct, bestLch,

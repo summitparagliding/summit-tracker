@@ -8,7 +8,7 @@
   export let showForecast = true;   // 3 & 7 day forecast
 
   const LAT = 45.472332, LON = -72.882132;  // Mont Yamaska launch — corrected
-  let fly7Open = true;
+  let fly7Open = false;
   let forecast = null, loading = true, err = null;
 
   const DIRS16 = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
@@ -141,7 +141,7 @@
         dir:    degToDir(d.wind_direction_10m_dominant[i+1]),
         dirDeg: d.wind_direction_10m_dominant[i+1],
         precip: d.precipitation_probability_max[i+1],
-        score:  bestLaunchScore(d.wind_speed_10m_max[i+1], d.wind_direction_10m_dominant[i+1], d.wind_gusts_10m_max[i+1]),
+        score:  bestLaunchScore(d.wind_speed_10m_max[i+1], d.wind_direction_10m_dominant[i+1], d.wind_gusts_10m_max[i+1], d.precipitation_probability_max[i+1] || 0),
       }));
 
       forecast = { cur, next12, days };
@@ -177,7 +177,7 @@
 <div class="ww">
 
 {#if loading}
-  <div class="ww-msg">Chargement météo…</div>
+  <div class="ww-msg">{lang==='fr'?'Chargement météo…':'Loading weather…'}</div>
 {:else if err}
   <div class="ww-msg ww-err">{err}</div>
 {:else if forecast}
@@ -287,7 +287,7 @@
     <div class="forecast-subhdr xs">{lang==='fr'?'3 prochains jours':'Next 3 days'}</div>
     <div class="forecast-grid">
       {#each forecast.days.slice(0,3) as day}
-        {@const pct = Math.round(bestLaunchScore(day.wind, day.dirDeg, isNaN(day.gust)?null:day.gust) ?? 0)}
+        {@const pct = Math.round(bestLaunchScore(day.wind, day.dirDeg, isNaN(day.gust)?null:day.gust, day.precip||0) ?? 0)}
         {@const col = scoreColor(pct)}
         <div class="forecast-card" style="border-top:3px solid {col}">
           <div class="fc-date xs">{fmtDate(day.date)}</div>
@@ -307,6 +307,9 @@
           {/if}
           <div class="fc-dir xs muted">{day.dir}</div>
           <div class="fc-temp xs muted">{day.tMin}°–{day.tMax}°C</div>
+          <div class="fc-precip xs" style="color:{(day.precip||0)>=40?'#3b9eff':(day.precip||0)>=20?'#7fb3d5':'var(--txt-3)'};font-weight:{(day.precip||0)>=40?'700':'400'}">
+            {lang==='fr'?'Précip.':'Precip.'} {day.precip ?? 0}%
+          </div>
         </div>
       {/each}
     </div>
@@ -325,7 +328,7 @@
     {#if fly7Open}
     <div class="fly7-list">
       {#each forecast.days as day}
-        {@const pct = Math.round(bestLaunchScore(day.wind, day.dirDeg, isNaN(day.gust)?null:day.gust) ?? 0)}
+        {@const pct = Math.round(bestLaunchScore(day.wind, day.dirDeg, isNaN(day.gust)?null:day.gust, day.precip||0) ?? 0)}
         {@const col = scoreColor(pct)}
         <div class="fly7-row">
           <div class="fly7-date xs">{fmtDate(day.date)}</div>
@@ -351,7 +354,7 @@
 
 {/if}
 
-<div class="ww-credit xs muted">Météo: <a href="https://open-meteo.com" target="_blank" rel="noopener" style="color:inherit">Open-Meteo</a> · GEM (Canada) · {LAT}°N {Math.abs(LON)}°W</div>
+<div class="ww-credit xs muted">{lang==='fr'?'Météo':'Weather'}: <a href="https://open-meteo.com" target="_blank" rel="noopener" style="color:inherit">Open-Meteo</a> · GEM (Canada) · {LAT}°N {Math.abs(LON)}°W</div>
 </div>
 
 <style>
