@@ -365,6 +365,7 @@
             <span class="fly7-dot" style="background:{col}"></span>
             <span class="xs mono" style="color:{col};font-weight:700">{pct ?? '—'}%</span>
           </div>
+          <div class="fly7-precip xs mono" style="color:{(day.precip||0)>=40?'#3b9eff':(day.precip||0)>=20?'#7fb3d5':'var(--txt-3)'};font-weight:{(day.precip||0)>=40?'700':'400'}"><svg viewBox="0 0 12 16" width="8" height="10" style="vertical-align:-1px"><path d="M6 1 C6 1 1.5 6.5 1.5 10 a4.5 4.5 0 0 0 9 0 C10.5 6.5 6 1 6 1 z" fill="currentColor"/></svg>{day.precip ?? 0}%</div>
           <div class="fly7-tmp xs muted">{day.tMax}°/{day.tMin}°</div>
         </div>
       {/each}
@@ -393,7 +394,7 @@
   .cur-kph{font-size:2rem;font-weight:800;font-family:var(--ff-mono);color:var(--teal);line-height:1}
   .cur-unit{font-size:.75rem;color:var(--txt-3)}
   .section-card{background:var(--bg-raised);border-radius:10px;padding:.75rem}
-  .sec-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal);margin-bottom:.6rem}
+  .sec-lbl{font-family:var(--ff-head);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal);margin-bottom:.6rem}
   .site-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem;margin-bottom:.5rem}
   .site-cell{border-radius:8px;border:1.5px solid;padding:.4rem .3rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.3rem}
   .site-key{font-weight:700;font-size:.72rem;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -407,7 +408,7 @@
   .h-cell{flex-shrink:0;width:52px;background:var(--bg-2);border-radius:7px;padding:.35rem .25rem;text-align:center;display:flex;flex-direction:column;gap:.1rem;align-items:center}
   .h-spd{font-size:.9rem;font-weight:700;color:var(--txt)}
   /* Forecast */
-  .forecast-subhdr{font-weight:700;color:var(--txt-2);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.05em}
+  .forecast-subhdr{font-family:var(--ff-head);font-weight:700;color:var(--txt-2);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.05em}
   .forecast-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem}
   .forecast-card{background:var(--bg-2);border-radius:8px;padding:.5rem .4rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.15rem}
   .fc-date{color:var(--txt-2);font-weight:600}
@@ -429,6 +430,7 @@
   .fly7-score{display:flex;align-items:center;gap:.25rem;flex-shrink:0}
   .fly7-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;display:block}
   .fly7-tmp{min-width:52px;text-align:right;flex-shrink:0}
+  .fly7-precip{min-width:42px;text-align:right;flex-shrink:0;display:flex;align-items:center;gap:1px;justify-content:flex-end}
   .fl-wind{color:var(--txt);text-align:right}
   .fl-dir{color:var(--txt-3);text-align:right}
   .forecast-legend{display:flex;align-items:center;flex-wrap:wrap;gap:.25rem}

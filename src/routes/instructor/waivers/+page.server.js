@@ -17,7 +17,7 @@ export const actions = {
   saveDoc: async ({ request }) => {
     const fd = await request.formData();
     const slot = Number(fd.get('slot'));
-    if (![1,2,3].includes(slot)) return fail(400, { err: 'Bad slot' });
+    if (![1,2,3,4].includes(slot)) return fail(400, { err: 'Bad slot' });
     const title = String(fd.get('title') || '');
     const recipients = String(fd.get('recipients') || 'school');
     const file = fd.get('file');

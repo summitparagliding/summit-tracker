@@ -291,7 +291,7 @@
 <style>
   .wb{display:flex;flex-direction:column;gap:.5rem}
   .wb-hdr{display:flex;align-items:center;justify-content:space-between}
-  .wb-title{font-size:.82rem;font-weight:700;color:var(--txt)}
+  .wb-title{font-family:var(--ff-head);font-size:.82rem;font-weight:700;color:var(--txt)}
   .wb-ref{background:none;border:1px solid var(--border);border-radius:5px;padding:.15rem .4rem;cursor:pointer;color:var(--txt-3);font-size:.9rem;line-height:1}
   .wb-ref:disabled{opacity:.4}
   .wb-state{display:flex;align-items:center;gap:.4rem;padding:.35rem 0}

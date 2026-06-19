@@ -1972,6 +1972,7 @@ export function runV47Migrations(db) {
       file_url   TEXT,                       -- /api/file?key=... of the blank template PDF
       recipients TEXT DEFAULT 'school',      -- 'school' | 'school_club'
       version    INTEGER DEFAULT 1,
+      optional   INTEGER DEFAULT 0,          -- slot 4 = optional (external equipment)
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
     CREATE TABLE IF NOT EXISTS waiver_signatures (
@@ -2172,32 +2173,38 @@ export function setSetting(key, value) {
 export function getWaiverDocuments() {
   const rows = getDb().prepare('SELECT * FROM waiver_documents ORDER BY slot').all();
   const bySlot = Object.fromEntries(rows.map(r => [r.slot, r]));
-  // Always return 3 slots so the instructor UI has placeholders
-  return [1,2,3].map(slot => bySlot[slot] || { slot, title:'', file_url:null, recipients: slot===3?'school_club':'school', version:0 });
+  // Slots 1–3 are mandatory; slot 4 is the optional "equipment acquired outside
+  // the Summit boutique" waiver. Always return placeholders for the instructor UI.
+  return [1,2,3,4].map(slot => bySlot[slot] || {
+    slot, title:'', file_url:null,
+    recipients: slot===3 ? 'school_club' : 'school',
+    version:0, optional: slot===4 ? 1 : 0
+  });
 }
 export function getActiveWaivers() {
-  // Only waivers that actually have a PDF uploaded count toward the gate
+  // Only waivers that actually have a PDF uploaded count
   return getWaiverDocuments().filter(w => w.file_url);
 }
 export function upsertWaiverDocument(slot, { title, file_url, recipients }) {
   const db = getDb();
+  const optional = Number(slot) === 4 ? 1 : 0;
   const existing = db.prepare('SELECT * FROM waiver_documents WHERE slot=?').get(slot);
   if (existing) {
     // bump version only when the file actually changes (forces re-signing)
     const newVersion = (file_url && file_url !== existing.file_url) ? (existing.version || 1) + 1 : (existing.version || 1);
-    db.prepare(`UPDATE waiver_documents SET title=?, file_url=COALESCE(?,file_url), recipients=?, version=?, updated_at=datetime('now') WHERE slot=?`)
-      .run(title ?? existing.title, file_url || null, recipients || existing.recipients, newVersion, slot);
+    db.prepare(`UPDATE waiver_documents SET title=?, file_url=COALESCE(?,file_url), recipients=?, version=?, optional=?, updated_at=datetime('now') WHERE slot=?`)
+      .run(title ?? existing.title, file_url || null, recipients || existing.recipients, newVersion, optional, slot);
   } else {
-    db.prepare(`INSERT INTO waiver_documents (slot,title,file_url,recipients,version) VALUES (?,?,?,?,1)`)
-      .run(slot, title || '', file_url || null, recipients || (slot===3?'school_club':'school'));
+    db.prepare(`INSERT INTO waiver_documents (slot,title,file_url,recipients,version,optional) VALUES (?,?,?,?,1,?)`)
+      .run(slot, title || '', file_url || null, recipients || (slot===3?'school_club':'school'), optional);
   }
 }
 export function getStudentWaiverSignatures(studentId) {
   return getDb().prepare('SELECT * FROM waiver_signatures WHERE student_id=? ORDER BY slot, signed_at DESC').all(studentId);
 }
 export function hasSignedAllWaivers(studentId) {
-  const active = getActiveWaivers();
-  if (!active.length) return true; // no waivers configured -> nothing to sign
+  const active = getActiveWaivers().filter(w => !w.optional); // optional waivers don't gate access
+  if (!active.length) return true; // no mandatory waivers configured -> nothing to sign
   const sigs = getStudentWaiverSignatures(studentId);
   return active.every(w => sigs.some(s => s.slot === w.slot && s.waiver_version === w.version));
 }
@@ -2368,6 +2375,7 @@ export function runDebriefingMigration(db) {
   // Add student_note column if upgrading an existing DB
   try { db.exec(`ALTER TABLE flight_debriefings ADD COLUMN student_note TEXT`); } catch(e) {}
   try { db.exec(`ALTER TABLE student_bills ADD COLUMN seen_by_instructor INTEGER DEFAULT 0`); } catch(e) {}
+  try { db.exec(`ALTER TABLE waiver_documents ADD COLUMN optional INTEGER DEFAULT 0`); } catch(e) {}
 }
 export function getPendingDebriefs() {
   return getDb().prepare(`

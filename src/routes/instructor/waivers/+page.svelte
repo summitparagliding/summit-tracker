@@ -36,11 +36,14 @@
 <!-- The three waiver documents -->
 {#each data.docs as d}
 <div class="card pad">
-  <h3>{L?'Décharge':'Waiver'} {d.slot}{d.file_url ? '' : (L?' — non configurée':' — not set')}</h3>
+  <h3>{L?'Décharge':'Waiver'} {d.slot}{d.optional ? (L?' — optionnelle':' — optional') : ''}{d.file_url ? '' : (L?' — non configurée':' — not set')}</h3>
+  {#if d.optional}
+  <p class="xs muted" style="margin:-.25rem 0 .5rem">{L?'Décharge facultative pour l\'équipement acquis hors de la boutique Summit. Les étudiants ne sont pas obligés de la signer pour accéder à l\'application.':'Optional waiver for equipment acquired outside the Summit boutique. Students are not required to sign it to access the app.'}</p>
+  {/if}
   <form method="POST" action="?/saveDoc" use:enhance enctype="multipart/form-data">
     <input type="hidden" name="slot" value={d.slot} />
     <label class="fld"><span>{L?'Titre':'Title'}</span>
-      <input name="title" value={d.title} placeholder={L?'p. ex. Décharge de responsabilité':'e.g. Liability waiver'} /></label>
+      <input name="title" value={d.title} placeholder={d.optional ? (L?'p. ex. Équipement acquis hors boutique Summit':'e.g. Equipment acquired outside the Summit boutique') : (L?'p. ex. Décharge de responsabilité':'e.g. Liability waiver')} /></label>
     <label class="fld"><span>{L?'Destinataires de la décharge signée':'Who receives the signed waiver'}</span>
       <select name="recipients">
         <option value="school" selected={d.recipients==='school'}>{L?'École seulement':'School only'}</option>

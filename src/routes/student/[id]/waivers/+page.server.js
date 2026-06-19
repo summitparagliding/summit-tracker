@@ -9,7 +9,12 @@ export function load({ locals }) {
     file_url: d.file_url,
     version: d.version,
     recipients: d.recipients,
+    optional: !!d.optional,
     signed: sigs.some(s => s.slot === d.slot && s.waiver_version === d.version)
   }));
-  return { waivers, allDone: hasSignedAllWaivers(locals.student.id), studentId: locals.student.id };
+  return {
+    waivers,
+    allDone: hasSignedAllWaivers(locals.student.id),
+    studentId: locals.student.id
+  };
 }

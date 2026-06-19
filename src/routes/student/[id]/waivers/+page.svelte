@@ -66,10 +66,10 @@
 
 <div class="wv-wrap">
   <div class="wv-head">
-    <h1>{L ? 'Décharges obligatoires' : 'Required waivers'}</h1>
+    <h1>{L ? 'Décharges' : 'Waivers'}</h1>
     <p class="wv-sub">{L
-      ? 'Vous devez lire et signer chaque décharge avant d\'accéder à l\'application.'
-      : 'You must read and sign each waiver before you can use the app.'}</p>
+      ? 'Vous devez lire et signer les décharges obligatoires avant d\'accéder à l\'application. La décharge optionnelle peut être signée plus tard si elle s\'applique à vous.'
+      : 'You must read and sign the required waivers before using the app. The optional waiver can be signed later if it applies to you.'}</p>
   </div>
 
   {#if !data.waivers.length}
@@ -81,9 +81,9 @@
   {#each data.waivers as w (w.slot)}
   <div class="wv-card" class:done={w.signed}>
     <button class="wv-cardhead" on:click={()=>openSlot = openSlot===w.slot ? null : w.slot}>
-      <span class="wv-status" class:ok={w.signed}>{w.signed ? '✓' : w.slot}</span>
-      <span class="wv-title">{w.title}</span>
-      <span class="wv-tag xs">{w.signed ? (L?'Signée':'Signed') : (L?'À signer':'To sign')}</span>
+      <span class="wv-status" class:ok={w.signed} class:opt={w.optional && !w.signed}>{w.signed ? '✓' : (w.optional ? '○' : w.slot)}</span>
+      <span class="wv-title">{w.title}{#if w.optional}<span class="wv-opt xs"> · {L?'optionnelle':'optional'}</span>{/if}</span>
+      <span class="wv-tag xs">{w.signed ? (L?'Signée':'Signed') : (w.optional ? (L?'Optionnel':'Optional') : (L?'À signer':'To sign'))}</span>
     </button>
 
     {#if openSlot===w.slot && !w.signed}
@@ -139,6 +139,8 @@
   .wv-status.ok{background:#00E8C6;color:#003C4E}
   .wv-title{font-weight:700;flex:1}
   .wv-tag{opacity:.6}
+  .wv-status.opt{background:transparent;border:1.5px dashed var(--border);color:var(--txt-3)}
+  .wv-opt{color:var(--txt-3);font-weight:600;font-style:italic}
   .wv-body{padding:0 .9rem 1rem;display:flex;flex-direction:column;gap:.85rem}
   .wv-pdf{position:relative}
   .wv-pdf iframe{width:100%;height:340px;border:1px solid #1c3147;border-radius:8px;background:#fff}

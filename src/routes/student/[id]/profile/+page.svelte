@@ -229,6 +229,13 @@
  </a>
 </div>
 
+<!-- ── Waivers / Décharges ───────────────────────────────────── -->
+<a href="/student/{student.id}/waivers" class="wv-link">
+  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+  <span>{$lang==='fr'?'Mes décharges':'My waivers'}</span>
+  <svg class="wv-link-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+</a>
+
 <!-- ── Progress Rings ─────────────────────────────────────── -->
 <div class="rings-row">
  {#each [
@@ -602,7 +609,7 @@
 
 
 <style>
-  .bills-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--txt-3);margin-bottom:.625rem}
+  .bills-title{font-family:var(--ff-head);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--txt-3);margin-bottom:.625rem}
   .bills-list{display:flex;flex-direction:column;gap:.35rem}
   .bill-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.4rem .5rem;background:var(--bg-2);border-radius:7px}
   .bill-name{font-size:.85rem;font-weight:600;color:var(--txt)}
@@ -624,7 +631,7 @@
  @keyframes spin{to{transform:rotate(360deg)}}
  .av-spinner{width:10px;height:10px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
  @keyframes spin{to{transform:rotate(360deg)}}
- .hero-name{font-size:1.35rem;line-height:1.2}
+ .hero-name{font-family:var(--ff-head);font-size:1.35rem;line-height:1.2}
  .hero-enrolled{margin-top:.2rem}
  .hero-progress{margin-top:.3rem;display:block}
 
@@ -716,17 +723,22 @@
  .dl-strip{display:flex;gap:.625rem;margin-bottom:1.25rem;flex-wrap:wrap}
  .dl-btn{flex:1;justify-content:center;min-width:140px;display:flex;align-items:center;gap:.45rem;font-size:.82rem}
   .conf-trend-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:10px;padding:.75rem .875rem;margin:.5rem 0 .875rem;position:relative}
+  .wv-link{display:flex;align-items:center;gap:.6rem;width:100%;margin:.25rem 0 .875rem;padding:.7rem .875rem;background:var(--bg-raised);border:1px solid var(--border);border-radius:10px;color:var(--txt);text-decoration:none;font-family:var(--ff-head);font-weight:700;font-size:.85rem}
+  .wv-link svg{color:var(--teal);flex-shrink:0}
+  .wv-link span{flex:1}
+  .wv-link-arrow{color:var(--txt-3)!important}
+  .wv-link:active{opacity:.7}
   .ct-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
   .prof-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.5rem}
   .fg{display:flex;flex-direction:column;gap:.2rem}
-  .fg-lbl{font-size:.68rem;font-weight:600;color:var(--txt-3);text-transform:uppercase;letter-spacing:.04em}
+  .fg-lbl{font-family:var(--ff-head);font-size:.68rem;font-weight:600;color:var(--txt-3);text-transform:uppercase;letter-spacing:.04em}
   .prof-inp{background:var(--bg-2);border:1px solid var(--border);border-radius:7px;padding:.32rem .55rem;color:var(--txt);font-size:.85rem;width:100%;box-sizing:border-box}
   .colour-row{display:flex;gap:.75rem;flex-wrap:wrap;margin:.35rem 0}
   .colour-field{display:flex;flex-direction:column;gap:.2rem;align-items:center}
   .colour-lbl{color:var(--txt-3);font-size:.68rem;text-align:center}
   .colour-picker{width:48px;height:36px;border:1.5px solid var(--border);border-radius:7px;padding:2px;cursor:pointer;background:none}
   .prof-hdr{display:flex;align-items:center;gap:.5rem;cursor:pointer;padding:.75rem;color:var(--txt)}
-  .prof-hdr-title{font-size:.85rem;font-weight:700;color:var(--txt)}
+  .prof-hdr-title{font-family:var(--ff-head);font-size:.85rem;font-weight:700;color:var(--txt)}
   /* Colour picker (Item 4 rebuild) */
   .cp-row{display:flex;gap:.875rem;margin-bottom:.625rem;flex-wrap:wrap}
   .cp-field{display:flex;flex-direction:column;align-items:center;gap:.3rem}
