@@ -65,7 +65,7 @@
           <button class="lang-btn" class:active={$lang==='en'} on:click={() => lang.set('en')}>EN</button>
           <button class="lang-btn" class:active={$lang==='fr'} on:click={() => lang.set('fr')}>FR</button>
         </div>
-        <div class="inst-version">Summit v124</div>
+        <div class="inst-version">Summit v125</div>
         <!-- Theme slider — same dark→light control as student side -->
         <div class="inst-theme-row">
           <span style="font-size:.85rem;opacity:.6">🌙</span>

@@ -117,6 +117,9 @@
       const now  = new Date();
 
       const allHourly = h.time.map((t,i) => ({
+        iso:     t,
+        day:     t.slice(0,10),
+        hr:      Number(t.slice(11,13)),
         time:    new Date(t),
         wind:    Math.round(h.wind_speed_10m[i]),
         gust:    Math.round(h.wind_gusts_10m[i]),
@@ -130,19 +133,34 @@
       const cur    = allHourly.filter(x => x.time <= now).at(-1) || allHourly[0];
       const next12 = allHourly.filter(x => x.time >= now && x.time <= new Date(now.getTime() + 12*3600e3));
 
-      // Daily forecast: next 7 days (skip today = index 0)
-      const days = d.time.slice(1, 8).map((t, i) => ({
-        date:   new Date(t + 'T12:00:00'),
-        wmo:    d.weathercode[i+1],
-        tMax:   Math.round(d.temperature_2m_max[i+1]),
-        tMin:   Math.round(d.temperature_2m_min[i+1]),
-        wind:   Math.round(d.wind_speed_10m_max[i+1]),
-        gust:   Math.round(d.wind_gusts_10m_max[i+1]),
-        dir:    degToDir(d.wind_direction_10m_dominant[i+1]),
-        dirDeg: d.wind_direction_10m_dominant[i+1],
-        precip: d.precipitation_probability_max[i+1],
-        score:  bestLaunchScore(d.wind_speed_10m_max[i+1], d.wind_direction_10m_dominant[i+1], d.wind_gusts_10m_max[i+1], d.precipitation_probability_max[i+1] || 0),
-      }));
+      // Daily forecast — flyability computed the SAME way as the hourly checker
+      // and the 12h strip: the best flyable hour in the 08:00–21:00 window via
+      // bestLaunchScore (wind + direction + gust + precip). Keeps every period
+      // on the weather page homogeneous instead of using pessimistic daily maxes.
+      const todayStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Toronto' });
+      const dayStrs  = d.time.filter(ds => ds > todayStr).slice(0, 7);
+      const days = dayStrs.map(ds => {
+        const di = d.time.indexOf(ds);
+        const dayHrs = allHourly.filter(x => x.day === ds && x.hr >= 8 && x.hr <= 21);
+        let best = null;
+        for (const hh of dayHrs) {
+          const sc = bestLaunchScore(hh.wind, hh.dirDeg, hh.gust, hh.precip);
+          if (sc != null && (best == null || sc > best.score)) best = { ...hh, score: sc };
+        }
+        return {
+          date:     new Date(ds + 'T12:00:00'),
+          wmo:      d.weathercode[di],
+          tMax:     Math.round(d.temperature_2m_max[di]),
+          tMin:     Math.round(d.temperature_2m_min[di]),
+          wind:     best ? best.wind   : Math.round(d.wind_speed_10m_max[di]),
+          gust:     best ? best.gust   : Math.round(d.wind_gusts_10m_max[di]),
+          dir:      best ? best.dir    : degToDir(d.wind_direction_10m_dominant[di]),
+          dirDeg:   best ? best.dirDeg : d.wind_direction_10m_dominant[di],
+          precip:   best ? best.precip : (d.precipitation_probability_max[di] || 0),
+          bestTime: best ? best.iso.slice(11,16) : null,
+          score:    best ? best.score  : 0,
+        };
+      });
 
       forecast = { cur, next12, days };
     } catch(e) {
@@ -244,8 +262,8 @@
     <div class="sec-lbl">{lang==='fr'?'Prochaines 12h':'Next 12 hours'}</div>
     <div class="hourly-row">
       {#each forecast.next12.filter((_, i) => i % 2 === 0) as hh}
-        {@const score = flyScore(hh.wind, hh.gust)}
-        <div class="h-cell" style="border-bottom:3px solid {getColor(score, hh.wind, hh.dirDeg, hh.gust)}">
+        {@const score = bestLaunchScore(hh.wind, hh.dirDeg, hh.gust, hh.precip) ?? 0}
+        <div class="h-cell" style="border-bottom:3px solid {scoreColor(score)}">
           <div class="xs muted">{fmtHour(hh.time)}</div>
           <div class="h-spd mono">{hh.wind}</div>
           <div class="xs" style="display:flex;align-items:center;gap:2px;color:var(--txt-3)">
@@ -287,7 +305,7 @@
     <div class="forecast-subhdr xs">{lang==='fr'?'3 prochains jours':'Next 3 days'}</div>
     <div class="forecast-grid">
       {#each forecast.days.slice(0,3) as day}
-        {@const pct = Math.round(bestLaunchScore(day.wind, day.dirDeg, isNaN(day.gust)?null:day.gust, day.precip||0) ?? 0)}
+        {@const pct = day.score ?? 0}
         {@const col = scoreColor(pct)}
         <div class="forecast-card" style="border-top:3px solid {col}">
           <div class="fc-date xs">{fmtDate(day.date)}</div>
@@ -310,6 +328,9 @@
           <div class="fc-precip xs" style="color:{(day.precip||0)>=40?'#3b9eff':(day.precip||0)>=20?'#7fb3d5':'var(--txt-3)'};font-weight:{(day.precip||0)>=40?'700':'400'}">
             {lang==='fr'?'Précip.':'Precip.'} {day.precip ?? 0}%
           </div>
+          {#if day.bestTime && pct >= 25}
+          <div class="fc-best xs" style="color:var(--teal)">{lang==='fr'?'Meilleure':'Best'} {day.bestTime}</div>
+          {/if}
         </div>
       {/each}
     </div>
@@ -328,7 +349,7 @@
     {#if fly7Open}
     <div class="fly7-list">
       {#each forecast.days as day}
-        {@const pct = Math.round(bestLaunchScore(day.wind, day.dirDeg, isNaN(day.gust)?null:day.gust, day.precip||0) ?? 0)}
+        {@const pct = day.score ?? 0}
         {@const col = scoreColor(pct)}
         <div class="fly7-row">
           <div class="fly7-date xs">{fmtDate(day.date)}</div>

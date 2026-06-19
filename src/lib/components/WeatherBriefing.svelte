@@ -58,7 +58,7 @@
 
     const flyIdxs = idxs.filter(i => {
       const hr = parseInt(h.time[i].slice(11, 13), 10);
-      return hr >= 9 && hr <= 17;
+      return hr >= 8 && hr <= 21;
     });
     const workIdxs = flyIdxs.length ? flyIdxs : idxs;
 

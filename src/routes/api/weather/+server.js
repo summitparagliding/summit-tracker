@@ -13,7 +13,7 @@
 // /v1/forecast, e.g. /api/weather?latitude=..&longitude=..&hourly=..&models=gem_seamless
 import { json } from '@sveltejs/kit';
 
-const TTL = 10 * 60 * 1000; // 10 minutes
+const TTL = 5 * 60 * 1000; // 5 minutes — keep forecasts fresh while avoiding rate limits
 const cache = new Map();     // qs -> { t, body }
 
 export async function GET({ url, fetch }) {

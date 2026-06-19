@@ -2,6 +2,7 @@
   import { uploadFile } from '$lib/upload.js';
   import { uploadWithProgress } from '$lib/uploadWithProgress.js';
   import ConfidenceTrend from '$lib/components/ConfidenceTrend.svelte';
+  import { lang } from '$lib/stores/lang.js';
  import { enhance } from '$app/forms';
  import { page } from '$app/stores';
  import Icon from '$lib/components/Icon.svelte';

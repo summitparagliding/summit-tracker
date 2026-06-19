@@ -348,10 +348,15 @@
       <span class="act-btn xs">{$lang==='fr'?'Répondre':'Reply'}</span></a>
     {/each}
     {#each (pendingPayments || []) as p}
-    <a href="/instructor/students/{p.student_id}?tab=payments" class="act-item act-item-link"><div class="act-dot" style="background:#22c55e"></div>
-      <div class="act-body"><span class="xs act-label">{$lang==='fr'?'Paiement à confirmer':'Payment to confirm'}</span>
-      <span class="xs act-name">{p.student_name} · {(p.amount||0).toFixed(2)} $</span></div>
-      <span class="act-btn xs">{$lang==='fr'?'Confirmer':'Confirm'}</span></a>
+    <div class="act-item">
+      <a href="/instructor/students/{p.student_id}?tab=payments" class="act-main"><div class="act-dot" style="background:#22c55e"></div>
+        <div class="act-body"><span class="xs act-label">{$lang==='fr'?'Paiement à confirmer':'Payment to confirm'}</span>
+        <span class="xs act-name">{p.student_name} · {(p.amount||0).toFixed(2)} $</span></div></a>
+      <form method="POST" action="?/approvePayment" use:enhance style="flex-shrink:0">
+        <input type="hidden" name="payment_id" value={p.id} />
+        <button class="act-btn xs" style="color:#22c55e">{$lang==='fr'?'Confirmer':'Confirm'}</button>
+      </form>
+    </div>
     {/each}
     {#each (uploadedBills || []) as b}
     <a href="/instructor/students/{b.student_id}?tab=payments" class="act-item act-item-link"><div class="act-dot" style="background:#10b981"></div>
@@ -641,6 +646,9 @@
   .act-item-link{text-decoration:none;color:inherit;transition:background .12s;border-radius:6px}
   .act-item-link:hover{background:var(--bg-raised)}
   .act-item-link:active{opacity:.7}
+  .act-main{flex:1;min-width:0;display:flex;align-items:center;gap:.5rem;text-decoration:none;color:inherit;border-radius:6px;transition:background .12s}
+  .act-main:hover{background:var(--bg-raised)}
+  .act-main:active{opacity:.7}
   .today-item-link{color:var(--txt);text-decoration:none}
   .today-item-link:hover{color:var(--teal);text-decoration:underline}
 </style>
