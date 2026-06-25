@@ -351,7 +351,7 @@
  .pmd-w{background:var(--amber)}
  .pmd-f{background:var(--red)}
  .pmd-n{background:rgba(150,200,230,0.22);border:1px solid rgba(150,200,230,0.18)}
- .pmd-num{font-family:var(--ff-mono);font-size:7px;color:rgba(180,220,255,0.65);font-weight:700;line-height:1;pointer-events:none}
+ .pmd-num{font-family:var(--ff-head);font-size:7px;color:rgba(180,220,255,0.65);font-weight:700;line-height:1;pointer-events:none}
 
  /* Tabs */
  .tc{margin-left:.3rem;color:var(--txt-3)}
@@ -367,7 +367,7 @@
  .sh-fill.pend{background:var(--amber)}
  .sh-right{display:flex;align-items:center;gap:.5rem;flex-shrink:0}
  .sh-count{}
- .badge-pend-sm{background:var(--amber);color:var(--txt-inv);font-family:var(--ff-mono);font-size:.65rem;font-weight:700;padding:.1rem .4rem;border-radius:var(--r-full);min-width:18px;text-align:center}
+ .badge-pend-sm{background:var(--amber);color:var(--txt-inv);font-family:var(--ff-head);font-size:.65rem;font-weight:700;padding:.1rem .4rem;border-radius:var(--r-full);min-width:18px;text-align:center}
 
  /* Exercise cards */
  .ex-list{display:flex;flex-direction:column;gap:.3rem;padding-left:.5rem;border-left:2px solid var(--border);margin-left:.5rem;margin-bottom:.5rem}
@@ -392,7 +392,7 @@
  .ex-note{display:flex;align-items:flex-start;gap:.35rem;padding:.35rem .5rem;background:var(--teal-lo);border-radius:var(--r-xs);margin-top:.4rem;color:var(--txt-2)}
 
  /* Badges */
- .badge-ex{font-family:var(--ff-mono);font-size:.7rem;font-weight:700;padding:.2rem .55rem;border-radius:var(--r-full);flex-shrink:0;white-space:nowrap}
+ .badge-ex{font-family:var(--ff-head);font-size:.7rem;font-weight:700;padding:.2rem .55rem;border-radius:var(--r-full);flex-shrink:0;white-space:nowrap}
  .badge-ex.pass{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.25)}
  .badge-ex.pend{background:var(--amber-lo);color:var(--amber);border:1px solid rgba(245,158,11,.25)}
  .badge-ex.fail{background:var(--red-lo);color:var(--red);border:1px solid rgba(239,68,68,.25)}

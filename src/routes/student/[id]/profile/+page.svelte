@@ -648,7 +648,7 @@
  .stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;margin-bottom:.875rem}
  @media(max-width:420px){.stats-grid{grid-template-columns:repeat(3,1fr)}}
  .sg-item{display:flex;flex-direction:column;align-items:center;gap:.25rem;padding:.625rem .4rem;text-align:center}
- .sg-val{font-family:var(--ff-mono);font-size:.95rem;font-weight:500;line-height:1}
+ .sg-val{font-family:var(--ff-head);font-size:.95rem;font-weight:500;line-height:1}
  .sg-lbl{line-height:1.2;text-align:center}
 
  /* Progress map */
@@ -677,7 +677,7 @@
  .eq-ico{width:20px;height:20px;flex-shrink:0;color:var(--teal);opacity:.8}
  .eq-info{flex:1;display:flex;flex-direction:column;gap:.1rem}
  .eq-name{font-size:.875rem;font-weight:600;color:var(--txt)}
- .eq-sub{font-size:.7rem;color:var(--txt-3);font-family:var(--ff-mono)}
+ .eq-sub{font-size:.7rem;color:var(--txt-3);font-family:var(--ff-head)}
  .eq-wt{color:var(--txt-2)}
  .no-eq{display:flex;flex-direction:column;align-items:center;gap:.35rem;padding:1.5rem 0;text-align:center}
 

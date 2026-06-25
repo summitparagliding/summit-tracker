@@ -476,7 +476,7 @@
 
   .xs{font-size:.75rem}
   .muted{color:var(--txt-3)}
-  .mono{font-family:var(--ff-mono)}
+  .mono{font-family:var(--ff-head)}
   .wind-scale{display:flex;flex-direction:column;gap:.3rem;margin:.75rem 0 .5rem}
   .wind-zone{display:flex;align-items:center;gap:.5rem;padding:.25rem .5rem;border-radius:0 6px 6px 0;background:var(--bg-raised)}
   .section-hdr{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;padding:.5rem .625rem;color:var(--txt);border-radius:8px;background:var(--bg-raised);border:1px solid var(--border)}

@@ -349,7 +349,7 @@
   .speed-btns{display:flex;gap:.25rem;margin-left:auto}
   .speed-btn{
     background:none;border:1px solid var(--border);color:var(--txt-3);
-    font-family:var(--ff-mono);font-size:.72rem;font-weight:700;
+    font-family:var(--ff-head);font-size:.72rem;font-weight:700;
     padding:.2rem .45rem;border-radius:var(--r-xs);cursor:pointer;transition:all .15s;
   }
   .speed-btn.active{background:var(--teal);border-color:var(--teal);color:#fff}

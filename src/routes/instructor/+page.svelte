@@ -554,7 +554,7 @@
   /* Stats */
   .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
   .stat-card{display:flex;flex-direction:column;align-items:center;gap:.375rem;padding:1.25rem 1rem;text-align:center}
-  .sv{font-family:var(--ff-mono);font-size:1.9rem;font-weight:400;line-height:1}
+  .sv{font-family:var(--ff-head);font-size:1.9rem;font-weight:400;line-height:1}
   .sl{font-size:.67rem;text-transform:uppercase;letter-spacing:.07em;color:var(--txt-3);font-family:var(--ff-head);font-weight:700}
 
   /* Students grid */

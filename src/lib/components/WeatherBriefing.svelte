@@ -308,7 +308,7 @@
   .wg-lbl{min-width:72px;background:var(--bg-2);border-radius:3px;padding:.2rem .35rem;display:flex;align-items:center}
   .wg-val{padding:.2rem .25rem;display:flex;align-items:center;justify-content:center;background:var(--bg-2);border-radius:3px;text-align:center}
   .wg-score{border-radius:4px;min-height:22px;display:flex;align-items:center;justify-content:center}
-  .xs{font-size:.75rem} .muted{color:var(--txt-3)} .mono{font-family:var(--ff-mono)}
+  .xs{font-size:.75rem} .muted{color:var(--txt-3)} .mono{font-family:var(--ff-head)}
   .wb-prom-btn{width:100%;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg, rgba(0,184,122,.10), rgba(0,184,122,.02));border:1px solid rgba(0,184,122,.35);border-radius:8px;padding:.6rem .75rem;cursor:pointer;color:var(--teal);font-size:.85rem;margin:.5rem 0;transition:all .15s}
   .wb-prom-btn:hover{background:linear-gradient(135deg, rgba(0,184,122,.18), rgba(0,184,122,.06));border-color:var(--teal)}
   .wb-prom-btn-left{display:flex;align-items:center;gap:.5rem}

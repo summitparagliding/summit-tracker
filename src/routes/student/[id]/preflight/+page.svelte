@@ -154,13 +154,13 @@
   .sc-inner { display:flex;flex-direction:column;align-items:center;padding:.875rem .5rem;border:1.5px solid var(--border);border-radius:var(--r-md);transition:all .15s;gap:.15rem }
   .site-chip input:checked + .sc-inner { border-color:var(--teal);background:var(--teal-lo) }
   .sc-name { font-family:var(--ff-head);font-weight:700;font-size:.9rem;color:var(--txt) }
-  .sc-dir { font-size:.68rem;font-family:var(--ff-mono);color:var(--txt-3) }
+  .sc-dir { font-size:.68rem;font-family:var(--ff-head);color:var(--txt-3) }
   .site-chip input:checked + .sc-inner .sc-name,
   .site-chip input:checked + .sc-inner .sc-dir { color:var(--teal) }
 
   .mental-row { display:flex;gap:.375rem;margin-bottom:.625rem }
   .mental-btn { flex:1;display:flex;flex-direction:column;align-items:center;padding:.6rem .25rem;border:1.5px solid var(--border);border-radius:var(--r-sm);background:transparent;cursor:pointer;transition:all .15s;gap:.15rem }
-  .m-num { font-family:var(--ff-mono);font-size:1rem;font-weight:500;color:var(--txt-2) }
+  .m-num { font-family:var(--ff-head);font-size:1rem;font-weight:500;color:var(--txt-2) }
   .m-lbl { font-size:.58rem;text-transform:uppercase;letter-spacing:.04em;font-family:var(--ff-head);font-weight:700;color:var(--txt-3) }
   .mental-note { font-size:.8rem;padding:.5rem .75rem;background:var(--bg-raised);border-radius:var(--r-xs);border-left:3px solid;line-height:1.5 }
 

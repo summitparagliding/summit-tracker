@@ -505,7 +505,7 @@
   .sc-sm{padding:.5rem .4rem}
   .site-chip input:checked+.sc-inner{border-color:var(--teal);background:var(--teal-lo)}
   .sc-name{font-family:var(--ff-head);font-weight:700;font-size:.82rem;color:var(--txt)}
-  .sc-dir{font-size:.65rem;font-family:var(--ff-mono);color:var(--txt-3)}
+  .sc-dir{font-size:.65rem;font-family:var(--ff-head);color:var(--txt-3)}
   .site-chip input:checked+.sc-inner .sc-name,
   .site-chip input:checked+.sc-inner .sc-dir{color:var(--teal)}
 
@@ -515,7 +515,7 @@
   .ex-grp:last-of-type{border-bottom:none}
   .ex-grp-hdr{display:flex;align-items:center;gap:.5rem;width:100%;background:none;border:none;cursor:pointer;padding:.6rem 0;text-align:left}
   .ex-grp-lbl{flex:1;font-family:var(--ff-head);font-size:.78rem;font-weight:700;color:var(--txt-2)}
-  .ex-grp-count{background:var(--teal);color:var(--txt-inv);font-family:var(--ff-mono);font-size:.65rem;font-weight:700;padding:.1rem .4rem;border-radius:var(--r-full);min-width:18px;text-align:center}
+  .ex-grp-count{background:var(--teal);color:var(--txt-inv);font-family:var(--ff-head);font-size:.65rem;font-weight:700;padding:.1rem .4rem;border-radius:var(--r-full);min-width:18px;text-align:center}
   .ex-grp-list{display:flex;flex-direction:column;gap:.2rem;padding-bottom:.4rem}
 
   /* Exercise items — button not label, for proper disabled state */
@@ -535,7 +535,7 @@
   .ex-title{flex:1;font-size:.855rem;font-weight:500;color:var(--txt);text-align:left}
   .ex-title.dimmed{color:var(--txt-3)}
 
-  .ex-badge{font-family:var(--ff-mono);font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:var(--r-full);white-space:nowrap;flex-shrink:0}
+  .ex-badge{font-family:var(--ff-head);font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:var(--r-full);white-space:nowrap;flex-shrink:0}
   .ex-badge.passed{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.25)}
   .ex-badge.pending{background:var(--amber-lo);color:var(--amber);border:1px solid rgba(245,158,11,.25)}
   .ex-badge.selected{background:var(--amber-lo);color:var(--amber);border:1px solid rgba(245,158,11,.3)}

@@ -426,14 +426,14 @@
 
   .timer-block { text-align:center;padding:1.5rem 0 .75rem;display:flex;flex-direction:column;align-items:center;gap:.5rem }
   .timer-sub { font-family:var(--ff-head);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt-3) }
-  .timer-val { font-family:var(--ff-mono);font-size:clamp(3.5rem,18vw,5.5rem);font-weight:300;color:var(--teal);line-height:1;letter-spacing:.04em }
+  .timer-val { font-family:var(--ff-head);font-size:clamp(3.5rem,18vw,5.5rem);font-weight:300;color:var(--teal);line-height:1;letter-spacing:.04em }
   .airborne-pill { display:flex;align-items:center;gap:.4rem;padding:.3rem .75rem;background:rgba(0,184,122,.1);border:1px solid var(--teal-border);border-radius:var(--r-full);color:var(--teal) }
 
   .stats-card { padding:.875rem }
   .sc-row { display:flex }
   .sc-item { flex:1;text-align:center }
   .sc-item+.sc-item { border-left:1px solid var(--border) }
-  .sc-val { font-family:var(--ff-mono);font-size:.95rem;font-weight:500;line-height:1;margin-bottom:.2rem;color:var(--txt) }
+  .sc-val { font-family:var(--ff-head);font-size:.95rem;font-weight:500;line-height:1;margin-bottom:.2rem;color:var(--txt) }
   .sc-lbl { font-family:var(--ff-head);font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--txt-3) }
 
   .launch-detected { display:flex;align-items:center;gap:.5rem;padding:.5rem .875rem;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:var(--r-sm) }

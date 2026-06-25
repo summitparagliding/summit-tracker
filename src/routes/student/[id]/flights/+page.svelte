@@ -753,7 +753,7 @@
   .main-tabs{display:flex;gap:.25rem;margin-bottom:.75rem;background:var(--bg-raised);border-radius:9px;padding:.2rem}
   .main-tab{flex:1;padding:.35rem;border-radius:7px;border:none;cursor:pointer;font-size:.78rem;font-weight:600;color:var(--txt-3);background:none;display:flex;align-items:center;justify-content:center;gap:.3rem}
   .main-tab.active{background:var(--bg-card);color:var(--txt);box-shadow:0 1px 3px rgba(0,0,0,.12)}
-  .tc{background:var(--bg-2);border-radius:var(--r-full);padding:.05rem .3rem;font-size:.68rem;font-family:var(--ff-mono)}
+  .tc{background:var(--bg-2);border-radius:var(--r-full);padding:.05rem .3rem;font-size:.68rem;font-family:var(--ff-head)}
   .flight-list{display:flex;flex-direction:column;gap:.4rem}
   .flight-card{background:var(--bg-raised);border-radius:10px;overflow:hidden;border:1px solid var(--border)}
   .flight-card.open{border-color:var(--teal-border)}
@@ -763,14 +763,14 @@
   .fl-date{font-weight:600;font-size:.85rem;color:var(--txt)}
   .fl-sub{margin-top:.1rem}
   .fl-chips{display:flex;gap:.2rem}
-  .chip{font-family:var(--ff-mono);font-size:.62rem;font-weight:700;padding:.1rem .35rem;border-radius:var(--r-full)}
+  .chip{font-family:var(--ff-head);font-size:.62rem;font-weight:700;padding:.1rem .35rem;border-radius:var(--r-full)}
   .chip-teal{background:rgba(0,184,122,.15);color:var(--teal)}
   .chip-amber{background:rgba(245,158,11,.15);color:var(--amber)}
   .flight-detail{padding:.625rem .75rem;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:.75rem}
   .detail-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.3rem}
   @media(min-width:380px){.detail-stats{grid-template-columns:repeat(6,1fr)}}
   .dstat{background:var(--bg-2);border-radius:6px;padding:.35rem .25rem;text-align:center}
-  .dstat-val{font-family:var(--ff-mono);font-size:.82rem;font-weight:700}
+  .dstat-val{font-family:var(--ff-head);font-size:.82rem;font-weight:700}
   .dstat-lbl{margin-top:.1rem}
   .flight-map{height:200px;border-radius:8px;overflow:hidden;border:1px solid var(--border);position:relative;z-index:0}
   .notes-grid{display:flex;flex-direction:column;gap:.4rem}

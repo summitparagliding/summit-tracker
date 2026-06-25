@@ -237,7 +237,7 @@
   .flag-teal{border-left-color:var(--aqua)}
   .flag-aqua{border-left-color:#60a5fa}
   .flag-amber{border-left-color:var(--amber)}
-  .flag-num{font-size:1.5rem;font-weight:800;font-family:var(--ff-mono);color:var(--txt);line-height:1}
+  .flag-num{font-size:1.5rem;font-weight:800;font-family:var(--ff-head);color:var(--txt);line-height:1}
   .flag-lbl{font-size:.78rem;font-weight:700;color:var(--txt-2);margin:.15rem 0}
   .flag-names{color:var(--txt-3)}
 
@@ -257,10 +257,10 @@
   .overall-bar-wrap{height:7px;background:var(--border);border-radius:4px;overflow:hidden}
   .overall-bar{height:100%;border-radius:4px;transition:width .4s}
   .overall-pct{line-height:1.4}
-  .calc-hint{display:block;font-family:var(--ff-mono)}
+  .calc-hint{display:block;font-family:var(--ff-head)}
   .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.25rem;text-align:center;background:var(--bg-2);border-radius:8px;padding:.4rem}
   .metric{}
-  .metric-val{font-family:var(--ff-mono);font-size:.9rem;font-weight:700;color:var(--txt)}
+  .metric-val{font-family:var(--ff-head);font-size:.9rem;font-weight:700;color:var(--txt)}
   .metric-tot{font-size:.72rem;color:var(--txt-3);font-weight:400}
   .metric-lbl{color:var(--txt-3)}
   .sub-bars{display:flex;flex-direction:column;gap:.25rem}
@@ -280,7 +280,7 @@
   .method-body{line-height:1.6}
   .xs{font-size:.75rem}
   .dimmed{color:var(--txt-3)}
-  .mono{font-family:var(--ff-mono)}
+  .mono{font-family:var(--ff-head)}
 
   .stu-collapse-btn{display:flex;align-items:center;gap:.6rem;width:100%;background:none;border:none;padding:0;cursor:pointer;text-align:left;color:inherit}
   .stu-collapse-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:.15rem}

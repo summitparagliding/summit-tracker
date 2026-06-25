@@ -51,7 +51,7 @@
  maxlength="4" minlength="4"
  placeholder="0000–9999" required
  value={form?.values?.pin ?? ''}
- style="max-width:140px;letter-spacing:.3em;font-family:var(--ff-mono);font-size:1.2rem" />
+ style="max-width:140px;letter-spacing:.3em;font-family:var(--ff-head);font-size:1.2rem" />
  </div>
 
  <div class="form-group">

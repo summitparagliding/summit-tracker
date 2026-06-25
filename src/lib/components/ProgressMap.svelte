@@ -217,5 +217,5 @@
   .pm-legend{display:flex;align-items:center;gap:.5rem;margin-top:.25rem;flex-wrap:wrap}
   .xs{font-size:.75rem}
   .dimmed{color:var(--txt-3)}
-  .mono{font-family:var(--ff-mono)}
+  .mono{font-family:var(--ff-head)}
 </style>

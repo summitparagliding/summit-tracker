@@ -114,7 +114,7 @@
  <div style="display:flex;gap:.5rem;align-items:flex-end">
  <input name="pin" type="text" inputmode="numeric" maxlength="4"
  placeholder="New 4-digit PIN" pattern="\d{4}"
- style="max-width:120px;letter-spacing:.2em;font-family:var(--ff-mono)" />
+ style="max-width:120px;letter-spacing:.2em;font-family:var(--ff-head)" />
  <button type="submit" class="btn btn-secondary btn-sm">Reset</button>
  </div>
  </div>
@@ -585,7 +585,7 @@ Cette action est irréversible.`))
  .prog-strip { display:flex;flex-wrap:wrap;gap:0;margin-bottom:1.5rem;padding:.875rem 1.25rem; }
  .ps-item { flex:1;min-width:80px;text-align:center; }
  .ps-item+.ps-item { border-left:1px solid var(--border); }
- .ps-val { display:block;font-family:var(--ff-mono);font-size:1.2rem;font-weight:500;line-height:1;margin-bottom:.2rem; }
+ .ps-val { display:block;font-family:var(--ff-head);font-size:1.2rem;font-weight:500;line-height:1;margin-bottom:.2rem; }
  .ps-lbl { font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:var(--txt-3); }
 
  .two-col { display:grid;grid-template-columns:1fr 1fr;gap:1.25rem; }

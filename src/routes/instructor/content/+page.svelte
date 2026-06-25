@@ -618,7 +618,7 @@
 
   .edit-form { margin-top:.875rem;padding-top:.875rem;border-top:1px solid var(--border) }
   .media-note { display:flex;align-items:flex-start;gap:.4rem;padding:.5rem .75rem;background:var(--teal-lo);border-radius:var(--r-xs);font-size:.78rem;color:var(--txt-2) }
-  .media-note code { font-family:var(--ff-mono);font-size:.72rem;background:var(--bg-raised);padding:.1rem .3rem;border-radius:3px }
+  .media-note code { font-family:var(--ff-head);font-size:.72rem;background:var(--bg-raised);padding:.1rem .3rem;border-radius:3px }
   .lib-tab-wrap{max-width:700px}
   .lib-doc-card{padding:.625rem .75rem}
   .fg{display:flex;flex-direction:column;gap:.2rem;margin-bottom:.4rem}

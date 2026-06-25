@@ -145,7 +145,7 @@
   .tab-row{display:flex;gap:.25rem;margin-bottom:.75rem;background:var(--bg-raised);border-radius:9px;padding:.2rem;width:fit-content}
   .tab{padding:.3rem .75rem;border-radius:7px;border:none;cursor:pointer;font-size:.78rem;font-weight:600;color:var(--txt-3);background:none}
   .tab.active{background:var(--bg-card);color:var(--txt);box-shadow:0 1px 3px rgba(0,0,0,.12)}
-  .tc{background:var(--bg-2);border-radius:99px;padding:.05rem .3rem;font-size:.68rem;font-family:var(--ff-mono)}
+  .tc{background:var(--bg-2);border-radius:99px;padding:.05rem .3rem;font-size:.68rem;font-family:var(--ff-head)}
   .table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border)}
   table{width:100%;border-collapse:collapse;table-layout:fixed}
   th,td{vertical-align:middle;padding:.45rem .625rem;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

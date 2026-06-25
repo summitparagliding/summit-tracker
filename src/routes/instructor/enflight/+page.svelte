@@ -265,7 +265,7 @@
   .fly-sig{flex-shrink:0}
   .fly-body{flex:1;min-width:0}
   .fly-name{font-size:.88rem;font-weight:700;color:var(--txt)}
-  .fly-clock{font-size:2rem;font-weight:800;font-family:var(--ff-mono);color:var(--teal);line-height:1;letter-spacing:.04em}
+  .fly-clock{font-size:2rem;font-weight:800;font-family:var(--ff-head);color:var(--teal);line-height:1;letter-spacing:.04em}
   .fly-gps{margin-top:.1rem}
   .fly-actions{flex-shrink:0}
 
