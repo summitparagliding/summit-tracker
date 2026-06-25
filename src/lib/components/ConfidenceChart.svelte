@@ -60,7 +60,7 @@
   .cc-svg{width:100%;height:auto;display:block}
   .cc-stats{display:flex;gap:.5rem}
   .cc-stat{flex:1;display:flex;flex-direction:column;align-items:center;gap:.1rem;background:var(--bg-2,var(--bg-input));border:1px solid var(--border);border-radius:8px;padding:.35rem}
-  .cc-lbl{font-size:.62rem;color:var(--txt-3);text-transform:uppercase;letter-spacing:.04em}
+  .cc-lbl{font-family:var(--ff-head);font-size:.62rem;color:var(--txt-3);text-transform:uppercase;letter-spacing:.04em}
   .cc-val{font-size:1rem;font-weight:800;font-family:var(--ff-mono,monospace)}
   .cc-insight{font-size:.74rem;color:var(--txt-2);line-height:1.5;font-style:italic}
   .cc-empty{font-size:.76rem;color:var(--txt-3);line-height:1.5}

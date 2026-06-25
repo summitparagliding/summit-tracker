@@ -298,7 +298,7 @@
   }
 
   /* Header */
-  .replay-hdr{
+  .replay-hdr{font-family:var(--ff-head);
     display:flex;align-items:center;justify-content:space-between;
     gap:.75rem;padding:.625rem 1rem;
     border-bottom:1px solid var(--border);flex-shrink:0;
@@ -321,7 +321,7 @@
     padding:.4rem .5rem;border-right:1px solid var(--border);
   }
   .rs-item:last-child{border-right:none}
-  .rs-lbl{font-size:.62rem;text-transform:uppercase;letter-spacing:.05em}
+  .rs-lbl{font-family:var(--ff-head);font-size:.62rem;text-transform:uppercase;letter-spacing:.05em}
   .rs-val{font-size:.875rem;font-weight:500;margin-top:.1rem}
 
   /* Scrubber */

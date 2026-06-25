@@ -242,7 +242,7 @@
 
   /* Add panel */
   .add-panel{background:var(--bg-raised);border:1px solid var(--teal-border,rgba(0,184,122,.3));border-radius:10px;padding:.75rem}
-  .add-panel-title{color:var(--txt-3);margin-bottom:.4rem;display:block}
+  .add-panel-title{font-family:var(--ff-head);color:var(--txt-3);margin-bottom:.4rem;display:block}
   .add-search{width:100%;background:var(--bg-2);border:1px solid var(--border);border-radius:6px;padding:.35rem .5rem;color:var(--txt);font-size:.85rem;margin-bottom:.4rem;box-sizing:border-box}
   .add-list{display:flex;flex-direction:column;gap:.2rem;max-height:220px;overflow-y:auto}
   .add-item{display:flex;align-items:center;gap:.5rem;background:var(--bg-2);border:1px solid var(--border);border-radius:7px;padding:.3rem .5rem;cursor:pointer;text-align:left;width:100%;transition:border-color .12s}
@@ -252,7 +252,7 @@
   /* Sections */
   .zone{background:var(--bg-raised);border:1px solid var(--border);border-radius:12px;overflow:hidden}
   .flying-zone{border-color:rgba(0,232,198,.3)}
-  .zone-hdr{display:flex;align-items:center;gap:.5rem;padding:.55rem .875rem;border-bottom:1px solid var(--border);background:rgba(0,0,0,.06);flex-wrap:wrap}
+  .zone-hdr{font-family:var(--ff-head);display:flex;align-items:center;gap:.5rem;padding:.55rem .875rem;border-bottom:1px solid var(--border);background:rgba(0,0,0,.06);flex-wrap:wrap}
   .zone-name{font-size:.88rem;font-weight:800;color:var(--txt)}
   .zone-badge{background:var(--bg-2);border-radius:10px;padding:.05rem .45rem;font-size:.68rem;font-weight:700;color:var(--txt-2)}
   .fly-badge{background:rgba(0,232,198,.15);color:var(--teal)}

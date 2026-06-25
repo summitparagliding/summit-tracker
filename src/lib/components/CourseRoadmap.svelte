@@ -376,9 +376,9 @@
 
 <style>
   .rm{padding:.1rem 0}
-  .rm-hdr{width:100%;display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:none;border:none;cursor:pointer;padding:.15rem 0 .5rem;text-align:left}
+  .rm-hdr{font-family:var(--ff-head);width:100%;display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:none;border:none;cursor:pointer;padding:.15rem 0 .5rem;text-align:left}
   .rm-left{display:flex;flex-direction:column;gap:.12rem;min-width:0}
-  .rm-title{font-family:var(--ff-head,inherit);font-weight:800;font-size:.92rem;color:var(--txt);letter-spacing:.01em}
+  .rm-title{font-family:var(--ff-head);font-weight:800;font-size:.92rem;color:var(--txt);letter-spacing:.01em}
   .rm-sub{font-size:.74rem;color:var(--txt-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .rm-cert{color:var(--teal);font-weight:800}
   .rm-right{display:flex;align-items:center;gap:.45rem;flex-shrink:0}
@@ -432,6 +432,6 @@
   .rm-it-dot[data-state="done"]{background:var(--teal);border-color:var(--teal)}
   .rm-it-dot[data-state="partial"]{border-color:#f59e0b}
   .rm-it-half{width:7px;height:7px;border-radius:50%;background:#f59e0b}
-  .rm-it-title{font-size:.74rem;line-height:1.35;flex:1;min-width:0}
-  .rm-it-tag{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;flex-shrink:0}
+  .rm-it-title{font-family:var(--ff-head);font-size:.74rem;line-height:1.35;flex:1;min-width:0}
+  .rm-it-tag{font-family:var(--ff-head);font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;flex-shrink:0}
 </style>

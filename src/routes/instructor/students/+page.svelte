@@ -149,7 +149,7 @@
   .table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border)}
   table{width:100%;border-collapse:collapse;table-layout:fixed}
   th,td{vertical-align:middle;padding:.45rem .625rem;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  th{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--txt-3);background:var(--bg-raised);border-bottom:1px solid var(--border)}
+  th{font-family:var(--ff-head);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--txt-3);background:var(--bg-raised);border-bottom:1px solid var(--border)}
   td{border-bottom:1px solid var(--border);font-size:.82rem;color:var(--txt)}
   tr:last-child td{border-bottom:none}
   .name-link{display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--txt);font-weight:500}

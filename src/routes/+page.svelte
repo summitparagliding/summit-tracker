@@ -118,7 +118,7 @@
   .lcard{width:100%;max-width:380px;padding:2.5rem 2rem;position:relative;z-index:1}
   .logo-wrap{display:flex;justify-content:center;margin-bottom:1.75rem}
   .logo{height:72px;object-fit:contain}
-  .subtitle{text-align:center;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--txt-3);margin-bottom:1.75rem}
+  .subtitle{font-family:var(--ff-head);text-align:center;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--txt-3);margin-bottom:1.75rem}
   .err-box{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:.5rem .75rem;color:#f87171;font-size:.82rem;margin-bottom:.875rem;text-align:center}
   .field{margin-bottom:1rem}
   .field label{display:block;font-size:.78rem;font-weight:600;color:var(--txt-2);margin-bottom:.3rem}

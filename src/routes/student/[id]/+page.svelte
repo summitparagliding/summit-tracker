@@ -1289,8 +1289,8 @@
  /* Day plans */
  /* Day plans — unified styling with msg-card */
  .plan-card{padding:0;overflow:hidden;margin-bottom:.75rem}
- .plan-hdr-btn{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;cursor:pointer;user-select:none;width:100%;background:none;border:none;color:inherit;text-align:left}
- .plan-hdr-btn:hover{background:var(--bg-raised)}
+ .plan-hdr-btn{font-family:var(--ff-head);display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;cursor:pointer;user-select:none;width:100%;background:none;border:none;color:inherit;text-align:left}
+ .plan-hdr-btn:hover{font-family:var(--ff-head);background:var(--bg-raised)}
  .plan-hdr-title{font-family:var(--ff-head);font-size:.85rem;font-weight:700;color:var(--txt)}
  .plan-count-badge{font-family:var(--ff-head);background:var(--teal);color:#fff;font-size:.68rem;font-weight:700;padding:.1rem .4rem;border-radius:var(--r-full);min-width:18px;text-align:center}
  .plan-count-badge.plan-new{background:var(--amber);animation:pulse-badge 2s ease-in-out infinite}
@@ -1330,7 +1330,7 @@
 
  /* Flight progress bar */
  .flight-prog-card{margin-bottom:1.25rem;padding:1.1rem 1.25rem}
- .fp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.625rem}
+ .fp-header{font-family:var(--ff-head);display:flex;align-items:center;justify-content:space-between;margin-bottom:.625rem}
  .fp-label{font-family:var(--ff-head);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--txt-2)}
  .fp-count{display:flex;align-items:baseline;gap:.25rem}
  .bonus-tag{font-family:var(--ff-head);font-size:.68rem;color:var(--amber);background:var(--amber-lo);border:1px solid rgba(245,158,11,.2);border-radius:var(--r-full);padding:.1rem .4rem}
@@ -1382,15 +1382,15 @@
  .mini-map{height:180px;border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--border);position:relative;z-index:0}
  /* Messages */
  .msg-card{padding:0;overflow:hidden;margin-bottom:.75rem}
- .msg-header{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;cursor:pointer;user-select:none}
+ .msg-header{font-family:var(--ff-head);display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;cursor:pointer;user-select:none}
  .msg-title-lbl{font-family:var(--ff-head);font-size:.85rem;font-weight:700;color:var(--txt)}
  .msg-badge{background:var(--teal);color:#fff;font-size:.68rem;font-weight:700;padding:.1rem .4rem;border-radius:var(--r-full);min-width:18px;text-align:center}
  .msg-body{padding:.5rem .75rem .75rem;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:.3rem}
  .msg-empty{padding:.25rem 0}
  .msg-item{background:var(--bg-2);border-radius:8px;overflow:hidden}
  .msg-archived{opacity:.7}
- .msg-item-hdr{display:flex;align-items:center;gap:.5rem;padding:.5rem .625rem;cursor:pointer;user-select:none}
- .msg-item-title{flex:1;font-size:.83rem;font-weight:600;color:var(--txt)}
+ .msg-item-hdr{font-family:var(--ff-head);display:flex;align-items:center;gap:.5rem;padding:.5rem .625rem;cursor:pointer;user-select:none}
+ .msg-item-title{font-family:var(--ff-head);flex:1;font-size:.83rem;font-weight:600;color:var(--txt)}
  .msg-item-date{flex-shrink:0}
  .msg-item-body{padding:.5rem .625rem .625rem;border-top:1px solid var(--border)}
  .msg-item-body p{margin:0;color:var(--txt-2);line-height:1.5}
@@ -1504,7 +1504,7 @@
  .equip-card{display:flex;flex-direction:column;gap:.375rem}
  .eq-row{display:flex;align-items:center;gap:.5rem}
  .equip-form-card{}
-  .bill-hdr{display:flex;align-items:center;justify-content:space-between;gap:.5rem;cursor:pointer;padding:.1rem 0;margin-bottom:.1rem}
+  .bill-hdr{font-family:var(--ff-head);display:flex;align-items:center;justify-content:space-between;gap:.5rem;cursor:pointer;padding:.1rem 0;margin-bottom:.1rem}
   .bill-body{padding-top:.35rem;border-top:1px solid var(--border)}
   .bill-balance-row{border-top:1px solid var(--border);padding-top:.3rem;margin-top:.25rem}
   .bill-balance{font-size:.88rem;font-weight:800}
@@ -1519,14 +1519,14 @@
   .debrief-dismiss{background:none;border:none;color:var(--txt-3);cursor:pointer;font-size:.75rem;flex-shrink:0;padding:.1rem .25rem}
   .undo-toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:var(--bg-raised);border:1px solid var(--teal);border-radius:8px;padding:.4rem .75rem;display:flex;align-items:center;gap:.75rem;z-index:300;box-shadow:0 2px 12px rgba(0,0,0,.3)}
   .undo-btn{background:var(--teal);color:#fff;border:none;border-radius:6px;padding:.2rem .55rem;font-size:.75rem;font-weight:700;cursor:pointer}
-  .bill-hdr{display:flex;align-items:center;justify-content:space-between;gap:.5rem;cursor:pointer;padding:.1rem 0;margin-bottom:.1rem}
+  .bill-hdr{font-family:var(--ff-head);display:flex;align-items:center;justify-content:space-between;gap:.5rem;cursor:pointer;padding:.1rem 0;margin-bottom:.1rem}
   .bill-body{padding-top:.35rem;border-top:1px solid var(--border)}
   .bill-balance-row{border-top:1px solid var(--border);padding-top:.3rem;margin-top:.25rem}
   .bill-balance{font-size:.88rem;font-weight:800}
   .bill-doc-row{display:flex;align-items:center;gap:.4rem;margin-top:.35rem;padding-top:.35rem;border-top:1px solid var(--border)}
   /* Dashboard cards (orders + payments) */
   .dash-card{padding:.75rem .875rem;margin-bottom:.75rem}
-  .dash-card-hdr{display:flex;align-items:center;gap:.5rem;margin-bottom:.625rem}
+  .dash-card-hdr{font-family:var(--ff-head);display:flex;align-items:center;gap:.5rem;margin-bottom:.625rem}
   .dash-card-title{font-family:var(--ff-head);font-size:.88rem;font-weight:800;color:var(--txt);flex:1}
   .balance-pill{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.3);border-radius:10px;padding:.1rem .45rem;font-size:.7rem;font-weight:700;font-family:var(--ff-head)}
   .new-order-form{margin-bottom:.5rem}
@@ -1552,8 +1552,8 @@
   .rf-num{color:var(--txt-3);font-family:var(--ff-head);min-width:18px;text-align:right}
   .rf-info{flex:1;display:flex;flex-direction:column;gap:.05rem;padding:0 .4rem}
   .rf-stats{display:flex;flex-direction:column;align-items:flex-end;gap:.05rem;flex-shrink:0}
-  .dash-toggle-hdr{width:100%;display:flex;align-items:center;justify-content:space-between;background:none;border:none;cursor:pointer;padding:0;margin-bottom:0}
-  .dash-toggle-hdr:focus{outline:none}
+  .dash-toggle-hdr{font-family:var(--ff-head);width:100%;display:flex;align-items:center;justify-content:space-between;background:none;border:none;cursor:pointer;padding:0;margin-bottom:0}
+  .dash-toggle-hdr:focus{font-family:var(--ff-head);outline:none}
   .badge-teal{background:rgba(0,232,198,.15);color:var(--teal);border-radius:8px;padding:.05rem .4rem;font-size:.65rem;font-weight:700}
   .bill-doc-link{display:flex;align-items:center;gap:.625rem;padding:.5rem .35rem;background:var(--bg-2);border-radius:8px;text-decoration:none;transition:background .12s}
   .balance-pill-sm{font-size:.68rem;font-weight:700;color:#f59e0b;background:rgba(245,158,11,.1);border-radius:8px;padding:.1rem .4rem;flex-shrink:0}

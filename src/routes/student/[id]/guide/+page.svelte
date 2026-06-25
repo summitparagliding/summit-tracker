@@ -177,7 +177,7 @@
   .guide-cat{font-family:var(--ff-head);font-size:.68rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--teal);margin:1.1rem 0 .45rem;padding-bottom:.3rem;border-bottom:1px solid var(--border)}
   .guide-sections{display:flex;flex-direction:column;gap:.4rem}
   .guide-section{background:var(--bg-raised);border:1px solid var(--border);border-radius:10px;overflow:hidden}
-  .guide-hdr{display:flex;align-items:center;gap:.5rem;width:100%;background:none;border:none;cursor:pointer;padding:.7rem .9rem;text-align:left;color:var(--txt)}
+  .guide-hdr{font-family:var(--ff-head);display:flex;align-items:center;gap:.5rem;width:100%;background:none;border:none;cursor:pointer;padding:.7rem .9rem;text-align:left;color:var(--txt)}
   .guide-label{flex:1;font-family:var(--ff-head);font-size:.88rem;font-weight:700;color:var(--txt)}
   .guide-chev{flex-shrink:0;color:var(--txt-3);transition:transform .2s}
   .guide-body{padding:.1rem .9rem .85rem;color:var(--txt-2);font-family:var(--ff-body);line-height:1.7;font-size:.8rem;border-top:1px solid var(--border)}

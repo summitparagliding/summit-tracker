@@ -138,12 +138,12 @@
   .page-hd h1{font-size:1.5rem}
   .page-hd p{color:var(--txt-2);font-size:.82rem;margin-top:.2rem}
 
-  .day-header{display:flex;align-items:center;gap:.875rem;margin:1.25rem 0 .5rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)}
+  .day-header{font-family:var(--ff-head);display:flex;align-items:center;gap:.875rem;margin:1.25rem 0 .5rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)}
   .day-date{font-family:var(--ff-head);font-weight:700;font-size:.95rem;color:var(--txt)}
   .day-count{margin-left:auto}
 
   .student-day-block{margin-bottom:.625rem;padding:.875rem 1rem}
-  .sdb-header{display:flex;align-items:center;gap:.625rem;margin-bottom:.625rem}
+  .sdb-header{font-family:var(--ff-head);display:flex;align-items:center;gap:.625rem;margin-bottom:.625rem}
   .sdb-av{width:26px;height:26px;border-radius:50%;background:var(--teal-lo);border:1px solid var(--teal-border);color:var(--teal);font-family:var(--ff-head);font-weight:800;font-size:.78rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
   .sdb-name{font-weight:700;font-size:.875rem;flex:1}
   .sdb-count{flex-shrink:0}

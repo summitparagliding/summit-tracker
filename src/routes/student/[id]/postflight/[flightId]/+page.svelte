@@ -485,9 +485,9 @@
 </form>
 
 <style>
-  .pf-header{display:flex;align-items:center;gap:.875rem;margin-bottom:1.25rem}
+  .pf-header{font-family:var(--ff-head);display:flex;align-items:center;gap:.875rem;margin-bottom:1.25rem}
   .pf-logo{width:44px;height:44px;border-radius:var(--r-sm);object-fit:cover;border:1px solid var(--border);flex-shrink:0}
-  .pf-header h1{font-size:1.3rem}
+  .pf-header h1{font-family:var(--ff-head);font-size:1.3rem}
   .field-block{margin-bottom:.875rem}
 
   .time-banner{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:rgba(0,184,122,.07);border:1px solid var(--teal-border);border-radius:var(--r-md);margin-bottom:.875rem;flex-wrap:wrap}
@@ -513,7 +513,7 @@
   .suggest-pill{display:flex;align-items:center;gap:.4rem;padding:.4rem .75rem;background:var(--teal-lo);border:1px solid var(--teal-border);border-radius:var(--r-sm);margin-bottom:.5rem}
   .ex-grp{border-bottom:1px solid var(--border)}
   .ex-grp:last-of-type{border-bottom:none}
-  .ex-grp-hdr{display:flex;align-items:center;gap:.5rem;width:100%;background:none;border:none;cursor:pointer;padding:.6rem 0;text-align:left}
+  .ex-grp-hdr{font-family:var(--ff-head);display:flex;align-items:center;gap:.5rem;width:100%;background:none;border:none;cursor:pointer;padding:.6rem 0;text-align:left}
   .ex-grp-lbl{flex:1;font-family:var(--ff-head);font-size:.78rem;font-weight:700;color:var(--txt-2)}
   .ex-grp-count{background:var(--teal);color:var(--txt-inv);font-family:var(--ff-head);font-size:.65rem;font-weight:700;padding:.1rem .4rem;border-radius:var(--r-full);min-width:18px;text-align:center}
   .ex-grp-list{display:flex;flex-direction:column;gap:.2rem;padding-bottom:.4rem}
@@ -532,8 +532,8 @@
   .ind-sel{width:20px;height:20px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center}
   .ind-empty{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border)}
 
-  .ex-title{flex:1;font-size:.855rem;font-weight:500;color:var(--txt);text-align:left}
-  .ex-title.dimmed{color:var(--txt-3)}
+  .ex-title{font-family:var(--ff-head);flex:1;font-size:.855rem;font-weight:500;color:var(--txt);text-align:left}
+  .ex-title.dimmed{font-family:var(--ff-head);color:var(--txt-3)}
 
   .ex-badge{font-family:var(--ff-head);font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:var(--r-full);white-space:nowrap;flex-shrink:0}
   .ex-badge.passed{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.25)}

@@ -276,7 +276,7 @@
 
   /* Methodology */
   .method-note{background:var(--bg-raised);border-radius:10px;padding:.75rem 1rem;border-left:3px solid var(--border)}
-  .method-title{font-weight:700;color:var(--txt-2);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.05em}
+  .method-title{font-family:var(--ff-head);font-weight:700;color:var(--txt-2);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.05em}
   .method-body{line-height:1.6}
   .xs{font-size:.75rem}
   .dimmed{color:var(--txt-3)}

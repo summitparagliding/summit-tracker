@@ -87,8 +87,8 @@
 {/if}
 
 <style>
-  .page-title{font-size:1.15rem;font-weight:700;color:var(--txt);margin-bottom:.75rem}
-  .section-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt-3);margin-bottom:.4rem}
+  .page-title{font-family:var(--ff-head);font-size:1.15rem;font-weight:700;color:var(--txt);margin-bottom:.75rem}
+  .section-label{font-family:var(--ff-head);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt-3);margin-bottom:.4rem}
   .xs{font-size:.75rem} .muted{color:var(--txt-3)}
   /* PDF overlay — covers everything including bottom nav */
   .pdf-overlay{position:fixed;inset:0;z-index:500;background:#1a1a2e;display:flex;flex-direction:column}
@@ -101,7 +101,7 @@
   .lib-list{display:flex;flex-direction:column;gap:.4rem}
   .lib-item{display:flex;align-items:center;gap:.625rem;background:var(--bg-raised);border:1px solid var(--border);border-radius:10px;padding:.625rem .875rem;cursor:pointer;text-align:left;width:100%;transition:border-color .15s}
   .lib-item:hover{border-color:var(--teal-border)}
-  .lib-title{font-weight:600;font-size:.9rem;color:var(--txt)}
+  .lib-title{font-family:var(--ff-head);font-weight:600;font-size:.9rem;color:var(--txt)}
   /* Quiz launch */
   .quiz-launch{display:flex;align-items:center;gap:.75rem;background:var(--bg-raised);border:1px solid var(--border);border-radius:10px;padding:.75rem .875rem;cursor:pointer;text-align:left;width:100%;transition:border-color .15s}
   .quiz-launch:hover{border-color:var(--teal-border)}

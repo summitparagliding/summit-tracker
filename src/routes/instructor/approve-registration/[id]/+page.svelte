@@ -58,7 +58,7 @@
 <style>
   .ap-wrap{padding:1.25rem;max-width:420px;margin:0 auto;display:flex;flex-direction:column;gap:.75rem}
   .ap-back{color:var(--teal);text-decoration:none;font-size:.78rem}
-  .ap-title{font-size:1.1rem;font-weight:800;color:var(--txt);margin:0}
+  .ap-title{font-family:var(--ff-head);font-size:1.1rem;font-weight:800;color:var(--txt);margin:0}
   .ap-info-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:10px;padding:.875rem;display:flex;flex-direction:column;gap:.2rem}
   .ap-name{font-size:.95rem;font-weight:700;color:var(--txt)}
   .ap-msg{margin-top:.35rem;color:var(--txt-2);font-style:italic}

@@ -67,7 +67,7 @@
   h1{font-size:1.2rem;font-weight:700;margin-bottom:1rem;color:var(--txt)}
   .card{background:var(--bg-raised);border:1px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:1rem}
   .danger-zone{border-color:rgba(220,38,38,.3)}
-  .dz-title{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#dc2626;margin-bottom:.75rem}
+  .dz-title{font-family:var(--ff-head);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#dc2626;margin-bottom:.75rem}
   .dz-item{display:flex;flex-direction:column;gap:.75rem}
   .dz-label{font-size:.9rem;font-weight:600;color:var(--txt)}
   .xs{font-size:.75rem} .muted{color:var(--txt-3)}

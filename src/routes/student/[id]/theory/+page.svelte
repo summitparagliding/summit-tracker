@@ -232,7 +232,7 @@
  .qp-bar{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:.3rem}
  .qp-fill{height:100%;background:var(--teal);border-radius:3px;transition:width .3s}
  .quiz-card{background:var(--bg-raised);border-radius:12px;padding:1rem;display:flex;flex-direction:column;gap:.75rem}
- .quiz-cat{color:var(--teal);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+ .quiz-cat{font-family:var(--ff-head);color:var(--teal);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
  .quiz-q{font-size:.95rem;font-weight:600;color:var(--txt);line-height:1.5}
  .quiz-opts{display:flex;flex-direction:column;gap:.4rem}
  .quiz-opt{display:flex;align-items:flex-start;gap:.625rem;padding:.6rem .75rem;border-radius:8px;border:1.5px solid var(--border);background:var(--bg-2);color:var(--txt);text-align:left;cursor:pointer;transition:all .15s;font-size:.88rem}
@@ -258,17 +258,17 @@
  .phase-label { font-family:var(--ff-head);font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin:1.25rem 0 .5rem }
  .theory-card { margin-bottom:.5rem;padding:.875rem 1rem;transition:border-color .15s }
  .theory-card.done { border-color:rgba(34,197,94,.2) }
- .tc-header { display:flex;align-items:center;gap:.75rem;width:100%;background:none;border:none;cursor:pointer;text-align:left;padding:0 }
+ .tc-header {font-family:var(--ff-head); display:flex;align-items:center;gap:.75rem;width:100%;background:none;border:none;cursor:pointer;text-align:left;padding:0 }
  .tc-status { flex-shrink:0;width:20px;display:flex;align-items:center;justify-content:center }
  .tc-circle { width:16px;height:16px;border-radius:50%;border:2px solid var(--border) }
- .tc-title { flex:1;font-weight:600;font-size:.9rem;color:var(--txt) }
+ .tc-title {font-family:var(--ff-head); flex:1;font-weight:600;font-size:.9rem;color:var(--txt) }
  .tc-desc { margin-top:.5rem;padding-left:1.75rem }
  .tc-content { font-size:.855rem;color:var(--txt);margin-top:.875rem;padding-left:1.75rem;line-height:1.75 }
  .tc-actions { display:flex;align-items:center;gap:.75rem;margin-top:.875rem;padding-left:1.75rem }
 
  .exam-card { margin-bottom:.75rem }
  .exam-top { display:flex;justify-content:space-between;align-items:flex-start;gap:.75rem;flex-wrap:wrap }
- .exam-title { font-weight:700;font-size:.925rem }
+ .exam-title {font-family:var(--ff-head); font-weight:700;font-size:.925rem }
  .inst-note { display:flex;align-items:flex-start;gap:.4rem;font-size:.8rem;color:var(--teal);padding:.5rem .75rem;background:var(--teal-lo);border-radius:var(--r-xs);margin:.5rem 0 }
  .exam-form { margin-top:.875rem;border-top:1px solid var(--border);padding-top:.875rem }
 </style>

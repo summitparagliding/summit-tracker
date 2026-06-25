@@ -576,7 +576,7 @@ Cette action est irréversible.`))
 {/if}
 
 <style>
- .stu-header { display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap; }
+ .stu-header {font-family:var(--ff-head); display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap; }
  .big-av { width:52px;height:52px;border-radius:50%;background:var(--sky-lo);border:2px solid rgba(14,165,233,.3);color:var(--sky);font-family:var(--ff-head);font-weight:800;font-size:1.4rem;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
  .stu-info { flex:1; }
  .stu-info h1 { font-size:1.5rem;margin-bottom:.2rem; }
@@ -586,11 +586,11 @@ Cette action est irréversible.`))
  .ps-item { flex:1;min-width:80px;text-align:center; }
  .ps-item+.ps-item { border-left:1px solid var(--border); }
  .ps-val { display:block;font-family:var(--ff-head);font-size:1.2rem;font-weight:500;line-height:1;margin-bottom:.2rem; }
- .ps-lbl { font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:var(--txt-3); }
+ .ps-lbl {font-family:var(--ff-head); font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:var(--txt-3); }
 
  .two-col { display:grid;grid-template-columns:1fr 1fr;gap:1.25rem; }
  @media(max-width:700px){.two-col{grid-template-columns:1fr;}}
- .sec-title { font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;color:var(--txt-3);margin-bottom:.875rem; }
+ .sec-title {font-family:var(--ff-head); font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;color:var(--txt-3);margin-bottom:.875rem; }
 
  .prog-row { display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem; }
  .pr-lbl { font-size:.8rem;color:var(--txt-2);width:70px;flex-shrink:0; }
@@ -602,7 +602,7 @@ Cette action est irréversible.`))
   .contact-grid{display:flex;flex-direction:column;gap:.3rem}
   .cg-row{display:flex;gap:.5rem;align-items:baseline;padding:.25rem 0;border-bottom:1px solid var(--border)}
   .cg-row:last-child{border-bottom:none}
-  .cg-lbl{font-size:.72rem;font-weight:700;color:var(--txt-3);min-width:80px;text-transform:uppercase;letter-spacing:.04em}
+  .cg-lbl{font-family:var(--ff-head);font-size:.72rem;font-weight:700;color:var(--txt-3);min-width:80px;text-transform:uppercase;letter-spacing:.04em}
   .cg-val{font-size:.88rem;color:var(--txt)}
   .link{color:var(--teal);text-decoration:none}
   .contact-form{background:var(--bg-raised);border-radius:10px;padding:.875rem;display:flex;flex-direction:column;gap:.625rem}
@@ -633,7 +633,7 @@ Cette action est irréversible.`))
   .bill-list{display:flex;flex-direction:column;gap:.4rem}
   .bill-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem;background:var(--bg-raised);border-radius:8px;padding:.5rem .75rem}
   .bill-info{flex:1}
-  .bill-title{font-size:.85rem;font-weight:600;color:var(--txt)}
+  .bill-title{font-family:var(--ff-head);font-size:.85rem;font-weight:600;color:var(--txt)}
   .order-detail-row{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;background:var(--bg-raised);border-radius:8px;padding:.5rem .75rem}
   .order-d-info{flex:1}
   .order-d-desc{font-size:.85rem;color:var(--txt-2);margin-top:.15rem}

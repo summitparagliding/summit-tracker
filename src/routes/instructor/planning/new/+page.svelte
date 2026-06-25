@@ -105,7 +105,7 @@
 
 <style>
  .page-wrap{padding:1.25rem;max-width:560px}
- .page-hdr{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem}
+ .page-hdr{font-family:var(--ff-head);display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem}
  h1{font-size:1.2rem;font-weight:700;color:var(--txt);margin:0}
  .plan-form{display:flex;flex-direction:column;gap:.875rem}
  .fg{display:flex;flex-direction:column;gap:.3rem}

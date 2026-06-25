@@ -358,7 +358,7 @@
 
  /* Subcat blocks */
  .subcat-block{margin-bottom:.5rem}
- .subcat-hdr{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;padding:.5rem 0;gap:.75rem}
+ .subcat-hdr{font-family:var(--ff-head);display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;padding:.5rem 0;gap:.75rem}
  .sh-left{display:flex;align-items:center;gap:.625rem;flex:1;min-width:0}
  .sh-label{font-family:var(--ff-head);font-size:.78rem;font-weight:700;color:var(--txt-2);white-space:nowrap}
  .sh-bar{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;position:relative;max-width:120px}
@@ -374,7 +374,7 @@
  .ex-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:.7rem .875rem;transition:border-color .15s}
  .ex-card.is-passed{border-color:rgba(34,197,94,.15);background:rgba(34,197,94,.02)}
   .ex-top-btn{display:flex;align-items:center;gap:.6rem;width:100%;background:none;border:none;padding:0;cursor:pointer;text-align:left}
-  .ex-top-btn:hover .ex-title{color:var(--teal)}
+  .ex-top-btn:hover .ex-title{font-family:var(--ff-head);color:var(--teal)}
   .ex-expanded{padding-top:.5rem;margin-top:.5rem;border-top:1px dashed var(--border);display:flex;flex-direction:column;gap:.4rem}
 
  .ex-card.is-pending{border-color:rgba(245,158,11,.2)}
@@ -385,9 +385,9 @@
  .ind-pend{width:20px;height:20px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center}
  .ind-empty{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border)}
  .ex-body{flex:1;min-width:0}
- .ex-title{font-weight:600;font-size:.875rem;color:var(--txt);line-height:1.35}
+ .ex-title{font-family:var(--ff-head);font-weight:600;font-size:.875rem;color:var(--txt);line-height:1.35}
  /* Dimmed (not strikeout) for completed */
- .ex-title.dimmed-done{color:var(--txt-3);font-weight:400}
+ .ex-title.dimmed-done{font-family:var(--ff-head);color:var(--txt-3);font-weight:400}
  .ex-desc{margin-top:.2rem}
  .ex-note{display:flex;align-items:flex-start;gap:.35rem;padding:.35rem .5rem;background:var(--teal-lo);border-radius:var(--r-xs);margin-top:.4rem;color:var(--txt-2)}
 

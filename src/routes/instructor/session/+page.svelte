@@ -196,7 +196,7 @@
   .card{background:var(--bg-raised);border:1px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:.75rem;position:relative}
   .step-pill{position:absolute;top:-10px;left:14px;width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-weight:700;font-size:.75rem;display:flex;align-items:center;justify-content:center}
   .fg{display:flex;flex-direction:column;gap:.25rem;margin-bottom:.75rem}
-  .fg-lbl{font-size:.72rem;font-weight:600;color:var(--txt-3);text-transform:uppercase;letter-spacing:.05em}
+  .fg-lbl{font-family:var(--ff-head);font-size:.72rem;font-weight:600;color:var(--txt-3);text-transform:uppercase;letter-spacing:.05em}
   .date-input{background:var(--bg-2);border:1px solid var(--border);border-radius:7px;padding:.35rem .6rem;color:var(--txt);font-size:.88rem;width:100%}
   .stu-grid{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.5rem}
   .stu-chip{padding:.3rem .7rem;border-radius:20px;border:1.5px solid var(--border);background:var(--bg-2);color:var(--txt-2);font-size:.82rem;cursor:pointer;transition:all .15s}
@@ -208,7 +208,7 @@
 
   /* Step 2 */
   .sess-active{display:flex;flex-direction:column;gap:.625rem}
-  .sess-hdr{display:flex;flex-direction:column;gap:.3rem}
+  .sess-hdr{font-family:var(--ff-head);display:flex;flex-direction:column;gap:.3rem}
   .sess-chips{display:flex;flex-wrap:wrap;gap:.25rem}
   .stu-mini{background:rgba(0,184,122,.1);color:var(--teal);border-radius:12px;padding:.15rem .5rem;font-size:.72rem;font-weight:600}
   .cat-tabs{display:flex;gap:.3rem;flex-wrap:wrap}
@@ -231,7 +231,7 @@
 
   /* Log */
   .log-panel{background:var(--bg-raised);border:1px solid var(--teal-border,var(--teal));border-radius:10px;padding:.625rem}
-  .log-title{font-weight:700;color:var(--txt-2);margin-bottom:.4rem}
+  .log-title{font-family:var(--ff-head);font-weight:700;color:var(--txt-2);margin-bottom:.4rem}
   .log-entry{display:flex;align-items:flex-start;gap:.4rem;padding:.2rem 0;border-bottom:1px solid var(--border)}
   .log-entry:last-of-type{border:none}
   .rm-btn{background:none;border:none;color:var(--txt-3);cursor:pointer;font-size:.8rem;flex-shrink:0;padding:.1rem .3rem}

@@ -154,8 +154,8 @@
 
   .student-group { margin-bottom:.875rem;padding:0;overflow:hidden }
 
-  .sg-header { display:flex;align-items:center;gap:.75rem;width:100%;background:none;border:none;cursor:pointer;padding:1rem 1.25rem;text-align:left;transition:background .15s }
-  .sg-header:hover { background:var(--bg-raised) }
+  .sg-header {font-family:var(--ff-head); display:flex;align-items:center;gap:.75rem;width:100%;background:none;border:none;cursor:pointer;padding:1rem 1.25rem;text-align:left;transition:background .15s }
+  .sg-header:hover {font-family:var(--ff-head); background:var(--bg-raised) }
   .sg-av { width:34px;height:34px;border-radius:50%;background:var(--teal-lo);border:1.5px solid var(--teal-border);color:var(--teal);font-family:var(--ff-head);font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0 }
   .sg-info { flex:1 }
   .sg-name { font-weight:700;font-size:.95rem;color:var(--txt) }
@@ -167,7 +167,7 @@
   .so-item { padding:.75rem;background:var(--bg-raised);border-radius:var(--r-sm);border:1px solid var(--border) }
   .exam-item { border-color:rgba(59,130,246,.2);background:rgba(59,130,246,.03) }
   .so-meta { display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.375rem }
-  .so-title { flex:1;font-weight:500 }
+  .so-title {font-family:var(--ff-head); flex:1;font-weight:500 }
   .so-notes { display:flex;align-items:flex-start;gap:.35rem;padding:.35rem .5rem;background:var(--bg-card);border-radius:var(--r-xs);margin-bottom:.5rem }
   .so-form { margin-top:.625rem }
   .so-btns { display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.625rem }

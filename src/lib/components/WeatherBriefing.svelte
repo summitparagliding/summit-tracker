@@ -290,7 +290,7 @@
 
 <style>
   .wb{display:flex;flex-direction:column;gap:.5rem}
-  .wb-hdr{display:flex;align-items:center;justify-content:space-between}
+  .wb-hdr{font-family:var(--ff-head);display:flex;align-items:center;justify-content:space-between}
   .wb-title{font-family:var(--ff-head);font-size:.82rem;font-weight:700;color:var(--txt)}
   .wb-ref{background:none;border:1px solid var(--border);border-radius:5px;padding:.15rem .4rem;cursor:pointer;color:var(--txt-3);font-size:.9rem;line-height:1}
   .wb-ref:disabled{opacity:.4}
@@ -299,7 +299,7 @@
   .wb-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
   .wb-blocks{display:flex;flex-direction:column;gap:.3rem}
   .wb-block{padding:.4rem .6rem;border-radius:0 8px 8px 0;background:var(--bg-raised);display:flex;flex-direction:column;gap:.2rem}
-  .wb-blk-hdr{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+  .wb-blk-hdr{font-family:var(--ff-head);display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
   .wb-blk-row{display:flex;align-items:center;gap:.25rem}
   .wb-blk-ico{width:14px;flex-shrink:0;font-size:.75rem;text-align:center;color:var(--txt-3)}
   .wb-grid-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}

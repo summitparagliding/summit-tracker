@@ -137,7 +137,7 @@
   .wv-cardhead{display:flex;align-items:center;gap:.65rem;width:100%;background:none;border:none;color:#e6edf3;padding:.85rem .9rem;cursor:pointer;text-align:left}
   .wv-status{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#1c3147;color:#9fb4c7;font-weight:800;font-size:.85rem;flex-shrink:0}
   .wv-status.ok{background:#00E8C6;color:#003C4E}
-  .wv-title{font-weight:700;flex:1}
+  .wv-title{font-family:var(--ff-head);font-weight:700;flex:1}
   .wv-tag{opacity:.6}
   .wv-status.opt{background:transparent;border:1.5px dashed var(--border);color:var(--txt-3)}
   .wv-opt{color:var(--txt-3);font-weight:600;font-style:italic}

@@ -639,8 +639,8 @@
 
 <style>
   .snd-wrap{display:flex;flex-direction:column;gap:.4rem}
-  .snd-hdr{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-  .snd-title{font-size:.82rem;font-weight:700;color:var(--txt);flex:1;min-width:120px}
+  .snd-hdr{font-family:var(--ff-head);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .snd-title{font-family:var(--ff-head);font-size:.82rem;font-weight:700;color:var(--txt);flex:1;min-width:120px}
   .snd-legend{display:flex;gap:.5rem;align-items:center;flex-shrink:0}
   .leg-item{display:flex;align-items:center;gap:.2rem}
   .leg-line{width:16px;height:2px;display:block;border-radius:1px}
@@ -656,9 +656,9 @@
   .snd-prom-btn:hover{background:linear-gradient(135deg, rgba(0,184,122,.18), rgba(0,184,122,.06));border-color:var(--teal)}
   .snd-prom-btn-left{display:flex;align-items:center;gap:.5rem}
   .snd-summary{background:var(--bg-2);border-radius:8px;padding:.6rem .75rem;display:flex;flex-direction:column;gap:.25rem}
-  .snd-main-title{font-size:.8rem;font-weight:800;color:var(--txt);margin-bottom:.25rem;text-transform:uppercase;letter-spacing:.04em}
-  .snd-section-hdr{font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;margin-top:.4rem;padding-top:.35rem;border-top:1px solid var(--border)}
-  .snd-section-hdr:first-of-type{border-top:none;margin-top:0;padding-top:0}
+  .snd-main-title{font-family:var(--ff-head);font-size:.8rem;font-weight:800;color:var(--txt);margin-bottom:.25rem;text-transform:uppercase;letter-spacing:.04em}
+  .snd-section-hdr{font-family:var(--ff-head);font-size:.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;margin-top:.4rem;padding-top:.35rem;border-top:1px solid var(--border)}
+  .snd-section-hdr:first-of-type{font-family:var(--ff-head);border-top:none;margin-top:0;padding-top:0}
   .snd-data-row{display:flex;gap:.5rem;justify-content:space-between;align-items:flex-start;font-size:.74rem;line-height:1.4}
   .snd-period{color:var(--txt-2);font-weight:600;flex-shrink:0;min-width:140px}
   .snd-lbl{color:var(--txt-3);flex-shrink:0;min-width:140px}

@@ -245,7 +245,7 @@
 
 <style>
   .page-wrap{padding:1.25rem;max-width:700px}
-  .page-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+  .page-hdr{font-family:var(--ff-head);display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
   h1{font-size:1.3rem;font-weight:700;color:var(--txt)}
   .empty{color:var(--txt-3);padding:2rem;text-align:center}
   .day-list{display:flex;flex-direction:column;gap:.75rem}
@@ -263,7 +263,7 @@
   /* Attendees */
   .attendee-section{margin:.5rem 0;display:flex;flex-direction:column;gap:.35rem}
   .act-group{display:flex;flex-direction:column;gap:.2rem}
-  .act-group-lbl{font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+  .act-group-lbl{font-family:var(--ff-head);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
   .att-pills{display:flex;flex-wrap:wrap;gap:.25rem}
   .att-pill{background:var(--bg-2);border:1px solid;border-radius:12px;font-size:.72rem;font-weight:600;padding:.15rem .5rem}
   .day-actions{margin-top:.625rem;display:flex;align-items:center;flex-wrap:wrap;gap:.5rem}

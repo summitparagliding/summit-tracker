@@ -190,8 +190,8 @@
 
 <style>
   .qe-wrap{display:flex;flex-direction:column;gap:.75rem;padding:.25rem 0}
-  .qe-header{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
-  .qe-title{font-weight:700;font-size:1rem;color:var(--txt)}
+  .qe-header{font-family:var(--ff-head);display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+  .qe-title{font-family:var(--ff-head);font-weight:700;font-size:1rem;color:var(--txt)}
   .qe-close{background:none;border:none;font-size:1.1rem;color:var(--txt-3);cursor:pointer;padding:.25rem}
   .qe-back-btn{background:none;border:none;font-size:.8rem;color:var(--txt-3);cursor:pointer;padding:.2rem 0}
   .qe-prog{font-size:.82rem;color:var(--txt-2);text-align:center}
@@ -209,7 +209,7 @@
   .qe-nav-btn:disabled{opacity:.4;cursor:not-allowed}
   .qe-nav-btn.primary{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:600}
   .setup-group{display:flex;flex-direction:column;gap:.4rem}
-  .setup-label{font-size:.78rem;font-weight:600;color:var(--txt-2);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:.4rem}
+  .setup-label{font-family:var(--ff-head);font-size:.78rem;font-weight:600;color:var(--txt-2);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:.4rem}
   .cat-grid{display:flex;flex-wrap:wrap;gap:.3rem}
   .cat-chip{padding:.28rem .6rem;border-radius:16px;border:1.5px solid var(--border);background:var(--bg-raised);color:var(--txt-2);font-size:.75rem;cursor:pointer;transition:all .15s}
   .cat-chip.sel{border-color:var(--teal);background:rgba(0,184,122,.1);color:var(--teal);font-weight:700}

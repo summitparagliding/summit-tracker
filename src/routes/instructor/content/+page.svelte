@@ -609,7 +609,7 @@
   .content-card { margin-bottom:.5rem;padding:.875rem 1rem }
   .cc-top { display:flex;align-items:flex-start;gap:.625rem;flex-wrap:wrap }
   .cc-expand { background:none;border:none;cursor:pointer;flex-shrink:0;padding:0;margin-top:.1rem }
-  .cc-title { flex:1;font-weight:600;font-size:.875rem;color:var(--txt) }
+  .cc-title {font-family:var(--ff-head); flex:1;font-weight:600;font-size:.875rem;color:var(--txt) }
   .cc-fr { flex-basis:100%;margin-left:1.5rem;margin-top:.1rem }
   .cc-acts { display:flex;gap:.35rem;margin-left:auto;flex-shrink:0 }
 
@@ -622,7 +622,7 @@
   .lib-tab-wrap{max-width:700px}
   .lib-doc-card{padding:.625rem .75rem}
   .fg{display:flex;flex-direction:column;gap:.2rem;margin-bottom:.4rem}
-  .fg-lbl{font-size:.72rem;font-weight:600;color:var(--txt-3);text-transform:uppercase;letter-spacing:.04em}
+  .fg-lbl{font-family:var(--ff-head);font-size:.72rem;font-weight:600;color:var(--txt-3);text-transform:uppercase;letter-spacing:.04em}
   .inp{background:var(--bg-2);border:1px solid var(--border);border-radius:7px;padding:.35rem .6rem;color:var(--txt);font-size:.88rem;width:100%}
   .lib-tab-btn{padding:.25rem .6rem;border:1px solid var(--border);border-radius:6px;background:var(--bg-2);color:var(--txt-3);font-size:.75rem;cursor:pointer}
   .lib-tab-active{border-color:var(--teal);color:var(--teal);background:rgba(0,184,122,.08)}

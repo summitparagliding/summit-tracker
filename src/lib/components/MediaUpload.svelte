@@ -65,7 +65,7 @@
 
 <style>
   .mu-wrap{background:var(--bg-raised);border-radius:8px;padding:.75rem;margin-top:.75rem}
-  .mu-title{font-size:.75rem;font-weight:600;color:var(--txt-2);margin-bottom:.5rem}
+  .mu-title{font-family:var(--ff-head);font-size:.75rem;font-weight:600;color:var(--txt-2);margin-bottom:.5rem}
   .mu-inputs{display:flex;flex-direction:column;gap:.4rem}
   .mu-file{font-size:.8rem;color:var(--txt-2)}
   .mu-cap{background:var(--bg-2);border:1px solid var(--border);border-radius:6px;padding:.35rem .5rem;color:var(--txt);font-size:.85rem}

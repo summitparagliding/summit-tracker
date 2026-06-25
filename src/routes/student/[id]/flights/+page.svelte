@@ -775,11 +775,11 @@
   .flight-map{height:200px;border-radius:8px;overflow:hidden;border:1px solid var(--border);position:relative;z-index:0}
   .notes-grid{display:flex;flex-direction:column;gap:.4rem}
   .note-block{background:var(--bg-2);border-radius:6px;padding:.4rem .5rem}
-  .note-lbl{font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--txt-3);margin-bottom:.15rem}
+  .note-lbl{font-family:var(--ff-head);font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--txt-3);margin-bottom:.15rem}
   .note-txt{color:var(--txt-2);line-height:1.45;margin:0}
   /* Media */
   .media-section{display:flex;flex-direction:column;gap:.4rem}
-  .media-hdr{display:flex;align-items:center;justify-content:space-between}
+  .media-hdr{font-family:var(--ff-head);display:flex;align-items:center;justify-content:space-between}
   .uploading-btn{opacity:.6;cursor:wait}
   .upload-progress{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
   .upload-bar{height:100%;background:var(--teal);border-radius:2px;transition:width .2s}
@@ -792,7 +792,7 @@
   .media-del{border:none}
   /* Debrief */
   .debrief-section{display:flex;flex-direction:column;gap:.4rem}
-  .debrief-hdr{display:flex;align-items:center;justify-content:space-between}
+  .debrief-hdr{font-family:var(--ff-head);display:flex;align-items:center;justify-content:space-between}
   .debrief-form{background:var(--bg-2);border-radius:8px;padding:.5rem .625rem;display:flex;flex-direction:column;gap:.35rem}
   .phase-group{display:flex;flex-direction:column;gap:.2rem}
   .debrief-note-ta{width:100%;background:var(--bg-raised);border:1px solid var(--border);border-radius:8px;padding:.5rem;color:var(--txt);font-size:.82rem;font-family:inherit;resize:vertical}

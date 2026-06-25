@@ -59,8 +59,8 @@
   :global(body){background:#003C4E}
   .reg-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem}
   .reg-card{background:var(--bg-raised,#1a2a2e);border:1px solid rgba(0,232,198,.2);border-radius:16px;padding:2rem;width:100%;max-width:400px}
-  .reg-logo{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal,#00e8c6);margin-bottom:1rem}
-  .reg-title{font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:.4rem}
+  .reg-logo{font-family:var(--ff-head);font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal,#00e8c6);margin-bottom:1rem}
+  .reg-title{font-family:var(--ff-head);font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:.4rem}
   .reg-sub{font-size:.82rem;color:rgba(255,255,255,.6);line-height:1.6;margin-bottom:1.25rem}
   .reg-form{display:flex;flex-direction:column;gap:.75rem}
   .reg-label{display:flex;flex-direction:column;gap:.3rem}
