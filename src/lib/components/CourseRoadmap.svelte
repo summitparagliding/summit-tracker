@@ -26,6 +26,7 @@
   export let exercises = [];
   export let exams     = [];
   export let lang      = 'fr';
+  import { overallProgress } from '$lib/progress.js';
   $: L = lang === 'fr';
 
   // ── DB-authoritative counts (single source of truth) ──────────────────────
@@ -184,32 +185,9 @@
 
   $: doneCount  = steps.filter(s => s.done).length;
 
-  // Weighted progress: fully done = 1.0, partial = proportional, not started = 0
-  // Uses the actual counts already computed above
-  $: weightedProgress = (() => {
-    const weights = [
-      // P1 theory: p1TheoryDone / p1TheoryTotal
-      Math.min(1, p1TheoryDone / Math.max(p1TheoryTotal, 1)),
-      // Ground exercises: groundDone / groundTotal
-      Math.min(1, groundDone / Math.max(groundTotal, 1)),
-      // Practical exams: p1PracDone / p1PracTotal
-      Math.min(1, p1PracDone / Math.max(p1PracTotal, 1)),
-      // P1 theory exam: binary
-      p1ExamOk ? 1 : p1ExamWrit ? 0.5 : 0,
-      // Flights: flightCount / FLIGHT_TOTAL
-      Math.min(1, flightCount / Math.max(FLIGHT_TOTAL, 1)),
-      // In-flight exercises: inFlightDone / inFlightTotal
-      Math.min(1, inFlightDone / Math.max(inFlightTotal, 1)),
-      // P2 exercises: p2ExDone / p2ExTotal
-      Math.min(1, p2ExDone / Math.max(p2ExTotal, 1)),
-      // P2 theory: p2TheoryDone / p2TheoryTotal
-      Math.min(1, p2TheoryDone / Math.max(p2TheoryTotal, 1)),
-      // P2 exam: binary
-      p2ExamOk ? 1 : p2ExamWrit ? 0.5 : 0,
-    ];
-    const total = weights.reduce((s, w) => s + w, 0);
-    return Math.round((total / steps.length) * 100);
-  })();
+  // Weighted progress — delegated to the shared single-source-of-truth so the
+  // dashboard, profile and instructor views all show the identical number.
+  $: weightedProgress = overallProgress({ exercises, exams, theory, readiness, stats });
 
   $: pct        = weightedProgress;
   $: currentIdx = steps.findIndex(s => !s.done);

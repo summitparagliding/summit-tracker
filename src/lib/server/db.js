@@ -5,6 +5,7 @@ import { createHash, randomBytes } from 'crypto';
 import { seedCurriculum } from './seed.js';
 import { seedQuizQuestions } from './quiz-seed.js';
 import { seedFFVLQuestions } from './ffvl-seed.js';
+import { overallProgress } from '../progress.js';
 
 // Load better-sqlite3 safely — static import would kill the whole module on failure
 const _require = createRequire(import.meta.url);
@@ -1242,7 +1243,14 @@ export function getAllStudentsProgress() {
     const thTotal  = db.prepare('SELECT COUNT(*) as n FROM theory_blocks').get().n;
     const thDone   = db.prepare('SELECT COUNT(*) as n FROM theory_progress WHERE student_id=? AND completed=1').get(s.id).n;
     const flights  = db.prepare("SELECT COUNT(*) as n FROM flights WHERE student_id=? AND status='complete'").get(s.id).n;
-    return { ...s, exTotal, exPassed, exPending, thTotal, thDone, flights };
+    // Canonical overall progress — identical method to the student dashboard
+    let progressPct = 0;
+    try {
+      const dash = getStudentDashboard(s.id);
+      const readiness = getStudentReadiness(s.id);
+      progressPct = overallProgress({ exercises: dash.exercises, exams: dash.exams, theory: dash.theory, readiness, stats: dash.stats });
+    } catch (e) { progressPct = 0; }
+    return { ...s, exTotal, exPassed, exPending, thTotal, thDone, flights, progressPct };
   });
 }
 

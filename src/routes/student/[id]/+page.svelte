@@ -6,6 +6,7 @@
  import { lang } from '$lib/stores/lang.js';
  import ColourSignature from '$lib/components/ColourSignature.svelte';
  import CourseRoadmap   from '$lib/components/CourseRoadmap.svelte';
+ import { overallProgress } from '$lib/progress.js';
  import Icon from '$lib/components/Icon.svelte';
  import { onMount } from 'svelte';
  export let data;
@@ -92,7 +93,7 @@
  // Overall course progress
  $: total = (stats.theoryTotal + stats.exTotal + stats.examsTotal) || 1;
  $: done = stats.theoryDone + stats.exDone + stats.examsDone;
- $: pct = Math.round((done / total) * 100);
+ $: pct = overallProgress({ exercises: dash?.exercises || [], exams: dash?.exams || [], theory: dash?.theory || [], readiness: data.readiness, stats: { ...stats, flightCount } });
 
  let expandedFlight = null;
  let flightMaps = {};
@@ -1319,7 +1320,7 @@
  .plan-spots{margin-top:.15rem}
  .prog-inner{display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap}
  .prog-pct{text-align:center;flex-shrink:0;min-width:70px}
- .pct-num{font-family:var(--ff-head);font-size:2.4rem;font-weight:400;color:var(--teal);line-height:1}
+ .pct-num{font-family:var(--ff-head);font-size:2.4rem;font-weight:800;color:var(--teal);line-height:1;letter-spacing:-.01em}
  .pct-sign{font-family:var(--ff-head);font-size:1.2rem}
  .pct-label{font-size:.55rem;text-transform:uppercase;letter-spacing:.07em;color:var(--txt-3);margin-top:.2rem;font-family:var(--ff-head);font-weight:700}
  .prog-bars{flex:1;min-width:160px;display:flex;flex-direction:column;gap:.625rem;justify-content:center}

@@ -471,7 +471,7 @@
 <div class="section-label">Student Progress</div>
 <div class="students-grid">
   {#each allProgress as s}
-    {@const totalPct = Math.round(((s.thDone||0)+(s.exPassed||0)+(s.flights||0)) / ((s.thTotal||1)+(s.exTotal||1)+25) * 100)}
+    {@const totalPct = s.progressPct ?? 0}
     <a href="/instructor/students/{s?.id}" class="student-prog-card-compact card">
       <div class="spc-av">{(s?.name||"?")[0]}</div>
       <div class="spc-info">
