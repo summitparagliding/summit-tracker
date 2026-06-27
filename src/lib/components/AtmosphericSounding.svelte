@@ -20,13 +20,26 @@
     { label:'15h', hr:15 },
     { label:'17h', hr:17 },
     { label:'19h', hr:19 },
+    { label:'21h', hr:21 },
   ];
 
   let loading  = true;
   let error    = null;
   let allData  = {}; // { hr: [{alt, temp, dewpt}] }
   let summaryOpen = true;
+  let open = true;
   let selected = 11; // default to 11h
+
+  // Arrow navigation through the available sounding hours
+  $: availHours = HOURS.filter(h => allData[h.hr]).map(h => h.hr);
+  $: curLabel   = HOURS.find(h => h.hr === selected)?.label || '';
+  function stepHour(d) {
+    if (!availHours.length) return;
+    let i = availHours.indexOf(selected);
+    if (i < 0) i = 0;
+    i = Math.max(0, Math.min(availHours.length - 1, i + d));
+    selected = availHours[i];
+  }
 
   import { onMount } from 'svelte';
   import { YAMASKA_LAUNCHES, angleDiff, bestLaunch } from '$lib/launchParams.js';
@@ -457,8 +470,12 @@
 </script>
 
 <div class="snd-wrap">
-  <div class="snd-hdr">
+  <button class="snd-hdr-toggle" on:click={() => open = !open}>
     <span class="snd-title">{L?'Sondage atmosphérique':'Atmospheric sounding'}</span>
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--txt-3);flex-shrink:0;transition:transform .2s;transform:rotate({open?180:0}deg)"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  {#if open}
+  <div class="snd-hdr">
     <div class="snd-legend">
       <span class="leg-item"><span class="leg-line" style="background:#ef4444"></span><span class="xs">T</span></span>
       <span class="leg-item"><span class="leg-line" style="background:#22c55e"></span><span class="xs">Td</span></span>
@@ -468,15 +485,17 @@
   </div>
 
   {#if Object.keys(allData).length}
-  <!-- Time selector -->
-  <div class="time-chips">
-    {#each HOURS as {label, hr}}
-    {#if allData[hr]}
-    <button class="time-chip" class:sel={selected===hr} on:click={() => selected=hr}>
-      {label}
+  <!-- Time selector: arrows + current hour in the middle -->
+  <div class="time-nav">
+    <button class="time-arrow" on:click={() => stepHour(-1)}
+      disabled={availHours.indexOf(selected) <= 0} aria-label={L?'Heure précédente':'Previous hour'}>
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
     </button>
-    {/if}
-    {/each}
+    <div class="time-cur">{curLabel}</div>
+    <button class="time-arrow" on:click={() => stepHour(1)}
+      disabled={availHours.indexOf(selected) >= availHours.length-1} aria-label={L?'Heure suivante':'Next hour'}>
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
   </div>
   {/if}
 
@@ -635,11 +654,13 @@
     · {L?'Profil à':'Profile at'} {HOURS.find(h=>h.hr===selected)?.label} · {new Date().toLocaleDateString(L?'fr-CA':'en-CA',{timeZone:'America/Toronto'})}
   </div>
   {/if}
+  {/if}
 </div>
 
 <style>
   .snd-wrap{display:flex;flex-direction:column;gap:.4rem}
-  .snd-hdr{font-family:var(--ff-head);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+  .snd-hdr{font-family:var(--ff-head);display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.4rem}
+  .snd-hdr-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;padding:0;cursor:pointer;gap:.5rem;margin-bottom:.4rem}
   .snd-title{font-family:var(--ff-head);font-size:.82rem;font-weight:700;color:var(--txt);flex:1;min-width:120px}
   .snd-legend{display:flex;gap:.5rem;align-items:center;flex-shrink:0}
   .leg-item{display:flex;align-items:center;gap:.2rem}
@@ -647,9 +668,11 @@
   .dalr-line{background:#f97316;opacity:.7}
   .snd-btn{background:none;border:1px solid var(--border);border-radius:5px;padding:.15rem .4rem;cursor:pointer;color:var(--txt-3);font-size:.88rem;line-height:1;flex-shrink:0}
   .snd-btn:disabled{opacity:.4}
-  .time-chips{display:flex;gap:.3rem;flex-wrap:wrap}
-  .time-chip{padding:.22rem .55rem;border-radius:16px;border:1.5px solid var(--border);background:var(--bg-raised);color:var(--txt-2);font-size:.73rem;font-weight:600;cursor:pointer;transition:all .15s}
-  .time-chip.sel{border-color:var(--teal);background:rgba(0,184,122,.1);color:var(--teal)}
+  .time-nav{display:flex;align-items:center;justify-content:center;gap:1rem;margin:.1rem 0 .2rem}
+  .time-arrow{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;border:1.5px solid var(--border);background:var(--bg-raised);color:var(--teal);cursor:pointer;transition:all .15s;flex-shrink:0}
+  .time-arrow:active{background:rgba(0,184,122,.12)}
+  .time-arrow:disabled{opacity:.3;color:var(--txt-3);cursor:default}
+  .time-cur{font-family:var(--ff-head);font-size:1.25rem;font-weight:800;color:var(--teal);min-width:74px;text-align:center;line-height:1.2}
   .snd-state{display:flex;align-items:center;gap:.4rem;padding:.25rem 0}
   .snd-info{display:flex;gap:.875rem;flex-wrap:wrap;padding:.3rem 0}
   .snd-prom-btn{width:100%;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg, rgba(0,184,122,.10), rgba(0,184,122,.02));border:1px solid rgba(0,184,122,.35);border-radius:8px;padding:.6rem .75rem;cursor:pointer;color:var(--teal);font-size:.85rem;margin:.5rem 0;transition:all .15s}

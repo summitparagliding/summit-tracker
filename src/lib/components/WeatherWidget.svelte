@@ -9,6 +9,7 @@
 
   const LAT = 45.472332, LON = -72.882132;  // Mont Yamaska launch — corrected
   let fly7Open = false;
+  let fc3Open  = true;
   let forecast = null, loading = true, err = null;
 
   const DIRS16 = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
@@ -259,7 +260,12 @@
   <!-- NEXT 12H HOURLY -->
   {#if show12h && forecast.next12.length}
   <div class="section-card">
-    <div class="sec-lbl">{lang==='fr'?'Prochaines 12h':'Next 12 hours'}</div>
+    <div class="sec-lbl sec-lbl-row">
+      <span>{lang==='fr'?'Prochaines 12h':'Next 12 hours'}</span>
+      <span class="scroll-hint">{lang==='fr'?'glissez':'swipe'}
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
+      </span>
+    </div>
     <div class="hourly-row">
       {#each forecast.next12.filter((_, i) => i % 2 === 0) as hh}
         {@const score = bestLaunchScore(hh.wind, hh.dirDeg, hh.gust, hh.precip) ?? 0}
@@ -302,7 +308,18 @@
       <span class="muted" style="margin-left:.5rem">{lang==='fr'?'Gradient = nuance':'Gradient = nuance'}</span>
     </div>
     <!-- 3-day block -->
-    <div class="forecast-subhdr xs">{lang==='fr'?'3 prochains jours':'Next 3 days'}</div>
+    <button class="ww-prom-btn" on:click={() => fc3Open = !fc3Open}>
+      <div class="ww-prom-btn-left">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        <span style="font-weight:700">{lang==='fr'?'3 prochains jours':'Next 3 days'}</span>
+      </div>
+      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"
+        style="transition:transform .2s;transform:rotate({fc3Open?180:0}deg)"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    {#if fc3Open}
     <div class="forecast-grid">
       {#each forecast.days.slice(0,3) as day}
         {@const pct = day.score ?? 0}
@@ -334,6 +351,7 @@
         </div>
       {/each}
     </div>
+    {/if}
     <!-- 7 prochains jours — prominent button + collapsible -->
     <button class="ww-prom-btn" on:click={() => fly7Open = !fly7Open}>
       <div class="ww-prom-btn-left">
@@ -405,6 +423,11 @@
   .act-rng{min-width:70px;text-align:right}
   .act-icon{min-width:20px;text-align:right;display:flex;justify-content:flex-end;align-items:center}
   .hourly-row{display:flex;gap:.3rem;overflow-x:auto;padding-bottom:.25rem}
+  .sec-lbl-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+  .scroll-hint{display:inline-flex;align-items:center;gap:.2rem;font-family:var(--ff-body);font-size:.62rem;font-weight:600;text-transform:none;letter-spacing:0;color:var(--txt-3);opacity:.85;animation:hintpulse 1.8s ease-in-out infinite}
+  .scroll-hint svg{animation:hintnudge 1.8s ease-in-out infinite}
+  @keyframes hintpulse{0%,100%{opacity:.5}50%{opacity:.95}}
+  @keyframes hintnudge{0%,100%{transform:translateX(0)}50%{transform:translateX(3px)}}
   .h-cell{flex-shrink:0;width:52px;background:var(--bg-2);border-radius:7px;padding:.35rem .25rem;text-align:center;display:flex;flex-direction:column;gap:.1rem;align-items:center}
   .h-spd{font-size:.9rem;font-weight:700;color:var(--txt)}
   /* Forecast */

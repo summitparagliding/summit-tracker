@@ -10,6 +10,7 @@
   let error    = null;
   let wxData   = null;
   let gridOpen = false;
+  let bodyOpen = true;
   let model    = null;
 
   import { onMount } from 'svelte';
@@ -69,9 +70,9 @@
 
     const hours = workIdxs.map(i => ({
       time:  h.time[i].slice(11, 16),
-      spd:   h.wind_speed_10m?.[i],
+      spd:   h.wind_speed_10m?.[i] != null ? Math.round(h.wind_speed_10m[i]) : null,
       dir:   h.wind_direction_10m?.[i],
-      gust:  h.wind_gusts_10m?.[i] ?? null,
+      gust:  h.wind_gusts_10m?.[i] != null ? Math.round(h.wind_gusts_10m[i]) : null,
       precip:h.precipitation_probability?.[i] ?? null,
     }));
 
@@ -80,6 +81,19 @@
     const midHr    = hours[Math.floor(hours.length / 2)];
     const domDir   = midHr?.dir;
     const maxPrecip= hours.reduce((m, h) => Math.max(m, h.precip ?? 0), 0);
+
+    // Current hour (latest hour <= now) — the headline verdict uses these so it
+    // matches the "conditions now" card exactly instead of a window average.
+    const nowHr = parseInt(new Date().toLocaleString('en-US', { timeZone: 'America/Toronto', hour: '2-digit', hour12: false }), 10);
+    let curIdx = 0;
+    for (let i = 0; i < hours.length; i++) {
+      if (parseInt(hours[i].time.slice(0, 2), 10) <= nowHr) curIdx = i;
+    }
+    const cur     = hours[curIdx] || hours[0] || {};
+    const curSpd  = cur.spd ?? avgSpd;
+    const curGust = cur.gust ?? curSpd;   // current-hour gust, never the window peak
+    const curDir  = cur.dir ?? domDir;
+    const curPrecip = cur.precip ?? 0;
 
     const hourScores = hours.map(h => ({
       ...h,
@@ -90,20 +104,24 @@
     }));
 
     const blocks  = timeBriefing(hours, lang);
-    const bestPct = bestLaunchScore(avgSpd, domDir, peakGust || null, maxPrecip);
-    const bestLch = bestLaunch(avgSpd, domDir, peakGust || null);
+    const bestPct = bestLaunchScore(curSpd, curDir, curGust || null, curPrecip);
+    const bestLch = bestLaunch(curSpd, curDir, curGust || null);
 
-    return { avgSpd, peakGust, domDir, maxPrecip, bestPct, bestLch,
+    return { avgSpd, peakGust, domDir, maxPrecip, curSpd, curGust, curDir, bestPct, bestLch,
              hourScores, blocks, flyWindow: flyIdxs.length > 0 };
   }
 </script>
 
 <div class="wb">
   <div class="wb-hdr">
-    <span class="wb-title">{L ? 'Analyse météo — Mont Yamaska' : 'Weather analysis — Mont Yamaska'}</span>
+    <button class="wb-title-btn" on:click={() => bodyOpen = !bodyOpen}>
+      <span class="wb-title">{L ? 'Analyse météo — Mont Yamaska' : 'Weather analysis — Mont Yamaska'}</span>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--txt-3);transition:transform .2s;transform:rotate({bodyOpen?180:0}deg)"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
     <button class="wb-ref" on:click={fetchData} disabled={loading} title="Refresh">↺</button>
   </div>
 
+  {#if bodyOpen}
   {#if loading}
   <div class="wb-state xs muted"><div class="spin"></div> {L ? 'Chargement…' : 'Loading…'}</div>
 
@@ -127,8 +145,8 @@
       <span class="xs muted"> · {wxData.bestLch.key}</span>
       {/if}
       <span class="xs muted">
-        · {wxData.avgSpd ?? '—'} km/h {dirLabel(wxData.domDir)}
-        {#if wxData.peakGust > 0}, {L ? 'rafales' : 'gusts'} {wxData.peakGust} km/h{/if}
+        · {wxData.curSpd ?? '—'} km/h {dirLabel(wxData.curDir)}
+        {#if wxData.curGust > 0}, {L ? 'rafales' : 'gusts'} {wxData.curGust} km/h{/if}
       </span>
     </div>
   </div>
@@ -212,6 +230,9 @@
       style="transition:transform .2s;transform:rotate({gridOpen?180:0}deg)"><polyline points="6 9 12 15 18 9"/></svg>
   </button>
   {#if gridOpen}
+  <div class="scroll-hint">{L?'glissez pour voir les heures':'swipe to see hours'}
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
+  </div>
   <div class="wb-grid-wrap">
     <div class="wb-grid" style="grid-template-columns:72px repeat({wxData.hourScores.length},1fr)">
       <div class="wg-head"></div>
@@ -272,8 +293,12 @@
         <span style="color:#84cc16">80</span>
         <span style="color:#22c55e">100</span>
       </div>
-      <div class="xs muted" style="text-align:center;margin-top:.15rem">
-        {L ? 'No-go · Marginal · Acceptable · Favorable · Excellent' : 'No-go · Marginal · Acceptable · Favourable · Excellent'}
+      <div class="wg-legend-labels">
+        <span style="flex:25;color:#ef4444">{L?'Non volable':'No-go'}</span>
+        <span style="flex:20;color:#f97316">{L?'Limite':'Marginal'}</span>
+        <span style="flex:20;color:#eab308">{L?'Acceptable':'Acceptable'}</span>
+        <span style="flex:15;color:#84cc16">{L?'Favorable':'Favourable'}</span>
+        <span style="flex:20;color:#22c55e">{L?'Excellent':'Excellent'}</span>
       </div>
     </div>
   </div>
@@ -286,11 +311,13 @@
     · 
   </div>
   {/if}
+  {/if}
 </div>
 
 <style>
   .wb{display:flex;flex-direction:column;gap:.5rem}
   .wb-hdr{font-family:var(--ff-head);display:flex;align-items:center;justify-content:space-between}
+  .wb-title-btn{display:flex;align-items:center;gap:.4rem;background:none;border:none;padding:0;cursor:pointer;flex:1;text-align:left}
   .wb-title{font-family:var(--ff-head);font-size:.82rem;font-weight:700;color:var(--txt)}
   .wb-ref{background:none;border:1px solid var(--border);border-radius:5px;padding:.15rem .4rem;cursor:pointer;color:var(--txt-3);font-size:.9rem;line-height:1}
   .wb-ref:disabled{opacity:.4}
@@ -303,6 +330,10 @@
   .wb-blk-row{display:flex;align-items:center;gap:.25rem}
   .wb-blk-ico{width:14px;flex-shrink:0;font-size:.75rem;text-align:center;color:var(--txt-3)}
   .wb-grid-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .scroll-hint{display:flex;align-items:center;justify-content:flex-end;gap:.2rem;font-family:var(--ff-body);font-size:.62rem;font-weight:600;color:var(--txt-3);margin:.15rem 0;animation:hintpulse 1.8s ease-in-out infinite}
+  .scroll-hint svg{animation:hintnudge 1.8s ease-in-out infinite}
+  @keyframes hintpulse{0%,100%{opacity:.5}50%{opacity:.95}}
+  @keyframes hintnudge{0%,100%{transform:translateX(0)}50%{transform:translateX(3px)}}
   .wb-grid{display:grid;gap:2px;min-width:max-content}
   .wg-head{font-size:.6rem;color:var(--txt-3);font-weight:700;background:var(--bg-2);border-radius:3px;padding:.2rem .25rem;text-align:center;min-width:32px}
   .wg-lbl{min-width:72px;background:var(--bg-2);border-radius:3px;padding:.2rem .35rem;display:flex;align-items:center}
@@ -318,5 +349,7 @@
 
   .wg-legend{margin-top:.5rem;padding:.4rem .5rem;background:var(--bg-2);border-radius:6px}
   .wg-legend-bar{height:8px;border-radius:4px;background:linear-gradient(to right, #dc2626 0%, #ef4444 25%, #f97316 45%, #eab308 65%, #84cc16 80%, #22c55e 100%)}
-  .wg-legend-ticks{display:flex;justify-content:space-between;margin-top:.2rem;font-weight:700;font-family:var(--ff-mono,monospace)}
+  .wg-legend-ticks{display:flex;justify-content:space-between;margin-top:.2rem;font-weight:700;font-family:var(--ff-head)}
+  .wg-legend-labels{display:flex;margin-top:.25rem;gap:2px}
+  .wg-legend-labels span{text-align:center;font-size:.56rem;font-weight:700;font-family:var(--ff-head);text-transform:uppercase;letter-spacing:.02em;line-height:1.2;min-width:0}
 </style>

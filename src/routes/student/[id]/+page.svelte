@@ -777,15 +777,13 @@
 <!-- ── Commandes ──────────────────────────────────────────── -->
 <div class="card dash-card">
   <button class="dash-toggle-hdr" on:click={() => commandesOpen = !commandesOpen}>
-    <div style="display:flex;align-items:center;gap:.5rem">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-      <span class="dash-card-title">{$lang==='fr'?'Commandes':'Orders'}</span>
-      {#if data.orders?.filter(o=>o.status!=='confirmed' && o.status!=='completed').length}
-      <span class="badge-teal">{data.orders.filter(o=>o.status!=='confirmed' && o.status!=='completed').length}</span>
-      {/if}
-    </div>
-    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"
-      style="transition:transform .2s;transform:rotate({commandesOpen?180:0}deg)">
+    <span class="dash-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></span>
+    <span class="dash-card-title">{$lang==='fr'?'Commandes':'Orders'}</span>
+    {#if data.orders?.filter(o=>o.status!=='confirmed' && o.status!=='completed').length}
+    <span class="badge-teal">{data.orders.filter(o=>o.status!=='confirmed' && o.status!=='completed').length}</span>
+    {/if}
+    <svg class="dash-chev" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+      style="transform:rotate({commandesOpen?180:0}deg)">
       <polyline points="6 9 12 15 18 9"/>
     </svg>
   </button>
@@ -874,15 +872,13 @@
 <!-- ── Paiements ────────────────────────────────────────────── -->
 <div class="card dash-card">
   <button class="dash-toggle-hdr" on:click={() => paiementsOpen = !paiementsOpen}>
-    <div style="display:flex;align-items:center;gap:.5rem">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-      <span class="dash-card-title">{$lang==='fr'?'Paiements':'Payments'}</span>
-      {#if data.billing?.balance > 0}
-      <span class="balance-pill">{data.billing.balance.toFixed(2)} $ {$lang==='fr'?'dû':'owing'}</span>
-      {/if}
-    </div>
-    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"
-      style="transition:transform .2s;transform:rotate({paiementsOpen?180:0}deg)">
+    <span class="dash-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>
+    <span class="dash-card-title">{$lang==='fr'?'Paiements':'Payments'}</span>
+    {#if data.billing?.balance > 0}
+    <span class="balance-pill">{data.billing.balance.toFixed(2)} $ {$lang==='fr'?'dû':'owing'}</span>
+    {/if}
+    <svg class="dash-chev" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+      style="transform:rotate({paiementsOpen?180:0}deg)">
       <polyline points="6 9 12 15 18 9"/>
     </svg>
   </button>
@@ -936,16 +932,15 @@
 
 <!-- ── Factures ────────────────────────────────────────────── -->
 {#if data.billing}
-<div class="card dash-card" style="margin-bottom:.75rem">
-  <button class="dash-card-hdr" on:click={() => billOpen = !billOpen} style="width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:.5rem;padding:0">
-    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--txt-2)" stroke-width="2">
+<div class="card dash-card">
+  <button class="dash-toggle-hdr" on:click={() => billOpen = !billOpen}>
+    <span class="dash-ico"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--teal)" stroke-width="2">
       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
       <polyline points="14 2 14 8 20 8"/>
-    </svg>
+    </svg></span>
     <span class="dash-card-title">{$lang==='fr'?'Factures & reçus':'Invoices & receipts'}</span>
-
-    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"
-      style="margin-left:auto;flex-shrink:0;color:var(--txt-3);transition:transform .2s;transform:rotate({billOpen?180:0}deg)">
+    <svg class="dash-chev" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+      style="transform:rotate({billOpen?180:0}deg)">
       <polyline points="6 9 12 15 18 9"/>
     </svg>
   </button>
@@ -1552,7 +1547,9 @@
   .rf-num{color:var(--txt-3);font-family:var(--ff-head);min-width:18px;text-align:right}
   .rf-info{flex:1;display:flex;flex-direction:column;gap:.05rem;padding:0 .4rem}
   .rf-stats{display:flex;flex-direction:column;align-items:flex-end;gap:.05rem;flex-shrink:0}
-  .dash-toggle-hdr{font-family:var(--ff-head);width:100%;display:flex;align-items:center;justify-content:space-between;background:none;border:none;cursor:pointer;padding:0;margin-bottom:0}
+  .dash-toggle-hdr{font-family:var(--ff-head);width:100%;display:flex;align-items:center;gap:.55rem;background:none;border:none;cursor:pointer;padding:0;margin:0}
+  .dash-ico{width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .dash-chev{flex-shrink:0;color:var(--txt-3);transition:transform .2s}
   .dash-toggle-hdr:focus{font-family:var(--ff-head);outline:none}
   .badge-teal{background:rgba(0,232,198,.15);color:var(--teal);border-radius:8px;padding:.05rem .4rem;font-size:.65rem;font-weight:700}
   .bill-doc-link{display:flex;align-items:center;gap:.625rem;padding:.5rem .35rem;background:var(--bg-2);border-radius:8px;text-decoration:none;transition:background .12s}
