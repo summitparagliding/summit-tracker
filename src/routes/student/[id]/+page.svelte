@@ -1522,7 +1522,7 @@
   /* Dashboard cards (orders + payments) */
   .dash-card{padding:.75rem .875rem;margin-bottom:.75rem}
   .dash-card-hdr{font-family:var(--ff-head);display:flex;align-items:center;gap:.5rem;margin-bottom:.625rem}
-  .dash-card-title{font-family:var(--ff-head);font-size:.88rem;font-weight:800;color:var(--txt);flex:1}
+  .dash-card-title{font-family:var(--ff-head);font-size:.88rem;font-weight:800;color:var(--txt);flex:1;line-height:1.3}
   .balance-pill{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.3);border-radius:10px;padding:.1rem .45rem;font-size:.7rem;font-weight:700;font-family:var(--ff-head)}
   .new-order-form{margin-bottom:.5rem}
   .hist-details{margin-top:.4rem}

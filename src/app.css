@@ -32,7 +32,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{font-family:var(--ff-body);background:var(--bg);color:var(--txt);min-height:100svh;line-height:1.6;-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{font-family:var(--ff-head);line-height:1.2;font-weight:700}
+h1,h2,h3,h4{font-family:var(--ff-head);line-height:1.32;font-weight:700}
 a{color:var(--teal);text-decoration:none;transition:color .15s}
 a:hover{color:var(--teal-hi)}
 img{max-width:100%}

@@ -412,7 +412,7 @@
   .cur-kph{font-size:2rem;font-weight:800;font-family:var(--ff-head);color:var(--teal);line-height:1}
   .cur-unit{font-size:.75rem;color:var(--txt-3)}
   .section-card{background:var(--bg-raised);border-radius:10px;padding:.75rem}
-  .sec-lbl{font-family:var(--ff-head);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal);margin-bottom:.6rem}
+  .sec-lbl{font-family:var(--ff-head);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--teal);margin-bottom:.6rem;line-height:1.3}
   .site-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem;margin-bottom:.5rem}
   .site-cell{border-radius:8px;border:1.5px solid;padding:.4rem .3rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.3rem}
   .site-key{font-weight:700;font-size:.72rem;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -446,14 +446,14 @@
   .ww-prom-btn:hover{background:linear-gradient(135deg, rgba(0,184,122,.18), rgba(0,184,122,.06));border-color:var(--teal)}
   .ww-prom-btn-left{display:flex;align-items:center;gap:.5rem}
   .fly7-list{display:flex;flex-direction:column;gap:.2rem}
-  .fly7-row{display:flex;align-items:center;gap:.5rem;padding:.3rem .4rem;border-radius:7px;background:var(--bg-raised);border:1px solid var(--border)}
-  .fly7-date{min-width:54px;color:var(--txt-2)}
-  .fly7-ico{font-size:.95rem;flex-shrink:0}
-  .fly7-wind{flex:1;min-width:0;font-family:var(--ff-head)}
-  .fly7-score{display:flex;align-items:center;gap:.25rem;flex-shrink:0}
-  .fly7-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;display:block}
-  .fly7-tmp{min-width:52px;text-align:right;flex-shrink:0}
-  .fly7-precip{min-width:42px;text-align:right;flex-shrink:0;display:flex;align-items:center;gap:1px;justify-content:flex-end}
+  .fly7-row{display:grid;grid-template-columns:42px 18px minmax(0,1fr) auto auto auto;align-items:center;gap:.4rem;padding:.35rem .45rem;border-radius:7px;background:var(--bg-raised);border:1px solid var(--border)}
+  .fly7-date{color:var(--txt-2);font-size:.66rem;line-height:1.15}
+  .fly7-ico{font-size:.95rem}
+  .fly7-wind{min-width:0;display:flex;align-items:center;gap:.25rem;flex-wrap:wrap;font-family:var(--ff-head);font-size:.72rem}
+  .fly7-score{display:flex;align-items:center;gap:.25rem}
+  .fly7-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;display:block}
+  .fly7-tmp{text-align:right;font-size:.68rem;white-space:nowrap}
+  .fly7-precip{text-align:right;display:flex;align-items:center;gap:1px;justify-content:flex-end;font-size:.68rem;white-space:nowrap}
   .fl-wind{color:var(--txt);text-align:right}
   .fl-dir{color:var(--txt-3);text-align:right}
   .forecast-legend{display:flex;align-items:center;flex-wrap:wrap;gap:.25rem}

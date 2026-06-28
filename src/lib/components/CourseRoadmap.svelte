@@ -378,7 +378,7 @@
   .rm{padding:.1rem 0}
   .rm-hdr{font-family:var(--ff-head);width:100%;display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:none;border:none;cursor:pointer;padding:.15rem 0 .5rem;text-align:left}
   .rm-left{display:flex;flex-direction:column;gap:.12rem;min-width:0}
-  .rm-title{font-family:var(--ff-head);font-weight:800;font-size:.92rem;color:var(--txt);letter-spacing:.01em}
+  .rm-title{font-family:var(--ff-head);font-weight:800;font-size:.92rem;color:var(--txt);letter-spacing:.01em;line-height:1.3}
   .rm-sub{font-size:.74rem;color:var(--txt-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .rm-cert{color:var(--teal);font-weight:800}
   .rm-right{display:flex;align-items:center;gap:.45rem;flex-shrink:0}

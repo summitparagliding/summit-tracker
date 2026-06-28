@@ -82,18 +82,16 @@
     const domDir   = midHr?.dir;
     const maxPrecip= hours.reduce((m, h) => Math.max(m, h.precip ?? 0), 0);
 
-    // Current hour (latest hour <= now) — the headline verdict uses these so it
-    // matches the "conditions now" card exactly instead of a window average.
-    const nowHr = parseInt(new Date().toLocaleString('en-US', { timeZone: 'America/Toronto', hour: '2-digit', hour12: false }), 10);
-    let curIdx = 0;
-    for (let i = 0; i < hours.length; i++) {
-      if (parseInt(hours[i].time.slice(0, 2), 10) <= nowHr) curIdx = i;
-    }
-    const cur     = hours[curIdx] || hours[0] || {};
-    const curSpd  = cur.spd ?? avgSpd;
-    const curGust = cur.gust ?? curSpd;   // current-hour gust, never the window peak
-    const curDir  = cur.dir ?? domDir;
-    const curPrecip = cur.precip ?? 0;
+    // Current conditions — derived from ALL of today's hours (not just the fly
+    // window) using the same "latest hour <= now" rule as the conditions-now
+    // card, so the verdict's wind/dir/gust always match what's shown above.
+    const now = new Date();
+    let curI = idxs[0];
+    for (const i of idxs) { if (new Date(h.time[i]) <= now) curI = i; }
+    const curSpd  = h.wind_speed_10m?.[curI] != null ? Math.round(h.wind_speed_10m[curI]) : avgSpd;
+    const curGust = h.wind_gusts_10m?.[curI] != null ? Math.round(h.wind_gusts_10m[curI]) : curSpd;
+    const curDir  = h.wind_direction_10m?.[curI] ?? domDir;
+    const curPrecip = h.precipitation_probability?.[curI] ?? 0;
 
     const hourScores = hours.map(h => ({
       ...h,
@@ -318,7 +316,7 @@
   .wb{display:flex;flex-direction:column;gap:.5rem}
   .wb-hdr{font-family:var(--ff-head);display:flex;align-items:center;justify-content:space-between}
   .wb-title-btn{display:flex;align-items:center;gap:.4rem;background:none;border:none;padding:0;cursor:pointer;flex:1;text-align:left}
-  .wb-title{font-family:var(--ff-head);font-size:.82rem;font-weight:700;color:var(--txt)}
+  .wb-title{font-family:var(--ff-head);font-size:.82rem;font-weight:700;color:var(--txt);line-height:1.3}
   .wb-ref{background:none;border:1px solid var(--border);border-radius:5px;padding:.15rem .4rem;cursor:pointer;color:var(--txt-3);font-size:.9rem;line-height:1}
   .wb-ref:disabled{opacity:.4}
   .wb-state{display:flex;align-items:center;gap:.4rem;padding:.35rem 0}
@@ -350,6 +348,6 @@
   .wg-legend{margin-top:.5rem;padding:.4rem .5rem;background:var(--bg-2);border-radius:6px}
   .wg-legend-bar{height:8px;border-radius:4px;background:linear-gradient(to right, #dc2626 0%, #ef4444 25%, #f97316 45%, #eab308 65%, #84cc16 80%, #22c55e 100%)}
   .wg-legend-ticks{display:flex;justify-content:space-between;margin-top:.2rem;font-weight:700;font-family:var(--ff-head)}
-  .wg-legend-labels{display:flex;margin-top:.25rem;gap:2px}
-  .wg-legend-labels span{text-align:center;font-size:.56rem;font-weight:700;font-family:var(--ff-head);text-transform:uppercase;letter-spacing:.02em;line-height:1.2;min-width:0}
+  .wg-legend-labels{display:flex;margin-top:.25rem;gap:3px}
+  .wg-legend-labels span{text-align:center;font-size:.5rem;font-weight:700;font-family:var(--ff-head);text-transform:none;letter-spacing:0;line-height:1.1;min-width:0;overflow-wrap:anywhere;hyphens:auto}
 </style>

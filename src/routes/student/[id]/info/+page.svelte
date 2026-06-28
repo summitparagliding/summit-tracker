@@ -394,7 +394,7 @@
 
   /* Collapsible */
   .collapsible{background:var(--bg-raised);border-radius:10px;overflow:hidden}
-  .coll-hdr{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.75rem .875rem;background:none;border:none;cursor:pointer;font-family:var(--ff-head);font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--txt-2);text-align:left;gap:.5rem}
+  .coll-hdr{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.75rem .875rem;background:none;border:none;cursor:pointer;font-family:var(--ff-head);font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--txt-2);text-align:left;gap:.5rem;line-height:1.3}
   .coll-hdr:hover{font-family:var(--ff-head);color:var(--teal)}
   .coll-body{padding:.5rem .875rem .875rem;border-top:1px solid var(--border)}
 
